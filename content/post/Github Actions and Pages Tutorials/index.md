@@ -33,4 +33,4 @@ Github Actions 是一个持续集成和持续部署（CI/CD）平台，它允许
 
 让我们回顾一下这些教程说的内容，首先，在自己的账户中创建一个仓库，这个仓库的名字需要是 `yourname.github.io`，对于笔者来说，也就是创建一个名为 `Axi404.github.io` 的仓库。
 
-![](githubio_create.png)
+<img src="githubio_create.png" alt="title" style="display: block; margin: 0 auto; zoom: 50%;">

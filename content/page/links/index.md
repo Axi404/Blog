@@ -11,7 +11,7 @@ links:
     image: ./AIWiki.png
   - title: 汐学组
     description: 本人创建并维护的学习讨论小组。
-    website: https://aidiy.icu
+    website: https://xistudygroup.github.io/XiStudyGroup/
     image: ./XiStudyGroup.png
 menu:
     main: 

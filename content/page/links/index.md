@@ -8,7 +8,7 @@ links:
   - title: AI Wiki
     description: 本人创建并维护的人工智能自学指南。
     website: https://aidiy.icu
-    image: https://raw.githubusercontent.com/Axi404/ai-self-learning/blob/main/docs/images/aiwiki.ico
+    image: ./AIWiki.png
 menu:
     main: 
         weight: 4

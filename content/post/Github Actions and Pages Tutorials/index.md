@@ -29,11 +29,14 @@ Github Actions 是一个持续集成和持续部署（CI/CD）平台，它允许
 
 ## 部署你的第一个网站
 
+
+### 回顾
+
 在很多的教程中，往往都会教学如何建立一个自己的博客或者主页，通过 Github Pages 的方式。然而这些方法往往问题很大，即会让读者产生一种错觉，一个账户只能创建一个静态网站。
 
 让我们回顾一下这些教程说的内容，首先，在自己的账户中创建一个仓库，这个仓库的名字需要是 `username.github.io`，对于笔者来说，也就是创建一个名为 `Axi404.github.io` 的仓库。
 
-<img src="githubio_create.png" alt="title" style="display: block; margin: 0 auto; zoom: 50%;">
+<img src="githubio_create.png" alt="create github.io" style="display: block; margin: 0 auto; zoom: 50%;">
 
 然后在其中使用某些模板或者其他的内容进行进一步操作。这看上去确实正规，但是不免让人产生了怀疑，那么我的仓库名是不是只能叫做 `username.github.io` 呢？
 
@@ -41,4 +44,95 @@ Github Actions 是一个持续集成和持续部署（CI/CD）平台，它允许
 
 让我们来简单的了解一下创建一个网站的流程。
 
-按照常规的流程来说，我们都知道，Web 网站是由 Web 三大件共同创建的，其中 html 负责创建网页的框架，css 负责创建网页的样式，而 js 负责创建网页的交互。而在大多数的网站中，`index.html` 绝对是重中之重。在 Github Pages 
+按照常规的流程来说，我们都知道，Web 网站是由 Web 三大件共同创建的，其中 html 负责创建网页的框架，css 负责创建网页的样式，而 js 负责创建网页的交互。而在大多数的网站中，`index.html` 绝对是重中之重。在 Github Pages，其在部署阶段，网站会自动寻找在某一目录下的 `index.html` 文件，并且将其作为网站的主页，同时将全部的内容部署到静态网页中。
+
+因此这一流程也也就不难想象了，创建一个 `index.html`，在其中写入一些内容，然后将这个文件部署到 Github Pages 中，便可以得到一个网站，简单地好似将大象放进冰箱里。
+
+### 实例
+
+在这里给出一个小小的实例，读者可以跟着进行一下尝试，在这里我们假设读者已经在本地完成了 Git 以及 Github 相关的一切配置，并且拥有了一个仓库，例如名为 `MyExample`。**以下均会采用我的用户名进行操作，这是因为每一次使用 `username` 的时候总会存在读者不解并不将其替换，使用本人的用户名应当会更加明显一些，表明替换的必要性。读者在使用的时候将我的用户名替换为自己的即可。**
+
+```bash
+git clone git@github.com:Axi404/MyExample.git
+cd MyExample
+vim index.html
+```
+
+在 `index.html` 中写入以下内容：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+</head>
+<body>
+    <h1>Welcome to My First Website</h1>
+    <p>This is a simple HTML page hosted on GitHub Pages.</p>
+</body>
+</html>
+```
+
+更进一步来说，你可能愿意为其添加一些 CSS 样式以及 JS 脚本，这也同样不难：
+
+首先创建一个 CSS 文件名为 `styles.css`，在其中写入一些代码。
+
+```css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 50px;
+}
+
+p {
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+}
+```
+
+然后创建一个JS文件名为 `script.js`，并且在其中输入一些代码：
+
+```javascript
+document.addEventListener('DOMContentLoaded', function() {
+    alert('Welcome to My First Website!');
+});
+```
+最后再对 `index.html` 进行一些修改以导入这些内容，包括在 head 中加入 `<link rel="stylesheet" href="styles.css">` 以及在 body 的末尾加入 `<script src="script.js"></script>`，这样便大功告成了。
+
+假如你使用的是 VS Code 之类的编辑器，使用 `Live Server` 可以对这个页面进行实时阅览，十分好用，或者正常的 Linux 命令行，使用 `xdg-open` 打开文件进行预览也是可以的（指在具有桌面 GUI 以及默认浏览器的系统中）。
+
+接下来可以将这些内容上传到 Github 了：
+
+```bash
+git add . 
+git commit -m "initial commit"
+git push
+```
+
+之后前往 `Github` 上面，依次添加 `Setting -> Pages -> None -> main -> save`，完成设置，流程可以如下所示：
+
+<img src="github_pages.png" alt="github pages setting" style="display: block; margin: 0 auto; zoom: 50%;">
+
+不难发现后方的名为 `/(root)` 的选项，即你的 `index.html` 所在的目录，我们这里使用默认的根目录即可，后续我们会知道，使用自定义的 Github Actions 也可以做到相同的效果。
+
+在点击 save 之后可以点击上方的 Actions 看到一个 deployment 的 action 正在 `queue` 或者正在 `Pending`，等待部署结束即可。
+
+<img src="actions_start.png" alt="github actions pending" style="display: block; margin: 0 auto; zoom: 50%;">
+
+此时再次回到 Pages 的界面，可以看到页面已经部署，并且给出了 url 链接。
+
+<img src="pages_deploy_ready.png" alt="github pages ready" style="display: block; margin: 0 auto; zoom: 50%;">
+
+之后再次进行的部署流程会比这个简单很多，只需要在修改了内容之后重新 commit 并且 push 即可，剩下的内容 Github Actions 会帮助你完成，这是得力于这个 Action 对你的 push 操作的检测（被触发）。
+
+部署诸如 Hugo 以及 mkdocs 等内容与直接的 html 文件稍有不同，在后续的拓展内容中会陆续更新这两部分的介绍。

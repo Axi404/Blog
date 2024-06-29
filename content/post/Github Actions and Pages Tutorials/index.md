@@ -136,3 +136,105 @@ git push
 之后再次进行的部署流程会比这个简单很多，只需要在修改了内容之后重新 commit 并且 push 即可，剩下的内容 Github Actions 会帮助你完成，这是得力于这个 Action 对你的 push 操作的检测（被触发）。
 
 部署诸如 Hugo 以及 mkdocs 等内容与直接的 html 文件稍有不同，在后续的拓展内容中会陆续更新这两部分的介绍。
+
+## 完成你的第一个 Github Actions
+
+你已经完成了一个正常的网页的部署了，一般来说，假如说你是正常的手写的 `index.html` 类型的静态网页，此时任务便已经结束了，不过很不幸，你可能还有更多的需求，所以需要一个自己的 Github Actions 来进行更多的个性化操作。
+
+笔者将给出两个示例来进行示范，其中之一是部署 vue 项目，众所周知 vue 项目需要顺利编译才可以成为正常的静态网页，而优雅的方式之中并不包括本地编译之后手动推送。如何在 Github 中使用 Github Actions 来自动化完成这一流程便成为了刚需。同时，笔者也将给出另一个示例，也就是 CSDDL 的另一关键组成：BoardCaster。BoardCaster 是保管在另一仓库中的 JSON 格式的保研信息数据库，如何进行定时的订阅以及对于当前仓库的定时更新？这也同样可以使用 Github Actions 做到。
+
+### 部署 vue 项目
+
+首先先通过正常的方式安装 vue3，并且已经完成了一个项目的新建。例如：
+
+```bash
+npm install -g @vue/cli
+vue create cs-baoyan-ddl
+cd cs-baoyan-ddl
+npm install
+npm install gh-pages --save-dev
+```
+
+并且进行了一些内容的创建。
+
+之后需要进行若干的设置操作，虽然这些并不包括在 Github Actions 之中，但是为了后续的部署，这些是必要内容，假如仅讲解 Github Actions 未免写得过于的空洞。
+
+首先修改 `vue.config.js`：
+
+```js
+module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/cs-baoyan-ddl/' // your repo's name
+    : '/'
+};
+```
+
+此处值得一提的是，在此之前包括 fetch 的内容，如 `fetch('/config/schools.json')`，需要修改为类似于 `fetch('/cs-baoyan-ddl/config/schools.json')` 的格式。
+
+之后修改 `package.json`，加入 deploy部分：
+
+```json
+"scripts": {
+  "build": "vue-cli-service build",
+  "serve": "vue-cli-service serve",
+  "deploy": "gh-pages -d dist"
+}
+```
+
+`gh-pages` 是一个十分强大的工具，可以在 build 的时候为你 build 原内容到分支 `gh-pages` 中。
+
+之后在 `.github/workflows/deploy.yml` 中添加以下内容：
+
+```yml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+遂讲解一下这个 Github Actions 的内容。
+
+一般来说，Github Actions 一共包括三个部分，分别是 `name`, `on` 以及 `jobs`。
+
+- `name`：name 的含义应该不难理解，也就是你的 Actions 的名字，你在 Github 之中全流程都是可视化的，name 作为选择执行不同 Actions 的依据十分的直观。
+- `on`：on 的含义是触发条件，也就是当什么事件发生时，你的 Actions 才会被触发。
+- `jobs`：jobs 的含义是任务，也就是你的 Actions 具体要执行什么操作。
+  - `build-deploy`：本代码中的 `build-deploy` 是这个 Actions 之中唯一的任务，这串字符也就是这个任务的名称。
+  - `runs-on: ubuntu-latest`：`runs-on` 的含义是运行环境，也就是你的 Actions 会在什么环境下运行。一般来说使用最新的 ubuntu 环境即可，即 `ubuntu-latest`。
+  - `steps`：`steps` 的含义是步骤，也就是你的 Actions 具体要执行什么操作。
+    - `actions/checkout@v2`：`actions/checkout@v2` 是一个 Github 官方提供的 Actions，其作用是检出仓库。
+    - `actions/setup-node@v2`：`actions/setup-node@v2` 是一个 Github 官方提供的 Actions，其作用是安装 Node.js。

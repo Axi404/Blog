@@ -238,3 +238,99 @@ jobs:
   - `steps`：`steps` 的含义是步骤，也就是你的 Actions 具体要执行什么操作。
     - `actions/checkout@v2`：`actions/checkout@v2` 是一个 Github 官方提供的 Actions，其作用是检出仓库。
     - `actions/setup-node@v2`：`actions/setup-node@v2` 是一个 Github 官方提供的 Actions，其作用是安装 Node.js。
+    - `run: npm install`：这个步骤会执行 `npm install` 命令，以安装项目所需的所有依赖包。这个步骤通常是必要的，因为在构建和部署之前，所有的依赖包都需要被安装到项目中，这其中包括了关键内容，即 `vue` 以及 `gh-pages`。
+    - `run: npm run build`：这个步骤会执行 `npm run build` 命令，以构建项目。这通常会生成一个用于生产环境的优化后的静态文件集，例如 HTML、CSS 和 JavaScript 文件。
+    - `run: git config --global user.name 'github-actions'` 和 `run: git config --global user.email 'github-actions@github.com'`：这两个步骤用于配置 Git 用户名和电子邮件地址，以便后续的 Git 操作可以顺利进行。这里设置的用户名和电子邮件是为了让 GitHub Actions 可以以一个虚拟用户的身份进行提交操作。换句话说，这里的 name 以及 email 可以随意设置，只是为了一个名称而已，具体的权限由 `secrets.GITHUB_TOKEN` 提供。
+    - `run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git`：这一行命令会更新 Git 远程仓库的 URL，以便使用 GitHub 提供的访问令牌进行身份验证。`${{ secrets.GITHUB_TOKEN }}` 是一个 GitHub 提供的自动生成的访问令牌，它存储在 GitHub Secrets 中，用于确保安全的身份验证。只有使用了 `secrets.GITHUB_TOKEN`，指令才有与 Github 仓库交互的权限。
+    - `run: npm run deploy`：这个步骤会执行 `npm run deploy` 命令，以将构建后的文件部署到 GitHub Pages 上。由于安装了 `gh-pages`，在部署的过程中会自动在 Git 上进行操作，将静态文件推送到 `gh-pages` 分支，从而触发 GitHub Pages 的部署。
+
+以上便不难理解 Github Actions 的基本工作原理了，绝大多数的静态网站生成方案都会给出自己的 Github Actions 配置文件，而你只需要在理解了文件的组成之后在他们的基础上进行略微的修改即可。
+
+### 定时更新仓库文件
+
+CSDDL 的另一关键组成便是其数据库，也就是 BoardCaster。众所周知，静态网站并不存在后端，也就不存在可以持续更新维护与访问的后端数据库，但是使用 JSON 文件以及一种类似于订阅效果的操作，可以完成一个丐版的数据库，这并不困难。
+
+梳理一下思路，我们的需求包括，`git clone` 另一仓库的内容，将另一仓库的内容截取需要的部分复制到本仓库对应位置，正常的 `add`, `commit`, `push` 流程。最后，这个脚本需要定期执行。
+
+不难给出 Github Actions 脚本：
+
+```yml
+name: Update JSON from BoardCaster
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # 每15分钟运行一次
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Listener repository
+      uses: actions/checkout@v2
+
+    - name: Clone BoardCaster repository
+      run: git clone https://github.com/CS-BAOYAN/BoardCaster.git
+
+    - name: Copy and rename data.json to public/config/schools.json
+      run: |
+        cp BoardCaster/data.json public/config/schools.json
+
+    - name: Commit and push changes if there are any
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add public/config/schools.json
+        if git diff-index --quiet HEAD; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update public/config/schools.json from BoardCaster"
+          git push
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+大多数内容应该不难理解，大量的篇幅是常规的 Git 操作，在 GITHUB_TOKEN 的环境下执行，其中唯一需要指出的细节是先比较 HEAD 之后再决定是否 commit，这是因为若无修改而 commit 会导致 Git 报错，虽然实际上无伤大雅，但是依然不够优雅。
+
+同样需要指出的是定时触发的语法，`schedule` 中的 `cron` 语法是 Github Actions 提供的定时触发语法，`*/15 * * * *` 表示每 15 分钟触发一次。
+
+```txt
+* * * * *
+| | | | |
+| | | | +---- 星期几 (0 - 7) (星期天为0或7)
+| | | +------ 月份 (1 - 12)
+| | +-------- 日期 (1 - 31)
+| +---------- 小时 (0 - 23)
++------------ 分钟 (0 - 59)
+```
+
+Cron 是一种用于调度任务的时间表表达式，广泛应用于类 Unix 操作系统的任务调度工具中。GitHub Actions 也支持使用 Cron 表达式来定时触发工作流。Cron 表达式由五个字段组成，分别表示分钟、小时、日期、月份和星期几。
+
+### Cron 表达式的基本格式
+
+```
+* * * * *
+| | | | |
+| | | | +---- 星期几 (0 - 7) (星期天为0或7)
+| | | +------ 月份 (1 - 12)
+| | +-------- 日期 (1 - 31)
+| +---------- 小时 (0 - 23)
++------------ 分钟 (0 - 59)
+```
+
+其中需要著名的特殊字符包括以下内容：
+
+- **星号（*）**：表示匹配任何值。例如，`* * * * *` 表示每分钟执行一次。
+- **逗号（,）**：用于分隔多个值。例如，`0,15,30,45 * * * *` 表示每小时的第 0、15、30 和 45 分钟执行。
+- **连字符（-）**：用于指定一个范围。例如，`0-5 * * * *` 表示每小时的第 0 到 5 分钟执行。
+- **斜杠（/）**：用于指定步长。例如，`*/15 * * * *` 表示每 15 分钟执行一次。
+
+同时，需要注意的是 Github Actions 由于流量过大的问题，所以说对于定期触发的 Actions 并不会按照准确的时间执行，而是大概率会出现延后，在这里开通了 `workflow_dispatch`，可以在紧急情况下选择手动触发。
+
+## 结语
+
+以上便是本次介绍的全部内容了，在此限于篇幅，也要告一段落了，更多的静态网站部署工具，笔者多半也有使用过，或许改天会开一个合集，讲一下踩过的坑。
+
+Github Pages 与 Github Actions 可以帮助开发者构建个人网站，更重要的是，其完全免费。使用它们吧，创作属于自己的内容。

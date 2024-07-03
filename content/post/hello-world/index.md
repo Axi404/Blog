@@ -9,7 +9,7 @@ categories:
 tags:
     - Daily Talk
     - About me
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+weight: 5       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
 读者们好，第一次见面是如此的仓促，以至于没有好好的准备一篇长篇大论，来讲述我来到这里之前走过多少的路，不过幸运的是，在将来的无数的日子里，我们还有很多机会来认识彼此。

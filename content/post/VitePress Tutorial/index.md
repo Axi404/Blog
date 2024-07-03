@@ -23,3 +23,25 @@ weight: 1       # You can add weight to some posts to override the default sorti
 VitePress 是一个基于 Vite 的静态网页生成器，它使用 Vue 作为其核心，并使用 Markdown 作为其内容格式。VitePress 的主要目标是提供一个简单而高效的方式来创建和维护静态网站，同时提供丰富的插件和主题来满足不同用户的需求。
 
 换句话来说，使用 VitePress，可以很轻易地通过 Markdown 格式的内容生成精美的静态网页，因此是很好的百科/博客类内容的载体。
+
+## 项目结构
+
+了解 VitePress 的项目结构是为 VitePress 做贡献的基本事项，一般来说，VitePress 的结构为：
+
+```txt
+├───.github
+├───docs
+│   ├───.vitepress
+│   │   ├───cache
+│   │   └───theme
+│   ├───images
+│   ├───public
+│   ├───folders
+│   └───index.md
+├───node_modules
+├───.gitignore
+├───package.json
+├───pnpm-lock.yaml
+├───tsconfig.json
+```
+

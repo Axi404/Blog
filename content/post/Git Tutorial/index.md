@@ -74,3 +74,44 @@ git remote add origin git@github.com:username/repository.git
 git pull origin main --allow-unrelated-histories
 git push -u origin main
 ```
+
+其中的精髓在于使用 `--allow-unrelated-histories`，这使得在 `pull` 的时候，允许两个不同的仓库进行合并，从而避免报错。
+
+## 废弃当前 Github 仓库分支并更新 main 分支
+
+对于部分的仓库的重构需求，例如将本仓库不再使用 Hugo，而是使用 VitePress 进行搭建，那么需要将本仓库的 main 分支进行完全的重建，同时出于保险起见，还需要将之前的分支进行备份，也就是将其置入一个废弃分支。
+
+首先先备份当前的分支：
+
+```shell
+git checkout main
+git checkout -b deprecated-main
+git push origin deprecated-main
+```
+
+之后重建当前的 main 分支：
+
+```shell
+git branch -D main
+git checkout --orphan main
+git rm -rf .
+# 将新的文件添加到当前目录
+git add .
+git commit -m "Rebuild main branch"
+```
+
+最后在 push 的时候使用 `-f`，也就是 force，进行强制推送：
+
+```shell
+git push -f origin main
+```
+
+假如说本仓库存在一个 gh-pages 分支，有可能会需要删除这个分支，使用以下指令：
+
+```shell
+git push origin --delete gh-pages
+```
+
+## 总结
+
+以上内容总结了部分的笔者在日常使用中经常会用到的 Git 相关的使用技巧，这些内容是维护一个仓库的过程中十分常见的。同时，同样需要注意的有诸如在修改仓库内容之前先进行 `git pull` 此类日常习惯，这样才可以保证内容的一致性。

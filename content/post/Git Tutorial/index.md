@@ -44,5 +44,33 @@ cat ~/.ssh/id_ed25519.pub
 
 ### 理解误区
 
-在这一过程中，我们注意到，包括说互联网中绝大多数的常见教程，均会使用 `-C "your_email@example.com"` 这一行指令，而与此同时，`git config` 以及 Github 均存在邮箱地址这一配置内容。
+在这一过程中，我们注意到，包括说互联网中绝大多数的常见教程，均会使用 `-C "your_email@example.com"` 这一行指令，而与此同时，`git config` 以及 Github 均存在邮箱地址这一配置内容，但是实际上这三者之间没有一点的关系。生成密钥使用的邮箱为注释性质的，本质上可以不添加；`git config` 的邮箱为记录性质，每一条 commit 都需要记录用户以及邮箱；而 GitHub 的邮箱则是账号性质，是掌管 Github 权限的内容。
 
+因此也就不难解释一些奇妙的问题了，诸如自己的本地的 `push` 在 Github 中显示的来源与自己的 Github 账号不一致。这完全是因为在 `git config` 中配置的邮箱与 Github 中的邮箱不一致导致的，而信息与 `git config` 中的内容保持一致，假如说想要纠正，重新设置 `git config` 即可。
+
+## 关联新建仓库
+
+关联新建的仓库同样是在 Git 操作中很常见的一种，也就是应该如何让本地的 Git 与 Github 中的仓库之间建立远程链接，这其中最方便的一种便是使用 `git clone` 指令。
+
+```shell
+git clone git@github.com:username/repository.git
+```
+
+假如说已经在本地的仓库中创建了一些内容，则可以在 `git clone` 之后将已经创建的内容统一复制到克隆出来的文件夹中即可。
+
+在这里需要指出的一种常见错误是，在 Github 中创建仓库时勾选了创建 `README.md` 或者 `LICENSE` 文件，而后使用大多数教程中推荐的 `git init`, `git add .`, `git commit -m "initial"`, `git remote add origin git@github.com:username/repository.git`, `git push -u origin main`。这一流程常常导致报错，这是因为在 Github 中存在这些默认创建的文件，而本地的仓库中并没有这些文件，这会导致在 `git push` 的时候出现错误，而如果已经进行过 `commit`，也会因为 `commit` 的历史不一致而在 `pull` 以同步这些文件的时候报错。
+
+因此，正确的流程是，在 Github 中创建仓库时，不勾选这些默认创建的文件，而在本地创建这些文件，再进行 `git push` 即可。或者使用上述的 `git clone` 流程。
+
+假如说非要在这种情况下使用 `git init` 的流程，则可以使用以下的脚本：
+
+```shell
+git init
+git add .
+git commit -m "initial"
+git branch # 查看当前分支名称
+git branch -m main # 当前分支重命名为 main
+git remote add origin git@github.com:username/repository.git
+git pull origin main --allow-unrelated-histories
+git push -u origin main
+```

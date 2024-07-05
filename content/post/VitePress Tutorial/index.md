@@ -1,5 +1,5 @@
 ---
-title: VitePress 贡献指南
+title: VitePress 贡献指南 & 建站指南
 description: 如何对于 VitePress 项目进行贡献，快速看懂项目结构，并构建自己的项目。
 date: 2024-07-03 00:00:00+0000
 image: cover.jpg
@@ -42,12 +42,14 @@ VitePress 是一个基于 Vite 的静态网页生成器，它使用 Vue 作为�
 ├───.gitignore
 ├───package.json
 ├───pnpm-lock.yaml
-├───tsconfig.json
+└───tsconfig.json
 ```
 
 对于贡献者来说，仅需要关注 `docs` 文件夹即可，`docs` 文件夹下包含了 VitePress 的配置文件，以及所有的 Markdown 文件。其中作为初级的贡献者，需要了解的是 `docs` 中的若干文件夹，并且对于新建的文档按照以下的步骤，在这里以项目 [SurviveXJTU](https://xistudygroup.github.io/SurviveXJTU/) 为例。
 
 ## 贡献流程
+
+关于从注册 Github 以及初始化 Git 开始的贡献流程，在 [SurviveXJTU的贡献指南](https://xistudygroup.github.io/SurviveXJTU/%E5%89%8D%E8%A8%80/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97.html) 中有更具富文本与插图版本的说明，在这里给出一个配置健全的设备上的简易版本。
 
 ### 撰写文档
 
@@ -106,15 +108,159 @@ export default defineConfig({
 
 其中之所以为如下路径，包括几个前提：
 
-- 读者撰写的文档位于 `docs/人生篇/` 文件夹中
-- 读者的文档名为 `人生思考.md`
-- 读者想要将文档显示为 `人生思考`
+- 读者撰写的文档位于 `docs/人生篇/` 文件夹中。
+- 读者的文档名为 `人生思考.md`。
+- 读者想要将文档显示为 `人生思考`（若不希望，将期望的显示内容替换 `text` 中内容）。
 
 更多内容可以参考 SurviveXJTU 中的具体实现。
 
 ### 提交 PR
 
 在进行了撰写之后，则可以根据正常的流程进行 PR，前提是读者已经对仓库进行了 fork，如上的修改发生在通过 `git clone` 复制自己的仓库之后的本地内容中，使用 `git add .`, `git commit -m "update"`, `git push -u origin main` 进行推送，并且在 Github 页面提交 PR 即可。
+
+## VitePress 快速建站
+
+本文接下来的内容用来讲解如何使用 VitePress 进行快速建站。
+
+### 安装初始化
+
+首先需要安装 npm，前往 [Node.js 的官网](https://nodejs.org/zh-cn)进行下载，之后按照指示安装即可，结束之后打开一个终端，输入 `node -v` 以及 `npm -v`，会提供 Node.js 以及 npm 的版本号，说明安装成功。
+
+接下来转用 pnpm，更加好用的包管理器：
+
+```shell
+npm install -g pnpm
+```
+
+然后使用 pnpm 安装 VitePress，新建文件夹，在目录下打开终端：
+
+```shell
+pnpm add -D vitepress
+```
+
+之后使用 VitePress 提供的快速初始化工具：
+
+```shell
+pnpm vitepress init
+```
+
+在初始化的过程中，进行以下的选择：
+
+```txt
+┌  Welcome to VitePress!
+│
+◇  Where should VitePress initialize the config?
+│  ./docs
+│
+◇  Site title:
+│  My Awesome Project
+│
+◇  Site description:
+│  A VitePress Site
+│
+◇  Theme:
+│  Default Theme + Customization
+│
+◇  Use TypeScript for config and theme files?
+│  Yes
+│
+◆  Add VitePress npm scripts to package.json?
+│  Yes
+└
+```
+
+之后执行 `pnpm run docs:dev` 即可在本地启动 VitePress 并进行预览。
+
+### Github 部署
+
+在本地预览没有问题之后，就可以进行 Github 部署了，首先需要新建一个仓库，例如 `Example`，然后在 `docs/.vitepress/config.mts` 中添加如下内容：
+
+```ts
+export default defineConfig({
+    ...,
+    base: '/Example/' // 若仓库为 username.github.io，则 base 为 /
+})
+```
+
+与仓库建立链接（详细方法见本人 [关于 Git 的博客](https://axi404.github.io/Blog/p/git-%E7%9A%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/#%E5%85%B3%E8%81%94%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93)）之后，在根目录下创建一个 `.github/workflows/deploy.yml`
+
+```yml
+# 构建 VitePress 站点并将其部署到 GitHub Pages 的示例工作流程
+#
+name: Deploy VitePress site to Pages
+
+on:
+  # 在针对 `main` 分支的推送上运行。如果你
+  # 使用 `master` 分支作为默认分支，请将其更改为 `master`
+  push:
+    branches: [main]
+
+  # 允许你从 Actions 选项卡手动运行此工作流程
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许同时进行一次部署，跳过正在运行和最新队列之间的运行队列
+# 但是，不要取消正在进行的运行，因为我们希望允许这些生产部署完成
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # 构建工作
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm # 或 pnpm / yarn
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Install dependencies
+        run: pnpm install # 或 pnpm install / yarn install / bun install
+      - name: Build with VitePress
+        run: pnpm docs:build # 或 pnpm docs:build / yarn docs:build / bun run docs:build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  # 部署工作
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+在 Github 仓库中，找到 `Settings` -> `Pages` -> `Build and deployment` -> `Source`，选择 `Github Actions`，之后进行：
+
+```shell
+git add .
+git commit -m "Initial Commit"
+git push origin main
+```
+
+稍等片刻之后即可看到部署成功。
 
 ## 结语
 

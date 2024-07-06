@@ -1,7 +1,7 @@
 ---
 title: Obsidian 快速上手指南
 description: Obsidian 快速上手，概念辨析 & 基础使用。
-date: 2024-07-07 00:00:00+0000
+date: 2024-07-06 00:00:00+0000
 image: cover.jpg
 categories:
     - Tech Talk

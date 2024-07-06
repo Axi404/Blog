@@ -1,7 +1,7 @@
 ---
 title: Tech Talk
 description: 技术分享
-image:
+image: cover.jpg
 
 # Badge style
 style:

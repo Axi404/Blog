@@ -1,7 +1,7 @@
 ---
 title: Daily Talk
 description: 日常谈话/交流/杂谈
-image:
+image: cover.jpg
 
 # Badge style
 style:

@@ -14,12 +14,8 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 ![](cover.png)
 
-![](01.png) ![](02.png)
+![](01.png) ![](02.png) ![](03.png) ![](04.png)
 
-![](03.png) ![](04.png)
-
-![](05.png) ![](06.png)
-
-![](07.png) ![](08.png)
+![](05.png) ![](06.png) ![](07.png) ![](08.png)
 
 ![](09.png)

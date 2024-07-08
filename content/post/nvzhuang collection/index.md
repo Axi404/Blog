@@ -1,8 +1,7 @@
 ---
 title: 女装收集
 description: 个人女装，欢迎欣赏。
-slug: hello-world
-date: 2024-06-25 00:00:00+0000
+date: 2024-07-09 00:00:00+0000
 image: cover.jpg
 categories:
     - Daily Talk

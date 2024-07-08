@@ -2,7 +2,7 @@
 title: 女装收集
 description: 个人女装，欢迎欣赏。
 date: 2024-07-08 00:00:00+0000
-image: cover.jpg
+image: cover.png
 categories:
     - Daily Talk
 tags:
@@ -12,14 +12,14 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 本人女装收集，欢迎欣赏。原有大约 200 余张，不过大多为同一姿势连拍，或未达到分享标准，在此给出本人较为喜欢的照片。
 
-![](cover.jpg)
+![](cover.png)
 
-![](1.jpg) ![](2.jpg)
+![](1.png) ![](2.png)
 
-![](3.jpg) ![](4.jpg)
+![](3.png) ![](4.png)
 
-![](5.jpg) ![](6.jpg)
+![](5.png) ![](6.png)
 
-![](7.jpg) ![](8.jpg)
+![](7.png) ![](8.png)
 
-![](9.jpg)
+![](9.png)

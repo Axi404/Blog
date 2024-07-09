@@ -45,11 +45,11 @@ VitePress 是一个基于 Vite 的静态网页生成器，它使用 Vue 作为�
 └───tsconfig.json
 ```
 
-对于贡献者来说，仅需要关注 `docs` 文件夹即可，`docs` 文件夹下包含了 VitePress 的配置文件，以及所有的 Markdown 文件。其中作为初级的贡献者，需要了解的是 `docs` 中的若干文件夹，并且对于新建的文档按照以下的步骤，在这里以项目 [SurviveXJTU](https://xistudygroup.github.io/SurviveXJTU/) 为例。
+对于贡献者来说，仅需要关注 `docs` 文件夹即可，`docs` 文件夹下包含了 VitePress 的配置文件，以及所有的 Markdown 文件。其中作为初级的贡献者，需要了解的是 `docs` 中的若干文件夹，并且对于新建的文档按照以下的步骤，在这里以项目 [SurviveXJTU](https://survivexjtu.github.io/) 为例。
 
 ## 贡献流程
 
-关于从注册 Github 以及初始化 Git 开始的贡献流程，在 [SurviveXJTU的贡献指南](https://xistudygroup.github.io/SurviveXJTU/%E5%89%8D%E8%A8%80/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97.html) 中有更具富文本与插图版本的说明，在这里给出一个配置健全的设备上的简易版本。
+关于从注册 Github 以及初始化 Git 开始的贡献流程，在 [SurviveXJTU的贡献指南](https://survivexjtu.github.io/%E5%89%8D%E8%A8%80/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97.html) 中有更具富文本与插图版本的说明，在这里给出一个配置健全的设备上的简易版本。
 
 ### 撰写文档
 

@@ -14,7 +14,7 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 根据惯例写一下前言，关于这篇博客为什么要写，以及其中的内容。
 
-笔者曾经不止一次在各种场合推荐过记笔记的好处，以及笔者所使用的 Obsidian 这一笔记软件。关于记笔记，每个人可能存在不同的理由，在这里笔者给出的理由是，笔记的记录是一种对于学习的正反馈，是对于自身学习内容的一种定量描述，更多的论述见 [SurviveXJTU 的对应章节](https://xistudygroup.github.io/SurviveXJTU/%E7%A0%94%E5%AD%A6%E7%AF%87/%E8%AE%B0%E7%AC%94%E8%AE%B0%E6%98%AF%E4%B8%80%E7%A7%8D%E6%AD%A3%E5%8F%8D%E9%A6%88.html)。
+笔者曾经不止一次在各种场合推荐过记笔记的好处，以及笔者所使用的 Obsidian 这一笔记软件。关于记笔记，每个人可能存在不同的理由，在这里笔者给出的理由是，笔记的记录是一种对于学习的正反馈，是对于自身学习内容的一种定量描述，更多的论述见 [SurviveXJTU 的对应章节](https://survivexjtu.github.io/%E7%A0%94%E5%AD%A6%E7%AF%87/%E8%AE%B0%E7%AC%94%E8%AE%B0%E6%98%AF%E4%B8%80%E7%A7%8D%E6%AD%A3%E5%8F%8D%E9%A6%88.html)。
 
 目前市面上存在着若干的笔记软件，国内的诸如语雀/flowus 等，而国外的则诸如 Notion/Obsidian 等。在这里有必要指出，尽管国内的笔记软件的功能均在提升，但是其功能性均不如 Notion，而 Notion 则是基于网络的内容，你记载的笔记均不是本地内容，同时伴随着较高的学习成本。
 

@@ -282,7 +282,7 @@ std::string f = "hello world"; // 字符串与前面不同，后续会讲解
 
 ```cpp
 int a = (int)'a'; // a = 61
-char b = (char) 61; // b = 'a' 
+char b = (char)61; // b = 'a' 
 ```
 
 而隐式转换则是 C++自动实现的一种机制，约等于实现了一些默认的转换，这里给出一些例子：
@@ -480,9 +480,12 @@ do
 ```cpp
 #include <iostream>
 
-int main() {
-    for (int i = 1; i <= 5; ++i) {
-        if (i == 3) {
+int main()
+{
+    for (int i = 1; i <= 5; ++i)
+    {
+        if (i == 3)
+        {
             std::cout << "Breaking the loop at i = " << i << std::endl;
             break;  // 当 i 等于 3 时，跳出循环
         }
@@ -507,15 +510,17 @@ Breaking the loop at i = 3
 ```cpp
 #include <iostream>
 
-int main() {
-    for (int i = 1; i <= 5; ++i) {
-        if (i == 3) {
+int main()
+{
+    for (int i = 1; i <= 5; ++i)
+    {
+        if (i == 3)
+        {
             std::cout << "Skipping iteration at i = " << i << std::endl;
             continue;  // 当 i 等于 3 时，跳过当前迭代
         }
         std::cout << "Current i: " << i << std::endl;
     }
-
     return 0;
 }
 ```

@@ -9,7 +9,7 @@ tags:
     - Tech Talk
     - RoboMaster
     - C++
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+weight: 5       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
 # RoboMaster 视觉组第一次培训

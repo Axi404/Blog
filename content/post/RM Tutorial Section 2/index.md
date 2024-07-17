@@ -1,7 +1,7 @@
 ---
 title: RoboMaster 视觉组第二次培训
 description: 关于 SSH 以及 CMake 的基础讲解。
-date: 2024-07-10 00:00:00+0000
+date: 2024-07-17 00:00:00+0000
 image: cover.png
 categories:
     - Tech Talk

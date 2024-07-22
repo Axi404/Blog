@@ -93,13 +93,13 @@ add_library(test STATIC ${ALL_SRCS})
 同时在主`CMakeLists.txt`中各项中添加：
 
 ```cmake
- 	include_directories(
-        test/include
-        )
-    add_subdirectory(test)
-    target_link_libraries(infantry_new
-        test
-        )
+include_directories(
+    test/include
+    )
+add_subdirectory(test)
+target_link_libraries(infantry_new
+    test
+    )
 ```
 
 即可完成 CMakeList.txt 的更新。

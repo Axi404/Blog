@@ -121,4 +121,4 @@ Choker 搭配上长发确实有一番韵味，但是一是本人不想露脸，�
 
 同时腿环还是比较有趣的，有一张比较昏暗的照片可以给大家一看，但是由于本人可能腿比较细一些，所以腿环没有勒肉感，不是很涩。
 
-<img src="腿环.jpg" style="display: block; margin: 0 auto; zoom: 40%;">
+<img src="腿环.jpg" style="display: block; margin: 0 auto; zoom: 20%;">

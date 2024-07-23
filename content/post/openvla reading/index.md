@@ -325,3 +325,165 @@ def train(cfg: TrainConfig) -> None:
 if __name__ == "__main__":
     train()  # 如果是主模块，则运行训练函数
 ```
+
+在这里暂时不用关注太多的事情，我第一件关心的事情是，一开始 `import` 的那么多的库里面，他们分别起到了什么作用。
+
+假如说前往 OpenVLA 的 [Github 仓库](https://github.com/openvla/openvla)，可以发现其 fork 了另一个库，也就是 [prismatic-vlms](https://github.com/TRI-ML/prismatic-vlms)，在这里我只想关注 OpenVLA 的实现，所以我想要知道，相较于 prismatic-vlms，OpenVLA 有什么改动。
+
+### prismatic-vlms
+
+在 prismatic-vlms 中，同样运行一下 `tree`，看一下文件结构：
+
+```txt
+├───prismatic
+│   ├───conf
+│   ├───models
+│   │   ├───backbones
+│   │   │   ├───llm
+│   │   │   │   └───prompting
+│   │   │   └───vision
+│   │   └───vlms
+│   ├───overwatch
+│   ├───preprocessing
+│   │   └───datasets
+│   ├───training
+│   │   └───strategies
+│   │   └───strategies
+│   └───util
+└───scripts
+    └───additional-datasets
+```
+
+在 `conf` 里面，可以发现的是，其中包括 `datasets.py` 以及 `models.py` 这两个文件，OpenVLA 增加了一个新的 `vla.py`，也是同样一个代码风格。
+
+以 `vla.py` 为例，具有一个 `VLAConfig` 的类：
+
+```python
+@dataclass
+class VLAConfig(ChoiceRegistry):
+    # fmt: off
+    vla_id: str                                     # Unique VLA Policy ID that fully specifies a configuration variant
+    base_vlm: Union[str, Path]                      # Base VLM as ID/Path to Run Directory (e.g., `prism-dinosiglip+7b`)
+    freeze_vision_backbone: bool                    # Freeze Vision Backbone Parameters (akin to pretraining)
+    freeze_llm_backbone: bool                       # Freeze LLM Backbone parameters
+    unfreeze_last_llm_layer: bool                   # Unfreeze final layer of LLM (only takes effect if LLM is frozen)
+
+    # Data Mixture Parameters
+    data_mix: str                                   # Open-X Embodiment Dataset =>> Unique Mixture ID (e.g., `bridge`)
+    shuffle_buffer_size: int                        # Size of Shuffle Buffer (100K for Bridge, 1M for OXE)
+
+    # Optimization Parameters
+    epochs: int                                     # Epochs to Run (in case `max_steps` is not specified)
+    max_steps: Optional[int]                        # [Optional] Max Gradient Steps to Run (overrides `epochs`)
+
+    expected_world_size: int                        # Expected # of GPUs =>> allows us to gate training on hardware
+    global_batch_size: int                          # Global Batch Size (divided across processes / world size)
+    per_device_batch_size: int                      # Per-Device Batch Size (per-process / individual GPU)
+                                                    #   =>> # of accumulation steps is auto-computed
+
+    learning_rate: float                            # Peak Learning Rate (`lr_scheduler_type` sets warmup/decay)
+    weight_decay: float                             # Weight Decay for AdamW Optimizer
+    max_grad_norm: float                            # Max Grad Norm (for global gradient clipping)
+    lr_scheduler_type: str                          # LR Scheduler (usually: "constant" | "linear-warmup+cosine-decay")
+    warmup_ratio: float                             # Fraction of Steps to Warmup (for warmup LR schedulers)
+
+    train_strategy: str                             # Train Strategy (default "fsdp-full-shard")
+
+    # Enable Gradient/Activation Checkpointing (for the LLM Backbone)
+    enable_gradient_checkpointing: bool = True      # Enable Gradient/Activation Checkpointing during Training
+
+    # Mixed Precision Training via Torch Native AMP (`autocast`)
+    enable_mixed_precision_training: bool = True    # Enable Traditional BF16 Mixed Precision
+    reduce_in_full_precision: bool = True           # Accumulate/Reduce All-Gather Gradients in FP32 Full Precision
+
+    # fmt: on
+```
+
+这等于说是全部的需要的配置信息了，接下来就需要在里面塞入一些配置就好了，之后在创建的时候，使用类似于 factory 的东西进行调用就可以了。
+
+于是就使用一个配置即可：
+
+```python
+@dataclass
+class Exp_SigLIP_224px_Bridge(VLAConfig):
+    vla_id: str = "siglip-224px+mx-bridge"
+    base_vlm: Union[str, Path] = "siglip-224px+7b"
+
+    freeze_vision_backbone: bool = False
+    freeze_llm_backbone: bool = False
+    unfreeze_last_llm_layer: bool = False
+
+    # Data Mixture Parameters
+    data_mix: str = "bridge"
+    shuffle_buffer_size: int = 256_000
+
+    # Optimization Parameters
+    epochs: int = 1000
+    max_steps: Optional[int] = None
+
+    expected_world_size: int = 8
+    global_batch_size: int = 256
+    per_device_batch_size: int = 32
+
+    learning_rate: float = 2e-5
+    weight_decay: float = 0.0
+    max_grad_norm: float = 1.0
+    lr_scheduler_type: str = "constant"
+    warmup_ratio: float = 0.0
+
+    train_strategy: str = "fsdp-full-shard"
+```
+
+对于其他的配置来说的话，相较于这个原来的配置文件，只需要进行少量的修改，于是直接进行继承就好：
+
+```python
+@dataclass
+class Exp_FreezeVIT_SigLIP_224px_Bridge(Exp_SigLIP_224px_Bridge):
+    vla_id: str = "siglip-224px-icy+mx-bridge"
+    base_vlm: Union[str, Path] = "siglip-224px+7b"
+    freeze_vision_backbone: bool = True
+```
+
+之后实现一个枚举：
+
+```python
+# === Define a VLA Registry Enum for Reference & Validation ===
+@unique
+class VLARegistry(Enum):
+    # Sanity Check Configurations =>> BridgeV2
+    SIGLIP_224PX_MX_BRIDGE = Exp_SigLIP_224px_Bridge
+    DINOSIGLIP_224PX_MX_BRIDGE = Exp_DinoSigLIP_224px_Bridge
+
+    # SigLIP Frozen Backbone Experiment
+    FREEZE_SIGLIP_224PX_MX_BRIDGE = Exp_FreezeVIT_SigLIP_224px_Bridge
+
+    # [OpenVLA v0.1 7B] SigLIP 224px + OXE Magic Soup
+    SIGLIP_224PX_MX_OXE_MAGIC_SOUP = Exp_SigLIP_224px_OXE_Magic_Soup
+
+    # [OpenVLA 7B] DINO + SigLIP 224px + OXE Magic Soup++
+    DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS = Exp_DinoSigLIP_224px_OXE_Magic_Soup_Plus
+
+    # === TDROID Fine-tuning Configs ===
+    SIGLIP_224PX_MX_TDROID_CARROT_IN_BOWL = Exp_SigLIP_224px_TDROID_CarrotInBowl
+    SIGLIP_224PX_MX_TDROID_POUR_CORN_IN_POT = Exp_SigLIP_224px_TDROID_PourCornInPot
+
+    SIGLIP_224PX_ICY_MX_TDROID_CARROT_IN_BOWL = Exp_SigLIP_224px_Icy_TDROID_CarrotInBowl
+    SIGLIP_224PX_LASTLAYER_MX_TDROID_CARROT_IN_BOWL = Exp_SigLIP_224px_LastLayer_TDROID_CarrotInBowl
+    SIGLIP_224PX_SANDWICH_MX_TDROID_CARROT_IN_BOWL = Exp_SigLIP_224px_Sandwich_TDROID_CarrotInBowl
+
+    # === DROID Fine-tuning Configs ===
+    SIGLIP_224PX_MX_DROID_WIPE = Exp_SigLIP_224px_Droid_Wipe
+
+    @property
+    def vla_id(self) -> str:
+        return self.value.vla_id
+```
+
+然后批量将这些内容注册成 `subclass`：
+
+```python
+# Register VLAs in Choice Registry
+for vla_variant in VLARegistry:
+    VLAConfig.register_subclass(vla_variant.vla_id, vla_variant.value)
+```
+

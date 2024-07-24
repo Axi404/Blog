@@ -487,3 +487,10 @@ for vla_variant in VLARegistry:
     VLAConfig.register_subclass(vla_variant.vla_id, vla_variant.value)
 ```
 
+虽然现在 prismatic-vlms 我还没有看完，但是我已经急了，所以对一些内容进行了跳过，接下来再次回到 `train.py`。
+
+### run_vla_training
+
+简单检查一下训练的代码，不难发现，前面的大多数内容都是类似的，除了一些获取数据集之类的操作之外，主要还是正在设置各种的配置文件，但是在这里暂时先不关心这些，而是直接跳到 `run_vla_training`，换句话说，我想要知道其论文中的训练是如何实现的。
+
+在这里简单再次复述一下 OpenVLA 的训练过程，

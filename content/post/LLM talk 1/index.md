@@ -17,6 +17,8 @@ weight: 5       # You can add weight to some posts to override the default sorti
 
 本篇内容是因为本人在 LLM 的学习过程中，有学到不同的东西，所以需要一篇文档来总结一下，顺便也作为一个分享。本篇内容不会过多的讲解方法本身，相应的，会给出一些 insight 和思考。
 
+Noting 的是，全部的内容都是直接基于论文阅读的，参考资料中提及的内容指，这些内容或许能够帮助读者进一步理解论文里说的内容。大的基石还是论文。
+
 ## BOW
 
 BOW，也就是 Bag of Words，是一种十分简单的模型，简答来说就是将一句话使用词的形式进行分割，然后用键值对的形式进行储存。这样做的一个显然的结果就是，词袋模型并不能很好的建模语言的顺序，但是作为一种最为初级的 tokenizer 来说也已经很不错了。
@@ -116,3 +118,53 @@ BLIP 的重点在于，ALBEF 只关注到了 MLM 生成的高质量，然后就�
 参考资料：
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
+
+## CoCa
+
+CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样，但是 CoCa 的关注点在于，之前的工作，虽然看上去从 pipeline 里面都是同时进行的输入，但是实际上在一个 iteration 里面都是经过了很多次的 forward，而 CoCa 则是希望，在同一个 iteration 里面，所有的 forward 都只进行一次，也就是所谓的 one-pass。
+
+方法也十分简单，既然 one-pass 了，那么 scale 上去很多数据就会方便很多，毕竟计算快了很多，于是直接对文本输入直接采取 casual-attention，也不需要管数据的损失，算就完事了，于是任务也变成了一个 Co 和一个 Ca，也就是 contrast 和 caption。
+
+所以说白了其实带来的 insight 不算多，一方面 ITC 确实有效，一方面 LM 也是一个难任务，但是在诸多 trick 之上，CoCa 的 large model 以及 scale up 的 data 显然为其性能带来的更大的影响。
+
+参考资料：
+
+- 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
+
+## BEiT V3
+
+可以说 BEiT V3 本质上和之前的 VLMo 是十分类似的，但是区别在于，其只采用了一种任务，也就是 LM 任务，这自然也增加了运算的效率。之后就是通过大量的数据，以及不同 FFN 的激活，来在不同的的任务里面训练，可以说是十分的简洁。
+
+这篇说白了也就是一个 insight，也就是阐述了 MoME 在 LM 任务下 scale up 之后确实很强，同时当然，这些 MoME 依然可以组合，再去 transfer 到不同的下游任务里。
+
+参考资料：
+
+- 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
+
+## BLIP2
+
+虽然说名字叫做 BLIP2，但是实际上感觉模型的结构上区别还是很大的，只是说任务比较类似而已。
+
+BLIP2 的主要贡献，以及 motivation 在于，之前的模型，都是全部由自己训练的，无论是效率还是算力之类的，开销都很大，而目前领域内已经有了很多的性能很好的模型，于是直接 frozen 之后拿过来用就好。于是提出了一个 Q-former，可以对于 frozen 的图像 encoder 以及 LLM 起到桥梁的作用。
+
+训练还是一个 two-stage，这里面 stage-1 和 stage-2 的图画的其实很迷惑，因为 Q-former 里面本质上是有两个 Transformer 的，那么后面在 stage-2 的输出，是两个 Transformer 的 concat 还是什么，就很神秘。这里一篇 [csdn 的博客](https://blog.csdn.net/LoseInVain/article/details/136013909) 的图很不错，事实上拿的是 queries 输入的那个 transformer 的输出。
+
+Stage-1 和正常的 ALBEF 区别不大，之后 stage-2 把输出过 MLP 送给 LLM，再进行训练。本质上假如没有 Stage-2，那么就是一个 ALBEF，而假如没有 stage-1，则是一种新的范式。那么能否抛开 stage-1 呢？毕竟 stage-2 也是一个完整的训练流程，而且也是多模态的，但是实验表明不行。一种理解是，在 Q-former 里面之所以要引入一个文本编码器，目的就是通过 stage-1 的各种任务，让图像端的 Q-former 和文本对齐，换句话说，这个 token 输入给后面的 LLM 的时候，模型说的是人话，而不是图像话，毕竟后面跟的 MLP 只是为了统一维度，本身与文本类似的语言表征，还是在 Q-former 里面进行建模的。比起来能够将两个模型拼起来，我觉得还是这个 align 的启发更大一些。
+
+参考资料：
+
+- BLIP2 - [https://blog.csdn.net/LoseInVain/article/details/136013909](https://blog.csdn.net/LoseInVain/article/details/136013909)
+
+## LLava
+
+LLava 比较简单，主要是提出了一种只使用 GPT 的文字功能，就可以生成高质量 caption 的方法，简单来说，对于具有 captions 和 bounding boxes 的内容来说，其实际上具有更多的信息量可以挖掘，所以可以生成一些高质量的 hard task。
+
+模型的结构就是一个 image encoder 之后跟一个 MLP 来映射，然后一起输入到 LLM 里面。依然训练是 two-stage 的，首先只训练 MLP 来对齐，之后训练 MLP 和 LLM 来适应具体任务。
+
+本身的 insight 一方面对齐不需要很强的表征能力，MLP 已经足矣；另一方面高质量的数据很重要。同时 LLava 用的各种 prompt 自然也很有参考价值。
+
+参考资料：
+
+- LLava - [https://blog.csdn.net/qq_35812205/article/details/136586853](https://blog.csdn.net/qq_35812205/article/details/136586853)
+
+## 

@@ -217,3 +217,9 @@ SayCan 可以说是在做这种规划任务里面比较早的了，但是也存�
 
 ## PaLM-E
 
+PaLM-E 可以说就是就是对于上述种种猜想的一个实际的体现，也就是说一方面仅仅通过多模态的 prompt 进行输入，这里面的输入包括文字/环境/图片，也就是全部的模态，之后输出的是 high-level 的 planning，再由其他的执行器去完成 low-level policy。
+
+参考资料：
+
+- PaLM-E - [https://zhuanlan.zhihu.com/p/662935514](https://zhuanlan.zhihu.com/p/662935514)
+

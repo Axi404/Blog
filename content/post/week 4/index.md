@@ -85,7 +85,7 @@ weight: 5       # You can add weight to some posts to override the default sorti
 
 暂时来看，本人腿型还算不错，所以，还算不错：
 
-![alt text](女装1.jpg) ![alt text](女装2.jpg) ![alt text](女装3.jpg)
+![](女装1.jpg) ![](女装2.jpg) ![](女装3.jpg)
 
 某种程度上来说，这也确实可以说是我的伪街初体验，虽然距离裙子还差不少，但是我不会化妆，所以那种还是暂且搁置吧。
 

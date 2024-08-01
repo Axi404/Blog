@@ -1,7 +1,7 @@
 ---
 title: 校园 VPN 连接实录
 description: EasyConnect + SSH 校外链接服务器。
-date: 2024-08-01 19:49:00+0000
+date: 2024-08-01 19:49:00+0800
 image: cover.jpg
 categories:
     - Tech Talk

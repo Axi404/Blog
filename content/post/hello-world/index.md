@@ -26,7 +26,7 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 我目前在维护几个开源项目，我想这也是你为什么可以找到这里的原因，在这里都进行一个统一的介绍（你可能对其中的一些内容有所了解，但是另外的知之甚少）：
 
-- [AI Wiki](https://aidiy.icu)：AI Wiki 是我主导的仿照 [CS 自学指南](https://cidiy.wiki) 的相关项目，旨在帮助初学者更好的学习人工智能领域的内容，介绍人工智能领域的入门路线以及各类常识，并且介绍各个领域的推荐论文等。
+- [AI Wiki](https://aidiy.icu)：AI Wiki 是我主导的仿照 [CS 自学指南](https://csdiy.wiki) 的相关项目，旨在帮助初学者更好的学习人工智能领域的内容，介绍人工智能领域的入门路线以及各类常识，并且介绍各个领域的推荐论文等。
 - [西安交大生存指南](https://survivexjtu.github.io)：西安交大生存指南是我主导的仿照 [上海交大生存指南](https://survivesjtu.gitbook.io/survivesjtumanual) 的相关项目，旨在帮助西安交大的新生与老生更好的在西安交大进行学习与生活，给予高效且实用的建议，并且提供一些有用的资源。
 - [汐学组](https://xistudygroup.github.io/XiStudyGroup/)：汐学组是我主导并维护的学习小组，目前是基于西安交通大学（尤其是人工智能专业），提供课内相关内容的学习辅导资料，以及其他的技术类的分享。假如进行归类，AI Wiki同样是汐学组名下的产物。汐学组产出内容包括：
   - 创作《西安交大生存指南》，旨在帮助西安交大新生与老生。

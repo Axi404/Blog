@@ -1,18 +1,14 @@
 ---
-title: Links
+title: 友链
 links:
-  - title: GitHub
-    description: GitHub is the world's largest software development platform.
-    website: https://github.com
-    image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-  - title: AI Wiki
-    description: 本人创建并维护的人工智能自学指南。
-    website: https://aidiy.icu
-    image: ./AIWiki.png
-  - title: 汐学组
-    description: 本人创建并维护的学习讨论小组。
-    website: https://xistudygroup.github.io/XiStudyGroup/
-    image: ./XiStudyGroup.png
+  - title: 主治医师李大华
+    description: 何地才是樂土，讓競爭做指數。
+    website: https://ilovebread.buzz
+    image: ./Assyrian.png
+  - title: 小树
+    description: 「妳突然對我説 七里香的名字很美」
+    website: https://blog.juniortree.com
+    image: ./xiaoshu.jpeg
 menu:
     main: 
         weight: 4

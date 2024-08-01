@@ -20,3 +20,38 @@ weight: 5
 ## 下载 Easy Connect
 
 学校的 SSH 分为两种，一种是 WebVPN，只能活在浏览器里面，本质上是在一个浏览器里面套了个壳子，在里面访问校内网；另一种是 SSLVPN，通过 SSL/TLS 访问内部资源的方法。
+
+使用 SSLVPN，首先需要前往学校的官网，下载一种叫做 EasyConnect 的玩意，之后打开软件，会卡在一个获取登录配置的地方，在浏览器中进入 [sslvpn](https://sslvpn.xjtu.edu.cn) 的官网，然后在学校账号认证界面登录，就可以成功进入某种内网了，此时可以连接跳板机了。
+
+## SSH
+
+之后就可以进行正常的 SSH 了，在这里因为是使用跳板机，对于 `C:/Users/user_name/.ssh/config` 进行修改：
+
+```txt
+Host *
+    ServerAliveInterval 60
+Host jump_server
+    HostName host_name
+    User user_name
+    Port port
+    IdentityFile C:/Users/34064/.ssh/serect_key
+Host j67
+    HostName host_name
+    User user_name
+    Port port
+    ProxyJump jump_server
+```
+
+其中前一个里面是类似组里的跳板机，于是使用组里面提供的地址以及端口和密钥来登录，之后的是正常的服务器，多了一个 `ProxyJump` 来表示使用跳板机。
+
+之后使用 `ssh j67` 就可以登录了。
+
+## 二次 SSH
+
+由于跳板机只有特定端口的转发，而组里的跳板机连接的是一个 4*2080Ti 的服务器，我现在有一个能够用单卡 V100 的服务器，所以说要连接别的服务器。
+
+于是选择了比较愚蠢的方法，因为我当前这个服务器已经在校园网内，约等于我拥有了一个校园网内的终端，那么直接进行二次的 SSH 即可。在这里不得不提到 tmux，确实是十分实用的工具，不仅可以避免自己的程序被没有心跳信号杀死，也可以在一个 SSH 里面多开窗口，可以说十分的方便了。
+
+## 结语
+
+感觉自己的这一套流程笨笨的，一套操作猛如虎，最后 SSH 确实很卡，毕竟套了好几层，不知道有没有更好的方法。

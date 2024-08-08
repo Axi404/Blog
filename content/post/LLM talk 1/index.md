@@ -48,7 +48,7 @@ Word 2 Vec 是一种用于生成词向量的技术，它通过将词语映射到
 
 Word 2 Vec 的一个 insight 是，它将词映射到了一个高维空间中，而高维空间中，距离较近的词，语义上更相似。因此，这种思想可以拓展到其他领域，例如图像，声音等等，将不同模态的信息映射到同一个高维空间中，然后进行相似度的计算。
 
-## CLIP
+## [CLIP](https://arxiv.org/pdf/2103.00020)
 
 CLIP 在某种程度上也可以说是一个开山之作，虽然说对多模态的探索早在它之前就已经开始了，然而不只是数据量很大，本身对于内容处理的范式也使得 CLIP 极具拓展性，可以在很多任务中泛化。
 
@@ -62,7 +62,7 @@ CLIP 在某种程度上也可以说是一个开山之作，虽然说对多模态
 
 - CLIP - [https://www.bilibili.com/video/BV1SL4y1s7LQ/](https://www.bilibili.com/video/BV1SL4y1s7LQ/)
 
-## ViLT
+## [ViLT](https://arxiv.org/pdf/2102.03334)
 
 ViLT 也算是比较经典的多模态领域的工作了，这里面需要说的东西其实不多。首先需要先理清一些常规的内容，也就是 ViT 和 Transformer 在形式上究竟有什么区别。假如说我们不去关注这两个模型的输出，一个显而易见的事情是，他们的不同点仅仅在于模型的输入部分，当然对于输入的处理也有所不同。具体来说，在文本的部分使用了 tokenizer，还在图像的部分分 patch 变成 token 之后进行了一次简单的编码。借用一下后期的 insight，假如不去在意这种简单的编码的性能，已经可以理解为，视觉信息本身就是一种语言。
 
@@ -77,7 +77,7 @@ ViLT 也算是比较经典的多模态领域的工作了，这里面需要说的
 - ViLT - [https://www.bilibili.com/video/BV14r4y1j74y/](https://www.bilibili.com/video/BV14r4y1j74y/)
 
 
-## ALBEF
+## [ALBEF](https://arxiv.org/pdf/2107.07651)
 
 介绍一下 ALBEF，这份工作可以说也是很经典的内容了，基本来说，符合了前人工作的几个共识。首先就是，一般来说，图像编码器需要大于文本编码器，同时的话，多模态的编码器也要尽可能的大，于是使用了 12 层 Transformer 作为图像编码器，6 层文本以及 6 层多模态。同时也是用了 ITC/ITM/MLM，这几种经典的任务。
 
@@ -89,7 +89,7 @@ ViLT 也算是比较经典的多模态领域的工作了，这里面需要说的
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1Vd4y1v77v/](https://www.bilibili.com/video/BV1Vd4y1v77v/)
 
-## VLMo
+## [VLMo](https://arxiv.org/pdf/2111.02358)
 
 VLMo 也可以说是一个比较经典的工作，其中提出的主要就是 MoME，但是这里面，MoE 的experts 是模型自己去选择的，而在这个里面则是手动的进行切换。
 
@@ -105,7 +105,7 @@ VLMo 也可以说是一个比较经典的工作，其中提出的主要就是 Mo
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1Vd4y1v77v/](https://www.bilibili.com/video/BV1Vd4y1v77v/)
 
-## BLIP
+## [BLIP](https://arxiv.org/pdf/2201.12086)
 
 BLIP 可以说是我比较喜欢的一篇工作了，当然，基础的模型结构并没有很大的创新，本身还是 VLMo 的框架，贡献了 attention block 的参数，但是把 MLM 换成了 LM，所以这里的参数不能共享，换成了一个 casual attention。
 
@@ -119,7 +119,7 @@ BLIP 的重点在于，ALBEF 只关注到了 MLM 生成的高质量，然后就�
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
 
-## CoCa
+## [CoCa](https://arxiv.org/pdf/2205.01917)
 
 CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样，但是 CoCa 的关注点在于，之前的工作，虽然看上去从 pipeline 里面都是同时进行的输入，但是实际上在一个 iteration 里面都是经过了很多次的 forward，而 CoCa 则是希望，在同一个 iteration 里面，所有的 forward 都只进行一次，也就是所谓的 one-pass。
 
@@ -131,7 +131,7 @@ CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样�
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
 
-## BEiT V3
+## [BEiT V3](https://arxiv.org/pdf/2208.10442)
 
 可以说 BEiT V3 本质上和之前的 VLMo 是十分类似的，但是区别在于，其只采用了一种任务，也就是 LM 任务，这自然也增加了运算的效率。之后就是通过大量的数据，以及不同 FFN 的激活，来在不同的的任务里面训练，可以说是十分的简洁。
 
@@ -141,7 +141,7 @@ CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样�
 
 - 多模态串讲 - [https://www.bilibili.com/video/BV1fA411Z772/](https://www.bilibili.com/video/BV1fA411Z772/)
 
-## BLIP2
+## [BLIP2](https://arxiv.org/pdf/2301.12597)
 
 虽然说名字叫做 BLIP2，但是实际上感觉模型的结构上区别还是很大的，只是说任务比较类似而已。
 
@@ -155,7 +155,7 @@ Stage-1 和正常的 ALBEF 区别不大，之后 stage-2 把输出过 MLP 送给
 
 - BLIP2 - [https://blog.csdn.net/LoseInVain/article/details/136013909](https://blog.csdn.net/LoseInVain/article/details/136013909)
 
-## LLava
+## [LLava](https://arxiv.org/pdf/2304.08485)
 
 LLava 比较简单，主要是提出了一种只使用 GPT 的文字功能，就可以生成高质量 caption 的方法，简单来说，对于具有 captions 和 bounding boxes 的内容来说，其实际上具有更多的信息量可以挖掘，所以可以生成一些高质量的 hard task。
 
@@ -167,7 +167,7 @@ LLava 比较简单，主要是提出了一种只使用 GPT 的文字功能，就
 
 - LLava - [https://blog.csdn.net/qq_35812205/article/details/136586853](https://blog.csdn.net/qq_35812205/article/details/136586853)
 
-## RT-1
+## [RT-1](https://arxiv.org/pdf/2212.06817)
 
 RT-1 讲实话结构并不是很好，但是一是在于数据量大，二是在于在实体跑起来了，于是的话，参考价值也挺高。简单概述一下结构，是用卷积 + FiLM 来进行的文本和图像的融合，文本编码器的输出用来作为 FiLM 的参数，然后调制卷积。之后获得 Tokens 再过 TokenLearner，输入进一个 transformer 里面，获得最后的自由度。
 
@@ -177,7 +177,7 @@ RT-1 讲实话结构并不是很好，但是一是在于数据量大，二是在
 
 - RT-1 - [https://zhuanlan.zhihu.com/p/652897511](https://zhuanlan.zhihu.com/p/652897511)
 
-## RT-2
+## [RT-2](https://arxiv.org/pdf/2307.15818)
 
 RT-2 的结构就十分的合理了，使用一个大的 transformer（其实也就是 LLM）接收文本和图像的编码输入，之后获得特殊的 token 用来表示动作，就可以直接进行控制了。这种操作使得其可以同时使用多模态的数据以及机器人的数据，所以说 scale up 的效果非常不错，剩下的就不需要过多赘述了，就是正常的训练。
 
@@ -185,7 +185,7 @@ RT-2 的结构就十分的合理了，使用一个大的 transformer（其实也
 
 - RT-2 - [https://zhuanlan.zhihu.com/p/651670131](https://zhuanlan.zhihu.com/p/651670131)
 
-## VIMA
+## [VIMA](https://arxiv.org/pdf/2210.03094)
 
 VIMA 也算是比较早期的工作了，没有使用 LLM，但是是有一定的可取之处的。首先是在于使用 object token，object token 的生成在使用 Mask R-CNN 之后包含图像信息即 ViT 编码之后的结果以及 bounding box，可以说同时包含了物体和位置信息，之后还储存了一些历史信息，可以进行长任务。虽然说 RT-2 也可以上下文理解，但是 VIMA 直接使用原本的信息，肯定表征更多一些。
 
@@ -195,7 +195,7 @@ VIMA 也算是比较早期的工作了，没有使用 LLM，但是是有一定�
 
 - VIMA - [https://zhuanlan.zhihu.com/p/659016759](https://zhuanlan.zhihu.com/p/659016759)、
 
-## SayCan
+## [SayCan](https://arxiv.org/pdf/2204.01691)
 
 SayCan 可以说是在做这种规划任务里面比较早的了，但是也存在一些问题。首先大概的流程就是，先把需求提出来，这个时候模型本身存在一个动作空间，那么 LLM 就可以从这个动作空间里面给出不同的推荐，但是一个问题在于，由于 LLM 不清楚当前的情况，所以说可能无法很好地给出能够执行的结果，这个时候可以使用另一个模型，或者说是一个价值函数，来去评判在当前情况下这些动作的价值。那么这个价值函数是使用了环境信息的，价值大模型的推荐结合在一起，就生成了一个布置合理，而且可以完成的动作。
 
@@ -205,7 +205,7 @@ SayCan 可以说是在做这种规划任务里面比较早的了，但是也存�
 
 - SayCan - [https://zhuanlan.zhihu.com/p/655418399](https://zhuanlan.zhihu.com/p/655418399)
 
-## Language Models as Zero-Shot Planners
+## [Language Models as Zero-Shot Planners](https://arxiv.org/pdf/2201.07207)
 
 这篇文章也是在 planning 领域的内容，某种程度上也可以说是 low fruit，甚至说不需要任何的训练，就是纯粹的 prompt，不过目测感觉还是要经过一些 finetune 的。
 
@@ -215,7 +215,7 @@ SayCan 可以说是在做这种规划任务里面比较早的了，但是也存�
 
 - Language Models as Zero-Shot Planners - [https://zhuanlan.zhihu.com/p/656399047](https://zhuanlan.zhihu.com/p/656399047)
 
-## PaLM-E
+## [PaLM-E](https://arxiv.org/pdf/2303.03378)
 
 PaLM-E 可以说就是就是对于上述种种猜想的一个实际的体现，也就是说一方面仅仅通过多模态的 prompt 进行输入，这里面的输入包括文字/环境/图片，也就是全部的模态，之后输出的是 high-level 的 planning，再由其他的执行器去完成 low-level policy。
 
@@ -223,13 +223,13 @@ PaLM-E 可以说就是就是对于上述种种猜想的一个实际的体现，�
 
 - PaLM-E - [https://zhuanlan.zhihu.com/p/662935514](https://zhuanlan.zhihu.com/p/662935514)
 
-## ViLA
+## [ViLA](https://arxiv.org/pdf/2311.17842)
 
 讲实话，我不是很理解 prompt 类型的工具，不过确实一些这种类型的工作可以有非常好的性能。总体来说，ViLA 输出的也是 high-level 的 policy。大概的流程就是输入当前的图像以及任务，还有历史上已经完成的任务，然后交给 gpt-4v，使用 CoT 分析一下当前的场面，然后结合分析给出动作，再交给执行器。
 
 个人感觉 prompt 类型的工作实际上还是解决任务，而没有带来比较振奋人心的 insight（当然，CoT 这种属于出色的 prompt 工作），这毫无疑问是令人沮丧的，但是确实也刷新了性能，并且有效利用了那些已经性能很好的工作。
 
-## CoPa
+## [CoPa](https://arxiv.org/pdf/2403.08248)
 
 CoPa 的工程感更足，把大量的模型结合在一起。总的来说首先是一个物体抓取，接下来是路径规划。对物体抓取，CoPa 给出了一个从粗到细的分割流程，具体还是使用 SAM 和 gpt 配合，最后筛选出来一个抓取的细节部位，然后用抓取姿势的生成器生成姿势。就有点类似于把锅拿起来，需要握住的是锅把一样。接下来是一个路径的规划，这里面也是先识别了各种物体的位姿，然后将这些内容画在图上，估计这种选择是因为不信任大模型的数学能力，反而是图像比较直观，容易理解。之后通过这种细粒度的指示，大模型就可以给出更加合理的建议，类似于之前是将锤子放在钉子上，现在可以是将锤子和钉子对齐，而且根据识别的位姿，或许可以精确到距离。然后交给执行器。
 

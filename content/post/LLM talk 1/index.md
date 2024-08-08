@@ -133,6 +133,8 @@ CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样�
 
 ## [BEiT V3](https://arxiv.org/pdf/2208.10442)
 
+![The pipeline of BEiT V3](BEiT V3.png)
+
 可以说 BEiT V3 本质上和之前的 VLMo 是十分类似的，但是区别在于，其只采用了一种任务，也就是 LM 任务，这自然也增加了运算的效率。之后就是通过大量的数据，以及不同 FFN 的激活，来在不同的的任务里面训练，可以说是十分的简洁。
 
 这篇说白了也就是一个 insight，也就是阐述了 MoME 在 LM 任务下 scale up 之后确实很强，同时当然，这些 MoME 依然可以组合，再去 transfer 到不同的下游任务里。

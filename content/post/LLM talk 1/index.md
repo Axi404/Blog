@@ -1,7 +1,7 @@
 ---
 title: LLM Talk 1
 description: 从 BOW 到 Embodied AI，一些 insight 与思考。
-date: 2024-07-25 03:34:00+0800
+date: 2024-08-08 22:34:00+0800
 image: cover.jpg
 categories:
     - AI Talk

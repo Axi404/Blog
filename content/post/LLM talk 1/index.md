@@ -207,6 +207,8 @@ SayCan 可以说是在做这种规划任务里面比较早的了，但是也存�
 
 ## [Language Models as Zero-Shot Planners](https://arxiv.org/pdf/2201.07207)
 
+![The pipeline of Language Models as Zero-Shot Planners](lmzsp.png)
+
 这篇文章也是在 planning 领域的内容，某种程度上也可以说是 low fruit，甚至说不需要任何的训练，就是纯粹的 prompt，不过目测感觉还是要经过一些 finetune 的。
 
 大概的思路就是，先让一个模型给出一些计划，然后这些计划通过另一个模型翻译成在 action set 里面的最接近的内容，然后执行。唯一不多的 insight 在于 LLM 通过 high-level 的交互就可以进行近似输出。

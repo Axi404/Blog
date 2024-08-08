@@ -1,7 +1,7 @@
 ---
 title: LLM Talk 2
 description: 从一些工作中扫过。
-date: 2024-07-26 14:22:00+0800
+date: 2024-08-08 23:01:00+0800
 image: cover.jpg
 categories:
     - AI Talk

@@ -147,7 +147,11 @@ CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样�
 
 BLIP2 的主要贡献，以及 motivation 在于，之前的模型，都是全部由自己训练的，无论是效率还是算力之类的，开销都很大，而目前领域内已经有了很多的性能很好的模型，于是直接 frozen 之后拿过来用就好。于是提出了一个 Q-former，可以对于 frozen 的图像 encoder 以及 LLM 起到桥梁的作用。
 
+![Stage 1 for BLIP2](BLIP2-1.png)
+
 训练还是一个 two-stage，这里面 stage-1 和 stage-2 的图画的其实很迷惑，因为 Q-former 里面本质上是有两个 Transformer 的，那么后面在 stage-2 的输出，是两个 Transformer 的 concat 还是什么，就很神秘。这里一篇 [csdn 的博客](https://blog.csdn.net/LoseInVain/article/details/136013909) 的图很不错，事实上拿的是 queries 输入的那个 transformer 的输出。
+
+![Stage 2 for BLIP2](BLIP2-2.png)
 
 Stage-1 和正常的 ALBEF 区别不大，之后 stage-2 把输出过 MLP 送给 LLM，再进行训练。本质上假如没有 Stage-2，那么就是一个 ALBEF，而假如没有 stage-1，则是一种新的范式。那么能否抛开 stage-1 呢？毕竟 stage-2 也是一个完整的训练流程，而且也是多模态的，但是实验表明不行。一种理解是，在 Q-former 里面之所以要引入一个文本编码器，目的就是通过 stage-1 的各种任务，让图像端的 Q-former 和文本对齐，换句话说，这个 token 输入给后面的 LLM 的时候，模型说的是人话，而不是图像话，毕竟后面跟的 MLP 只是为了统一维度，本身与文本类似的语言表征，还是在 Q-former 里面进行建模的。比起来能够将两个模型拼起来，我觉得还是这个 align 的启发更大一些。
 

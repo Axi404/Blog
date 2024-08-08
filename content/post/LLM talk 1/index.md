@@ -157,6 +157,8 @@ Stage-1 和正常的 ALBEF 区别不大，之后 stage-2 把输出过 MLP 送给
 
 ## [LLava](https://arxiv.org/pdf/2304.08485)
 
+![The pipeline of LLava](LLava.png)
+
 LLava 比较简单，主要是提出了一种只使用 GPT 的文字功能，就可以生成高质量 caption 的方法，简单来说，对于具有 captions 和 bounding boxes 的内容来说，其实际上具有更多的信息量可以挖掘，所以可以生成一些高质量的 hard task。
 
 模型的结构就是一个 image encoder 之后跟一个 MLP 来映射，然后一起输入到 LLM 里面。依然训练是 two-stage 的，首先只训练 MLP 来对齐，之后训练 MLP 和 LLM 来适应具体任务。

@@ -36,3 +36,25 @@ EmbodiedGPT 也是一篇比较符合直觉的工作，但是不是那么的极�
 ![The pipeline of RT-Trajectory](RT-Trajectory.png)
 
 RT-Trajectory 是一个输出 low-level policy 的模型，使用了 RT-1 的框架作为动作的输出，在此之前会输入之前和当前的帧以及一个工作轨迹，这里面动作轨迹通过 R 和 G 两个通道表征了时间顺序以及高度信息，和图像一起输入。因为从文字 prompt 改为了图像（轨迹），所以本质上具有更高的细粒度，性能更好也很正常。
+
+## [Im2Flow2Act](https://arxiv.org/pdf/2407.15208)
+
+## [LLARVA](https://arxiv.org/pdf/2406.11815)
+
+## [ATM](https://arxiv.org/pdf/2401.00025)
+
+## [Track2Act](https://arxiv.org/pdf/2405.01527)
+
+## [Extreme Cross-Embodiment](https://arxiv.org/pdf/2402.19432)
+
+## [ECoT](https://arxiv.org/pdf/2407.08693)
+
+## [VoxPoser](https://arxiv.org/pdf/2307.05973)
+
+## [MOO](https://arxiv.org/pdf/2303.00905)
+
+## [ChatGPT for Robotics](https://arxiv.org/pdf/2306.17582)
+
+## [PIVOT](https://arxiv.org/pdf/2402.07872)
+
+## [Code As Policies](https://arxiv.org/pdf/2209.07753)

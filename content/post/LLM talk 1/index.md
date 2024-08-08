@@ -19,6 +19,8 @@ weight: 5       # You can add weight to some posts to override the default sorti
 
 Noting 的是，全部的内容都是直接基于论文阅读的，参考资料中提及的内容指，这些内容或许能够帮助读者进一步理解论文里说的内容。大的基石还是论文。
 
+**由于博客本身的特性，因为在标题中添加了论文链接，想要跳转请点击目录中的序号，不然会跳转到论文中。**
+
 ## BOW
 
 BOW，也就是 Bag of Words，是一种十分简单的模型，简答来说就是将一句话使用词的形式进行分割，然后用键值对的形式进行储存。这样做的一个显然的结果就是，词袋模型并不能很好的建模语言的顺序，但是作为一种最为初级的 tokenizer 来说也已经很不错了。
@@ -106,6 +108,8 @@ VLMo 也可以说是一个比较经典的工作，其中提出的主要就是 Mo
 - 多模态串讲 - [https://www.bilibili.com/video/BV1Vd4y1v77v/](https://www.bilibili.com/video/BV1Vd4y1v77v/)
 
 ## [BLIP](https://arxiv.org/pdf/2201.12086)
+
+![The pipeline of BLIP](BLIP.png)
 
 BLIP 可以说是我比较喜欢的一篇工作了，当然，基础的模型结构并没有很大的创新，本身还是 VLMo 的框架，贡献了 attention block 的参数，但是把 MLM 换成了 LM，所以这里的参数不能共享，换成了一个 casual attention。
 

@@ -133,6 +133,8 @@ BLIP 的重点在于，ALBEF 只关注到了 MLM 生成的高质量，然后就�
 
 ## [CoCa](https://arxiv.org/pdf/2205.01917)
 
+![The pipeline of CoCa](CoCa.png)
+
 CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样，但是 CoCa 的关注点在于，之前的工作，虽然看上去从 pipeline 里面都是同时进行的输入，但是实际上在一个 iteration 里面都是经过了很多次的 forward，而 CoCa 则是希望，在同一个 iteration 里面，所有的 forward 都只进行一次，也就是所谓的 one-pass。
 
 方法也十分简单，既然 one-pass 了，那么 scale 上去很多数据就会方便很多，毕竟计算快了很多，于是直接对文本输入直接采取 casual-attention，也不需要管数据的损失，算就完事了，于是任务也变成了一个 Co 和一个 Ca，也就是 contrast 和 caption。

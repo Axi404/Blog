@@ -55,6 +55,8 @@ Im2Flow2Act 算是一篇比较有意思的工作，本身应该是 ATM 的后续
 
 ## [LLARVA](https://arxiv.org/pdf/2406.11815)
 
+LLARVA 相较于之前的工作，可以说也是一个比较符合直觉的工作，使用指令调优（IT）的方法进行训练，也是处理了 OXE 这个数据集。从 Pipeline 也不难看出，LLARVA 是一个比较经典的架构，
+
 ## [ATM](https://arxiv.org/pdf/2401.00025)
 
 ## [Track2Act](https://arxiv.org/pdf/2405.01527)

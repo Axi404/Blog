@@ -55,9 +55,17 @@ Im2Flow2Act 算是一篇比较有意思的工作，本身应该是 ATM 的后续
 
 ## [LLARVA](https://arxiv.org/pdf/2406.11815)
 
-LLARVA 相较于之前的工作，可以说也是一个比较符合直觉的工作，使用指令调优（IT）的方法进行训练，也是处理了 OXE 这个数据集。从 Pipeline 也不难看出，LLARVA 是一个比较经典的架构，
+![The pipeline of LLARVA](LLARVA.png)
+
+LLARVA 相较于之前的工作，可以说也是一个比较符合直觉的工作，使用指令调优（IT）的方法进行训练，也是处理了 OXE 这个数据集。从 Pipeline 也不难看出，LLARVA 是一个比较经典的架构，基本上也是 LLAVA 的框架，训练一个 projection layer 以及后面的 Transformer 做对齐以及模态的融合。
+
+![The instruction of LLARVA](LLARVA-2.png)
+
+其创新点其实有点 World Model 的意思，通过让模型预测将来的视觉轨迹这种更具细粒度的内容，之后输出 Action，这明显是一个更加困难而且包含了更多未来信息的任务，所以效果会更好也是显而易见的。当然，本身 IT 的方法，自然也可以让模型更好地完成任务就是了。
 
 ## [ATM](https://arxiv.org/pdf/2401.00025)
+
+这篇论文可以说影响力还是很拉满的，对于后续的一些轨迹 based 的工作，比如 Im2Flow2Act，明显是有很大的影响的，本身也是拿了 RSS 的满分，不过因为理解了之前的这些论文，这一篇其实很好理解。
 
 ## [Track2Act](https://arxiv.org/pdf/2405.01527)
 

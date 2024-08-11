@@ -65,7 +65,15 @@ LLARVA 相较于之前的工作，可以说也是一个比较符合直觉的工�
 
 ## [ATM](https://arxiv.org/pdf/2401.00025)
 
+![The pipeline of ATM](ATM.png)
+
 这篇论文可以说影响力还是很拉满的，对于后续的一些轨迹 based 的工作，比如 Im2Flow2Act，明显是有很大的影响的，本身也是拿了 RSS 的满分，不过因为理解了之前的这些论文，这一篇其实很好理解。
+
+![Trajectory Conditional Policy](ATM-2.png)
+
+本身的话，ATM 没有采取像是 Im2Flow2Act 一样的物体轨迹的预测，这也比较好理解，全局的点一方面或许可以具有全局的动作视野，而另一方面，全局的点也会比较好获取一些。本身的方法就是使用点跟踪的技术对图像里的点进行跟踪来生成数据集，然后让一个 track transformer 来预测点的轨迹。接下来就是一个正常的 Trajectory Conditional Policy，本身的实现，论文里也说了，也是使用 cls token 去做全局表征（ViT like），然后用了 track prediction 去作为额外的 condition 进行 fusion。
+
+从创新点来说，这篇算是开山之作之一了，引入了 Track 作为中间的表征以及条件，并且可以通过数据集的一些生成的技术进行标准的损失计算，因此在监督下训练提升的很好也是意料之中了。一方面增加了更具细粒度的输入，一方面这种细粒度也体现在任务的难度上（hard task），二者共同导致模型的简单易用。
 
 ## [Track2Act](https://arxiv.org/pdf/2405.01527)
 

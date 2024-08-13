@@ -119,4 +119,8 @@ MOO 的 pipeline 也很简单，本身甚至可以说设置了一个 hard task�
 
 ## [PIVOT](https://arxiv.org/pdf/2402.07872)
 
+![The pipeline of PIVOT](PIVOT.png)
+
+这篇文章的思想还是比较有趣的，也算是充分利用的 MLLM 的 VLM 能力。本身的思路其实在于，让大模型在具身智能的任务中进行生成式不太靠谱，但是去做选择题还是可以的。于是可以先随机 sample 一些动作或者轨迹，之后将这些内容 annotate 到图片上（与 CoPa 同理解，VLM 的 V 更具有空间的表征能力），让模型选择，然后一次次的选择即可。
+
 ## [Code As Policies](https://arxiv.org/pdf/2209.07753)

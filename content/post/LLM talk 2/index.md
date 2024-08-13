@@ -115,6 +115,8 @@ MOO 的 pipeline 也很简单，本身甚至可以说设置了一个 hard task�
 
 ## [ChatGPT for Robotics](https://arxiv.org/pdf/2306.17582)
 
+本身可以理解为使用 ChatGPT 去做机器人的一个发散性的思考，同时提出了诸如 PromptCraft 之类的工具。
+
 ## [PIVOT](https://arxiv.org/pdf/2402.07872)
 
 ## [Code As Policies](https://arxiv.org/pdf/2209.07753)

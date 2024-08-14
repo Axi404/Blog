@@ -12,8 +12,6 @@ tags:
 weight: 5       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-# CMake & SSH
-
 ## 前言
 
 本部分的博客是 RoboMaster 机甲大师视觉组培训的第二期内容，主要讲解一些计算机的基本技能，包括使用 Markdown/Linux/SSH/CMake，其中主要讲解的是包括 SSH 以及 CMake 在内的内容，这些内容是将来使用 Linux 进行编程的重要组件。

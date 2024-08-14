@@ -12,8 +12,6 @@ tags:
 weight: 5       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-# RoboMaster 视觉组第一次培训
-
 ## 欢迎来到视觉组
 
 欢迎大家来到视觉组，在这里简单的介绍一下视觉组的情况。

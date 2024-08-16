@@ -63,3 +63,15 @@ Build cuda_12.0.r12.0/compiler.31968024_0
 
 ### 下载 omniverse-launcher
 
+就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在[官网](https://www.nvidia.com/en-us/omniverse/download/)进行安装就好。
+
+![Download omniverse-launcher](image.png)
+
+下载下来之后是一个 `.AppImage` 的文件，按照我的惯例，就直接运行了：
+
+```bash
+cd ~/Downloads
+sudo chmod +x omniverse-launcher-linux.AppImage
+./omniverse-launcher-linux.AppImage
+```
+

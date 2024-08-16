@@ -45,7 +45,7 @@ root:~$ linuxlogo -a
               `-` 
 
 Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu
-16 2.14GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
+16 2.3GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
 ```
 
 以下是显卡信息，因为是笔记本，我的显卡是 8GB 的 RTX 3070 Laptop：
@@ -53,17 +53,17 @@ Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu
 ```text
 root:~$: nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2022 NVIDIA Corporation
-Built on Mon_Oct_24_19:12:58_PDT_2022
-Cuda compilation tools, release 12.0, V12.0.76
-Build cuda_12.0.r12.0/compiler.31968024_0
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Tue_Feb__7_19:32:13_PST_2023
+Cuda compilation tools, release 12.1, V12.1.66
+Build cuda_12.1.r12.1/compiler.32415258_0
 ```
 
 我的电脑是 Dell 的 Alienware m15 R6。
 
 ### 下载 omniverse-launcher
 
-就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在[官网](https://www.nvidia.com/en-us/omniverse/download/)进行安装就好。
+就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在[官网](https://www.nvidia.com/en-us/omniverse/download/)进行安装就好。进入下载页面之前会要求输入一些个人信息，随意写一下就好，理论来说 nvidia 账号中已经包含了这些内容，所以会自动填写。
 
 ![Download omniverse-launcher](image.png)
 
@@ -75,3 +75,42 @@ sudo chmod +x omniverse-launcher-linux.AppImage
 ./omniverse-launcher-linux.AppImage
 ```
 
+运行之后产生登录页面，本质上还是 nvidia 账号，点击 `LOG IN` 之后会跳转到网页，输入帐号密码登录即可。然后同意若干的协议，进入如下界面：
+
+![Path Selection](image-1.png)
+
+这些路径按照默认配置即可。选择确认，进入主界面：
+
+![Main page](image-2.png)
+
+其中比较重要的是 `Library`/`Exchange`/`Nucleus`，第一个是已经安装的内容的管理，第二个是安装内容的途径，第三个是一种中央数据库和协作引擎。
+
+### 安装并启动 Isaac Sim
+
+进入 Exchange 进行安装，首先安装 cache，搜索之后下拉版本，选择 `2023.1.0`，并点击 install 即可。
+
+![Install cache](image-3.png)
+
+然后点击 Nucleus，选择 Add local Nucleus Service：
+
+![Add local Nucleus Service](image-4.png)
+
+会要求设置 path 以及 admin account，自行设置即可。
+
+最后在 Exchange 中安装 Isaac Sim，同样是搜索，版本选择 `2023.1.0-hotfix.1`，点击 install。
+
+在 Nucleus 下载完毕之后，可以找到两个本地的服务：
+
+![Nucleus](image-5.png)
+
+其中选择 Settings，可以在网页中看到如下内容：
+
+![Nucleus Settings](image-6.png)
+
+假如出现问题，如显示 Stop 或者 Error，请检查之前说的版本问题。假如 cache 版本不对，重新卸载并且安装，然后点击 Launch 即可。
+
+选择文件夹图标的内容，可以在网页中看到如下的内容：
+
+![Nucleus content](image-7.png)
+
+均确认无误之后，可以在 Library 中选择 Isaac Sim 并且点击 Launch。

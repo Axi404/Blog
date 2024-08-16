@@ -121,3 +121,53 @@ Build cuda_12.1.r12.1/compiler.32415258_0
 ```
 
 之后的 CUDNN 以及 torch 的安装就是按照提供的正常流程进行，完结撒花。
+
+全部的指令包括以下内容：
+
+```bash
+sudo apt update
+sudo apt upgrade
+
+sudo ubuntu-drivers autoinstall
+
+reboot
+
+sudo apt-get install gcc-7 g++-7
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 9
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 1 
+sudo update-alternatives --display gcc
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 9
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 1
+sudo update-alternatives --display g++
+
+wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda_12.1.0_530.30.02_linux.run
+sudo sh cuda_12.1.0_530.30.02_linux.run
+
+sudo vim ~/.bashrc # or ~/.zshrc
+
+### add following in .bashrc ###
+
+export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64\
+                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+################################
+
+source ~/.bashrc # or ~/.zshrc
+
+wget https://developer.download.nvidia.com/compute/cudnn/9.3.0/local_installers/cudnn-local-repo-ubuntu2004-9.3.0_1.0-1_amd64.deb
+sudo dpkg -i cudnn-local-repo-ubuntu2004-9.3.0_1.0-1_amd64.deb
+sudo cp /var/cudnn-local-repo-ubuntu2004-9.3.0/cudnn-*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+sudo apt-get -y install cudnn
+
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+./Miniconda3-latest-Linux-x86_64.sh
+
+conda create -n torch python=3.8
+conda activate torch
+
+pip3 install torch torchvision torchaudio
+```
+
+之后在 python 中 `torch.cuda.is_available()` 返回为 `true`。

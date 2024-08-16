@@ -1,7 +1,7 @@
 ---
 title: 奇奇怪怪的 Bug 集散地
 description: 平时遇到的奇怪代码问题，记录并整理。
-date: 2024-07-26 14:44:00+0800
+date: 2024-08-17 06:10:00+0800
 image: cover.jpg
 categories:
     - Tech Talk
@@ -18,3 +18,106 @@ weight: 5       # You can add weight to some posts to override the default sorti
 ## 博客渲染超时
 
 在 Hugo 中，如果博客文章较多，渲染时间会非常长，导致渲染超时。具体考量可能是因为担心无限递归之类的，hugo 使用了粗暴的解决方法，超时就中断并且报错。所以解决方法也很简单，修改 `config.toml` 文件中的 `timeout` 配置项，增加渲染超时时间，单位貌似是毫秒。之前一直没有看 Github 详细报错，之前又出现过 Github Actions 瘫痪，我还以为又出现了，re-run 之后也就好了，估计是因为当初体量卡在临界点上，现在彻底超时了，也就发现了这个问题。
+
+## CUDA & CUDNN & Pytorch 安装
+
+因为之前的 Ubuntu 系统又因为我自己的不小心所以坏掉了，于是又一次尝试重装系统，但是出现了很多的问题。
+
+我的系统是 Ubuntu 20.04.6，在清华大学镜像站下载的最新版，电脑显卡是 NVIDIA GeForce RTX 3070 Laptop，可以支持 CUDA 12.2，在本段内容书写的时候，Torch 的官网使用的最标准的 pytorch 是 CUDA 12.1 的，所以安装这个版本，以及 9.3.0 的 CUDNN。
+
+首先给出下载 CUDA 和 CUDNN 的官网，其中 CUDA 12.1 为 [https://developer.nvidia.com/cuda-12-1-0-download-archive](https://developer.nvidia.com/cuda-12-1-0-download-archive)，CUDNN 9.3.0 为 [https://developer.nvidia.com/cudnn-downloads](https://developer.nvidia.com/cudnn-downloads)，之后依次选择自己的系统版本即可。其中 CUDA 的安装方法使用的是 `runfile (local)`，并且在此之前运行了 `sudo ubuntu-drivers autoinstall` 并重启以安装 driver。
+
+问题出现在，对于任何一个全新的最小安装的 Ubuntu 20.04 系统，在使用 runfile 的时候，均会报错，并说明在 `/var/log/nvidia-installer.log` 中可以看到详情，其最后为：
+
+```txt
+-> Error.
+ERROR: An error occurred while performing the step: "Checking to see whether the nvidia kernel module was successfully built". See /var/log/nvidia-installer.log for details.
+-> The command `cd ./kernel; /usr/bin/make -k -j16  NV_EXCLUDE_KERNEL_MODULES="" SYSSRC="/lib/modules/5.15.0-117-generic/build" SYSOUT="/lib/modules/5.15.0-117-generic/build" NV_KERNEL_MODULES="nvidia"` failed with the following output:
+
+make[1]: Entering directory '/usr/src/linux-headers-5.15.0-117-generic'
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+  You are using:           cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+  MODPOST /tmp/selfgz3405/NVIDIA-Linux-x86_64-530.30.02/kernel/Module.symvers
+ERROR: modpost: GPL-incompatible module nvidia.ko uses GPL-only symbol 'rcu_read_unlock_strict'
+make[2]: *** [scripts/Makefile.modpost:133: /tmp/selfgz3405/NVIDIA-Linux-x86_64-530.30.02/kernel/Module.symvers] Error 1
+make[2]: *** Deleting file '/tmp/selfgz3405/NVIDIA-Linux-x86_64-530.30.02/kernel/Module.symvers'
+make[2]: Target '__modpost' not remade because of errors.
+make[1]: *** [Makefile:1830: modules] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-5.15.0-117-generic'
+make: *** [Makefile:82: modules] Error 2
+ERROR: The nvidia kernel module was not created.
+ERROR: Installation has failed.  Please see the file '/var/log/nvidia-installer.log' for details.  You may find suggestions on fixing installation problems in the README available on the Linux driver download page at www.nvidia.com.
+```
+
+经过检查，发现问题其实很简单，是因为 g++ 等版本为 9，太高了，设置为 7 即可。
+
+```bash
+sudo apt-get install gcc-7 g++-7
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 9
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 1 
+sudo update-alternatives --display gcc
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 9
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 1
+sudo update-alternatives --display g++
+```
+
+之后再次运行，获得输出：
+
+```txt
+===========
+= Summary =
+===========
+
+Driver:   Not Selected
+Toolkit:  Installed in /usr/local/cuda-12.1/
+
+Please make sure that
+ -   PATH includes /usr/local/cuda-12.1/bin
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-12.1/lib64, or, add /usr/local/cuda-12.1/lib64 to /etc/ld.so.conf and run ldconfig as root
+
+To uninstall the CUDA Toolkit, run cuda-uninstaller in /usr/local/cuda-12.1/bin
+***WARNING: Incomplete installation! This installation did not install the CUDA Driver. A driver of version at least 530.00 is required for CUDA 12.1 functionality to work.
+To install the driver using this installer, run the following command, replacing <CudaInstaller> with the name of this run file:
+    sudo <CudaInstaller>.run --silent --driver
+
+Logfile is /var/log/cuda-installer.log
+```
+
+设置环境变量：
+
+```bash
+sudo vim ~/.bashrc # or ~/.zshrc
+```
+
+之后在最后添加：
+
+```bash
+export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64\
+                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+```
+
+之后再 `source` 一下：
+
+```bash
+source ~/.bashrc # or ~/.zshrc
+```
+
+就可以正常的使用 CUDA 了：
+
+```bash
+nvcc --version
+```
+
+输出为：
+
+```txt
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Tue_Feb__7_19:32:13_PST_2023
+Cuda compilation tools, release 12.1, V12.1.66
+Build cuda_12.1.r12.1/compiler.32415258_0
+```
+
+之后的 CUDNN 以及 torch 的安装就是按照提供的正常流程进行，完结撒花。

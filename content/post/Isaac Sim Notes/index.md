@@ -24,7 +24,11 @@ weight: 5       # You can add weight to some posts to override the default sorti
 
 既然是 Nvidia 的产品，拥有一个 Nvidia 的账号也就是必须的事情了，一般来说还是推荐通过谷歌邮箱之类的 Mail 去注册，在这里不去赘述这个事情。
 
-本人的环境如下，作为参考，当然，这套环境貌似在一些性能上不是很可以，不知道能否坚持到最后：
+### 环境概述
+
+按照常规的教程来说，反正首先概述一下环境。本人的环境如下，作为参考，当然，这套环境貌似在一些性能上不是很可以，不知道能否坚持到最后：
+
+以下是 CPU 以及系统信息：
 
 ```text
 root:~$ linuxlogo -a
@@ -40,9 +44,11 @@ root:~$ linuxlogo -a
         `-..-(   ) 
               `-` 
 
-Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu SMP Thu Jul 11 15:36:12 UTC 2024
-        16 2.14GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
+Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu
+16 2.14GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
 ```
+
+以下是显卡信息，因为是笔记本，我的显卡是 8GB 的 RTX 3070 Laptop：
 
 ```text
 root:~$: nvcc --version
@@ -52,4 +58,8 @@ Built on Mon_Oct_24_19:12:58_PDT_2022
 Cuda compilation tools, release 12.0, V12.0.76
 Build cuda_12.0.r12.0/compiler.31968024_0
 ```
+
+我的电脑是 Dell 的 Alienware m15 R6。
+
+### 下载 omniverse-launcher
 

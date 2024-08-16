@@ -128,3 +128,9 @@ MOO 的 pipeline 也很简单，本身甚至可以说设置了一个 hard task�
 <img src="Code-As-Policies.png" alt="The pipeline of Code As Policies" style="display: block; margin: 0 auto; zoom: 50%;">
 
 这篇文章的思路也很简答，就是可以使用代码来控制机器人，这等于可以让 LLM 与环境进行持续且合理的交互。大模型可以通过调用 API 来获取环境信息，比如说调用视觉 API 来获取物体位置，同时也支持了使用一些比如 for 之类的操作，毕竟代码肯定比一次次的生成式更加有条理。
+
+## [MOKA](https://arxiv.org/pdf/2403.03174)
+
+![The pipeline of MOKA](MOKA.png)
+
+MOKA 的思路其实本质上和 CoPa 以及 PIVOT 是十分类似的，都是使用 Prompt-based 的 VLM，通过将不同的选择 annotate 到图像上，并且让模型进行选择，从而进行路径的规划。MOKA 等于说是希望通过若干的点标注，让模型学会如何去完成动作。所以流程上也是首先先找到需要操作的物体，然后再采样抓握点以及路径点之类的，最后结束。甚至说虽然 MOKA 里面没有明说，但是实际上其对于抓握点进行 filter，并且通过 filter 获得抓握姿态，这个流程实际上和 CoPa 可以说是一模一样，只是说 MOKA 希望通过路径点来完成动作，而 CoPa 则希望通过向量来完成动作。

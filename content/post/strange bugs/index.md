@@ -1,7 +1,7 @@
 ---
 title: 奇奇怪怪的 Bug 集散地
 description: 平时遇到的奇怪代码问题，记录并整理。
-date: 2024-08-17 06:10:00+0800
+date: 2024-08-17 17:30:00+0800
 image: cover.jpg
 categories:
     - Tech Talk
@@ -171,3 +171,25 @@ pip3 install torch torchvision torchaudio
 ```
 
 之后在 python 中 `torch.cuda.is_available()` 返回为 `true`。
+
+## Ubuntu 22.04 三系统安装以及安装显卡驱动后无线网卡恢复
+
+因为 Ubuntu 20.04 的若干的内容已经不再支持，使用起来最新的一些软件基本上全是报错，比较经典的就是 `GLIBC 2.3.1` 以及 `libssl.so.3` 等内容，而前者的安装十分的麻烦，所以干脆直接安装三系统。
+
+三系统的安装不是很困难，使用之前安装 Ubuntu 20.04 的 EFI 分区作为挂载点就好，之后在系统的 GRUB 界面就可以看到三个系统了。
+
+Ubuntu 22.04 有一个比较经典的问题，就是安装显卡驱动之后，会导致无线网卡消失，按照正常的流程进行操作之后，运行 `sudo ubuntu-drivers autoinstall` 并且重启，再次进入默认的系统之后，就会发现网卡消失了。
+
+再次重启，进入 GRUB 之后选择 `Advanced options for ubuntu`，进去之后可以看到两个 Ubuntu 的版本以及对应的两个 recovery mode。两个版本里面比较新的一个是在安装显卡驱动之后新安装的版本，可以理解为显卡驱动对于较高版本的内核具有依赖，但是配套的无线没有一起安装，记下来两个版本的型号，然后选择较低版本的内核（不是 recovery mode）进入。
+
+进入这一内核之后，可以发现网卡是有的，但是使用 `nvidia-smi`，并没有正常的那个输出界面，因为这个系统中内核不满足显卡驱动的依赖，那么把这个系统的版本提上去就好了。
+
+使用 `sudo dpkg --get-selection | grep linux` 可以看到一些信息，其中一些项目包含版本号，有新版本的版本号，以及旧版本的，记下来这些旧版本的，并且使用 `sudo apt install` 安装使用新版本号覆盖旧版本号的这些内容。本人安装内容如下，作为参考：
+
+```bash
+sudo apt install linux-headers-6.8.0-40-generic linux-image-6.8.0-40-generic linux-modules-6.8.0-40-generic linux-modules-extra-6.8.0-40-generic
+```
+
+再次重启，正常进入正常的系统，恢复。
+
+需要注意的是，越早设置这些内容，与本文档的对齐程度最高，本人的安装流程为，正常安装系统（将全部硬盘空间都挂在在 `/` 下）并设置语言为中文，进入系统之后更换语言为英文（因为不然的话输入法的安装比较麻烦），重启，将文件夹变为英文名，再重启，连接网络，`sudo apt update` 以及 `sudo apt upgrade`，最后就开始安装显卡驱动 `sudo ubuntu-drivers autoinstall` 并 `reboot` 重启。 

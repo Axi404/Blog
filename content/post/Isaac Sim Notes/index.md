@@ -48,6 +48,26 @@ Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu
 16 2.3GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
 ```
 
+由于本人更换系统的意愿（见 [Strange Bugs](https://axi404.github.io/Blog/p/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84-bug-%E9%9B%86%E6%95%A3%E5%9C%B0/)，Ubuntu 20.04 日常使用已经很不方便），在安装 Isaac Sim 之后的内容均在 Ubuntu 22.04 上进行，如存在其他版本的信息，会专门注明补充。此系统的信息如下：
+
+```txt
+root:~$ linuxlogo -a
+              .-. 
+        .-'``(|||) 
+     ,`\ \    `-`.               88                         88 
+    /   \ '``-.   `              88                         88 
+  .-.  ,       `___:    88   88  88,888,  88   88  ,88888, 88888  88   88 
+ (:::) :        ___     88   88  88   88  88   88  88   88  88    88   88 
+  `-`  `       ,   :    88   88  88   88  88   88  88   88  88    88   88 
+    \   / ,..-`   ,     88   88  88   88  88   88  88   88  88    88   88 
+     `./ /    .-.`      '88888'  '88888'  '88888'  88   88  '8888 '88888' 
+        `-..-(   ) 
+              `-` 
+
+Linux Version 6.8.0-40-generic, Compiled #40~22.04.3-Ubuntu
+16 4.6GHz Intel i7 Tigerlake Processors, 31.1GB RAM, 74k Bogomips
+```
+
 以下是显卡信息，因为是笔记本，我的显卡是 8GB 的 RTX 3070 Laptop：
 
 ```text
@@ -63,7 +83,7 @@ Build cuda_12.1.r12.1/compiler.32415258_0
 
 ### 下载 omniverse-launcher
 
-就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在[官网](https://www.nvidia.com/en-us/omniverse/download/)进行安装就好。进入下载页面之前会要求输入一些个人信息，随意写一下就好，理论来说 nvidia 账号中已经包含了这些内容，所以会自动填写。
+就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在官网 [https://www.nvidia.com/en-us/omniverse/download/](https://www.nvidia.com/en-us/omniverse/download/) 进行安装就好。进入下载页面之前会要求输入一些个人信息，随意写一下就好，理论来说 nvidia 账号中已经包含了这些内容，所以会自动填写。
 
 ![Download omniverse-launcher](image.png)
 
@@ -71,9 +91,12 @@ Build cuda_12.1.r12.1/compiler.32415258_0
 
 ```bash
 cd ~/Downloads
+wget https://install.launcher.omniverse.nvidia.com/installers/omniverse-launcher-linux.AppImage
 sudo chmod +x omniverse-launcher-linux.AppImage
 ./omniverse-launcher-linux.AppImage
 ```
+
+对于 Ubuntu 22.04，可能会报错 `AppImages require FUSE to run.`，按照提示信息，安装 `sudo apt install libfuse2` 即可。
 
 运行之后产生登录页面，本质上还是 nvidia 账号，点击 `LOG IN` 之后会跳转到网页，输入帐号密码登录即可。然后同意若干的协议，进入如下界面：
 

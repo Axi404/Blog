@@ -18,6 +18,13 @@ weight: 5       # You can add weight to some posts to override the default sorti
 
 这篇日记依然和 LLM Talk 系列一样，应该是无限期更新的，包括说正常的安装以及操作的一些记录（对于一些涉密的内容，不会涉及），一些模块的学习，以及一些报错的整理。一方面是给自己作为一个笔记，一方面也是假如说有将来的同学进组，可以有一些更加明确的指引。毕竟本人是英文苦手，看英文的速度完全做不到“扫过”，所以还是有必要记录一下的。
 
+一些你有必要知道的网址：
+
+- Issac Sim 文档：[https://docs.omniverse.nvidia.com/py/isaacsim/index.html](https://docs.omniverse.nvidia.com/py/isaacsim/index.html)
+- Issac Sim 教程：[https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/index.html](https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/index.html)
+- mplib 文档：[https://motion-planning-lib.readthedocs.io/latest/index.html](https://motion-planning-lib.readthedocs.io/latest/index.html)
+- Franka urdf：[https://github.com/haosulab/ManiSkill/tree/v0.5.3/mani_skill2/assets/descriptions](https://github.com/haosulab/ManiSkill/tree/v0.5.3/mani_skill2/assets/descriptions)，需要使用其中的 `panda_v2.urdf` 并且下载 `franka_description/meshes`。
+
 ## 安装 Isaac Sim
 
 首先先简单说一下什么是 Isaac Sim，这是一个在 Nvidia 的 omniverse 下的一个 App，可以完成各种的仿真，也支持 ROS 的接口（虽然我目前还不知道 Embodied 的这一套流程是否和 ROS 有接壤），所以说做机器人这方面，用这个的比较多。而且这个东西是可以生成 image（镜像）并且运行在服务器上的，所以说各种意义上的符合具身智能领域的各种需求。
@@ -143,6 +150,110 @@ sudo chmod +x omniverse-launcher-linux.AppImage
 均确认无误之后，可以在 Library 中选择 Isaac Sim 并且点击 Launch。
 
 ## Standalone Pick and Place 代码实现
+
+> 此章节在 Ubuntu 22.04, CUDA 12.1, cudnn 9.3.0, Isaac Sim 4.1.0, cache 2023.1.0 下运行。
+
+接下来就是写代码的环节了，一般来说这个代码有两种实现的方式，一种是在 Isaac Sim 里面添加一个 User Example，另一种是直接使用一个脚本，也就是 standalone script，这里面推荐使用脚本。因为 User Example 的方法必须要使用 GUI 才可以启动，还是不太方便，后续我们肯定是希望这个程序可以摆脱 GUI，当然，必要的时候也可以唤出。
+
+第一次需要找到你的 Isaac Sim 的环境在哪里，因为 Isaac Sim 使用了自己的 python 环境，因此需要找到他的解释器，假如你是默认安装的路径，那么应该可以看到路径:
+
+```bash
+echo /home/`whoami`/.local/share/ov/pkg/isaac-sim-4.1.0
+```
+
+但是假如不是，可以进入 Isaac Sim 软件，随便点击一个上方栏的 Isaac Examples，并且 Open Containing Folder 即可。
+
+<img src="image-8.png" alt="alt text" style="display: block; margin: 0 auto; zoom: 50%;">
+
+例如 hello world 这个 example，这个文件夹应该在 `isaac-sim-4.1.0/exts/omni.isaac.examples/omni/isaac/examples/hello_world` 中，以下全部的操作视作在 `isaac-sim-4.1.0` 下进行。
+
+首先先安装一下 opencv-python，并且创建我们接下来的程序的文件夹：
+
+```bash
+sudo apt install libgtk2.0-dev pkg-config
+./python -m pip install opencv-python
+
+mkdir exts/omni.isaac.examples/omni/isaac/examples/Isaac_learning
+touch exts/omni.isaac.examples/omni/isaac/examples/Isaac_learning/script.py
+code .
+```
+
+然后打开这个新建的文件，在里面输入
+
+```python
+from isaacsim import SimulationApp
+simulation_app = SimulationApp({"headless": False})
+
+from omni.isaac.core import World
+world = World()
+
+while simulation_app.is_running():
+    world.step(render=True)
+
+simulation_app.close()
+```
+
+这是一个最简单的程序，可以创建出来一个正常的模拟器的界面，接下来需要做的事情就是在里面添加东西了。
+
+在这里简单介绍一下 Isaac Sim 的物体的基本组织结构，基本上可以说，Isaac Sim 里面的物体都是由 Prim 组成的，也就是所谓的 XFormPrim，一般来说，存在一个 world，一个 world 里面会存在 scene，scene 里面的绝大多数内容都是 prim，可以理解为 isaac sim 里面的 object，同时支持嵌套。
+
+不过对于最基础的内容，我们存在一些 api 可以使用，更多的内容都可以在文档中查询，所以让我们简单修改代码，在里面加入一个地面和一个方块。
+
+```python
+from isaacsim import SimulationApp
+simulation_app = SimulationApp({"headless": False}) # we can also run as headless.
+
+from omni.isaac.core import World
+from omni.isaac.core.objects import DynamicCuboid
+
+world = World()
+world.scene.add_default_ground_plane()
+cube1 =  world.scene.add(
+    DynamicCuboid(
+        prim_path="/World/cube1",
+        name="cube1",
+        position=np.array([0, 0, 1.0]),
+        scale=np.array([0.5015, 0.5015, 0.5015]),
+        color=np.array([0, 0, 1.0]),
+    ))
+
+while simulation_app.is_running():
+    world.step(render=True)
+```
+
+运行一下，不难发现里面多出来了一个方块和一个地板，也就是这两行的效果。一个物体有两个经常使用的属性，一个是 Rigid Body，也就是物体是否会受到力的影响，一个是 Colliders Preset，也就是物体是否会有碰撞。DynamicCuboid 默认具有这两个属性，所以你会看到它掉在地板上，而地板是不受到重力影响的，所以你不会看到地板和物体一起掉下去。
+
+同时可以注意到的是 prim_path 以及 name，第一个描述了 cube 的 prim 的嵌套关系，因为 world 也是一个 prim，而这个物体的名字则叫做 cube1。
+
+同样的方法，我们可以在里面加入一个 Franka，这也不难：
+
+```python
+from isaacsim import SimulationApp
+simulation_app = SimulationApp({"headless": False}) # we can also run as headless.
+
+from omni.isaac.core import World
+from omni.isaac.core.objects import DynamicCuboid
+
+world = World()
+world.scene.add_default_ground_plane()
+cube1 =  world.scene.add(
+    DynamicCuboid(
+        prim_path="/World/cube1",
+        name="cube1",
+        position=np.array([0, 0, 1.0]),
+        scale=np.array([0.5015, 0.5015, 0.5015]),
+        color=np.array([0, 0, 1.0]),
+    ))
+franka = world.scene.add(Franka(prim_path="/World/Franka", name="franka"))
+
+world.reset()
+franka.gripper.set_joint_positions(franka.gripper.joint_opened_positions)
+
+while simulation_app.is_running():
+    world.step(render=True)
+```
+
+USD 是 Isaac Sim 保存数字资产的方式，想要使用 USD 也可以使用 Prim 来进行导入，这些内容我们都会在后续讲到，我在 Isaac Sim 里用五个长方体做了一个[简陋的桌子](https://raw.githubusercontent.com/Axi404/Isaac_learning/main/assets/usds/table.usd)，或许可供后续我的程序的例子中的使用。
 
 ```python
 from isaacsim import SimulationApp

@@ -5,9 +5,7 @@ date: 2024-08-22 02:30:00+0800
 categories:
     - Tech Talk
 tags:
-    - Tech Talk
-    - Embodied AI
-    - Isaac Sim
+    - News
 weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

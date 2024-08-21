@@ -253,6 +253,8 @@ while simulation_app.is_running():
     world.step(render=True)
 ```
 
+
+
 USD 是 Isaac Sim 保存数字资产的方式，想要使用 USD 也可以使用 Prim 来进行导入，这些内容我们都会在后续讲到，我在 Isaac Sim 里用五个长方体做了一个[简陋的桌子](https://raw.githubusercontent.com/Axi404/Isaac_learning/main/assets/usds/table.usd)，或许可供后续我的程序的例子中的使用。
 
 ```python

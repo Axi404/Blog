@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VPN on Axi404</title><link>https://axi404.github.io/Blog/tags/vpn/</link><description>Recent content in VPN on Axi404</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Aug 2024 20:51:00 +0800</lastBuildDate><atom:link href="https://axi404.github.io/Blog/tags/vpn/index.xml" rel="self" type="application/rss+xml"/><item><title>校园 VPN 连接实录</title><link>https://axi404.github.io/Blog/p/%E6%A0%A1%E5%9B%AD-vpn-%E8%BF%9E%E6%8E%A5%E5%AE%9E%E5%BD%95/</link><pubDate>Fri, 16 Aug 2024 20:51:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/%E6%A0%A1%E5%9B%AD-vpn-%E8%BF%9E%E6%8E%A5%E5%AE%9E%E5%BD%95/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/%E6%A0%A1%E5%9B%AD-vpn-%E8%BF%9E%E6%8E%A5%E5%AE%9E%E5%BD%95/cover.jpg" alt="Featured image of post 校园 VPN 连接实录" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>简单来说，这是一篇成分复杂的文章，阅读到这篇文章的读者，多半并不符合这篇文章所属的条件。简单来说，需要是，你来自西安交大 + 你在校外出差 + 你在校内有跳板机 + 你需要使用校内服务器跑程序，不知道会不会对一些人有帮助。&lt;/p>
+&lt;p>本人电脑小白一枚，所以使用的方法极有可能绕了远路，而且我没有 sftp 需求，也就懒得研究更加优雅的方式了，欢迎大家在下方评论进行补充。&lt;/p>
+&lt;h2 id="下载-easy-connect">下载 Easy Connect
+&lt;/h2>&lt;p>学校的 SSH 分为两种，一种是 WebVPN，只能活在浏览器里面，本质上是在一个浏览器里面套了个壳子，在里面访问校内网；另一种是 SSLVPN，通过 SSL/TLS 访问内部资源的方法。&lt;/p>
+&lt;p>使用 SSLVPN，首先需要前往学校的官网，下载一种叫做 EasyConnect 的玩意，之后打开软件，会卡在一个获取登录配置的地方，在浏览器中进入 &lt;a class="link" href="https://sslvpn.xjtu.edu.cn" target="_blank" rel="noopener"
+>sslvpn&lt;/a> 的官网，然后在学校账号认证界面登录，就可以成功进入某种内网了，此时可以连接跳板机了。&lt;/p>
+&lt;h2 id="ssh">SSH
+&lt;/h2>&lt;p>之后就可以进行正常的 SSH 了，在这里因为是使用跳板机，对于 &lt;code>C:/Users/user_name/.ssh/config&lt;/code> 进行修改：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">Host *
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ServerAliveInterval 60
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Host jump_server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> HostName host_name
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> User user_name
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Port port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> IdentityFile C:/Users/34064/.ssh/serect_key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Host j67
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> HostName host_name
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> User user_name
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Port port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ProxyJump jump_server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其中前一个里面是类似组里的跳板机，于是使用组里面提供的地址以及端口和密钥来登录，之后的是正常的服务器，多了一个 &lt;code>ProxyJump&lt;/code> 来表示使用跳板机。&lt;/p>
+&lt;p>之后使用 &lt;code>ssh j67&lt;/code> 就可以登录了。&lt;/p>
+&lt;h2 id="二次-ssh">二次 SSH
+&lt;/h2>&lt;p>由于跳板机只有特定端口的转发，而组里的跳板机连接的是一个 4*2080Ti 的服务器，我现在有一个能够用单卡 V100 的服务器，所以说要连接别的服务器。&lt;/p>
+&lt;p>于是选择了比较愚蠢的方法，因为我当前这个服务器已经在校园网内，约等于我拥有了一个校园网内的终端，那么直接进行二次的 SSH 即可。在这里不得不提到 tmux，确实是十分实用的工具，不仅可以避免自己的程序被没有心跳信号杀死，也可以在一个 SSH 里面多开窗口，可以说十分的方便了。&lt;/p>
+&lt;h2 id="结语">结语
+&lt;/h2>&lt;p>感觉自己的这一套流程笨笨的，一套操作猛如虎，最后 SSH 确实很卡，毕竟套了好几层，不知道有没有更好的方法。&lt;/p>
+&lt;h2 id="updates">Updates
+&lt;/h2>&lt;p>事实上发现自己可能确实笨完了，按照我们实验室的手册来说，确实是根据上述的流程才没问题的，但是事实上貌似只要开启了 sslvpn 之后就进入了内网。我使用的 4*2080Ti 的服务器是使用跳板机进行转发的（之前我应该也配置过，但是忘记了），然而假如说是正常的服务器，是不需要进入跳板机之后再二次 SSH 的，直接进行进行 SSH 连接即可，注意关闭自己的 VPN 程序即可。&lt;/p></description></item></channel></rss>

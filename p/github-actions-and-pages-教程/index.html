@@ -1,0 +1,289 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="关于 Actions 与 Pages 的教程，暨 CSBAOYANDDL 技术分享"><title>Github Actions and Pages 教程</title>
+<link rel=canonical href=https://axi404.github.io/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/><link rel=stylesheet href=/Blog/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="Github Actions and Pages 教程"><meta property='og:description' content="关于 Actions 与 Pages 的教程，暨 CSBAOYANDDL 技术分享"><meta property='og:url' content='https://axi404.github.io/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/'><meta property='og:site_name' content='Axi404'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Tech Talk'><meta property='article:published_time' content='2024-07-02T00:00:00+00:00'><meta property='article:modified_time' content='2024-07-02T00:00:00+00:00'><meta property='og:image' content='https://axi404.github.io/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/cover.jpg'><meta name=twitter:title content="Github Actions and Pages 教程"><meta name=twitter:description content="关于 Actions 与 Pages 的教程，暨 CSBAOYANDDL 技术分享"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://axi404.github.io/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/cover.jpg'><link rel="shortcut icon" href=/Blog/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/Blog/><img src=/Blog/img/avatar_hu12164355173948498683.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>❤️</span></figure><div class=site-meta><h1 class=site-name><a href=/Blog>Axi404</a></h1><h2 class=site-description>你好，我是阿汐，欢迎。</h2></div></header><ol class=menu-social><li><a href=https://github.com/Axi404 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=/Blog/index.xml target=_blank title=RSS rel=me><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/Blog/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/Blog/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/Blog/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/Blog/repos/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Repos</span></a></li><li><a href=/Blog/%E5%8F%8B%E9%93%BE/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>友链</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#前言>前言</a></li><li><a href=#关于-github-pages>关于 Github Pages</a></li><li><a href=#关于-github-actions>关于 Github Actions</a></li><li><a href=#部署你的第一个网站>部署你的第一个网站</a><ol><li><a href=#回顾>回顾</a></li><li><a href=#实例>实例</a></li></ol></li><li><a href=#完成你的第一个-github-actions>完成你的第一个 Github Actions</a><ol><li><a href=#部署-vue-项目>部署 vue 项目</a></li><li><a href=#定时更新仓库文件>定时更新仓库文件</a></li></ol></li><li><a href=#结语>结语</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/><img src=/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/cover_hu675099708011337696.jpg srcset="/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/cover_hu675099708011337696.jpg 800w, /Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/cover_hu3935436127454541763.jpg 1600w" width=800 height=533 loading=lazy alt="Featured image of post Github Actions and Pages 教程"></a></div><div class=article-details><header class=article-category><a href=/Blog/categories/tech-talk/ style=background-color:#b12319;color:#fff>Tech Talk</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/Blog/p/github-actions-and-pages-%E6%95%99%E7%A8%8B/>Github Actions and Pages 教程</a></h2><h3 class=article-subtitle>关于 Actions 与 Pages 的教程，暨 CSBAOYANDDL 技术分享</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jul 02, 2024</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 minute read</time></div></footer></div></header><section class=article-content><h2 id=前言>前言</h2><p>本教程是关于 Actions 以及 Pages 的一些分享，最近一段时间在 Github 上面发烧了一阵子，狠狠的制作了一些开源的项目，自然也存在一些摸索性质的内容，而摸索出了答案，也就是时候出一篇教程来写一写，正好，本博客风格赏心悦目，值得一试。</p><h2 id=关于-github-pages>关于 Github Pages</h2><p>首先需要提及的是 Github Pages，简单来说，这是一种 Github 提供的静态网站托管服务，至于什么是静态网站，一种简易的理解是，至少上面不会有一个数据库，网站也不存在任何对数据的读写操作，一切的风格化变化只来自于网站提前搭建好的框架。</p><p>基于这种特性，不难理解的是，Github Pages 尤其擅长处理一些类似于博客、文档、教程一类的网站，甚至说我们的 <a class=link href=https://cs-baoyan.github.io/CSBAOYANDDL/ target=_blank rel=noopener>CSBAOYANDDL</a> 也通过一种取巧的方式，可以通过 Github Actions 维护一个类似于数据库的内容。</p><p>在提供静态网页这件事情上，Github 可以说是十分慷慨的，每一个用户可以创建近乎无限的仓库，而每一个仓库都可以对应一个 Github Pages————只要你知道如何设置（而这一点我们会在后面提及）。</p><h2 id=关于-github-actions>关于 Github Actions</h2><p>Github Actions 是一个持续集成和持续部署（CI/CD）平台，它允许用户在 Github 上创建自动化流程，用于构建、测试和部署项目，其支持使用 YAML 文件定义工作流程，并且可以与 Github 上的其他服务进行交互，换句话来说，Github Actions 支持我们在 Github 这个理论来说静态的平台上面运行一个脚本。</p><p>通过上述的内容，细心的读者应当不难发现，Pages 提供静态服务，而 Actions 则可以运行脚本，二者的互补之下，很多内容都成为了可能，不过本篇中不得不遗憾地告诉读者，Actions 在其中并不发挥着过多的作用，大多数的内容仅是基于现如今成熟的网页模板以及 Github Pages 的静态网站部署，便已经结束了。</p><h2 id=部署你的第一个网站>部署你的第一个网站</h2><h3 id=回顾>回顾</h3><p>在很多的教程中，往往都会教学如何建立一个自己的博客或者主页，通过 Github Pages 的方式。然而这些方法往往问题很大，即会让读者产生一种错觉，一个账户只能创建一个静态网站。</p><p>让我们回顾一下这些教程说的内容，首先，在自己的账户中创建一个仓库，这个仓库的名字需要是 <code>username.github.io</code>，对于笔者来说，也就是创建一个名为 <code>Axi404.github.io</code> 的仓库。</p><img src=githubio_create.png alt="create github.io" style="display:block;margin:0 auto;zoom:50%"><p>然后在其中使用某些模板或者其他的内容进行进一步操作。这看上去确实正规，但是不免让人产生了怀疑，那么我的仓库名是不是只能叫做 <code>username.github.io</code> 呢？</p><p>事实上在创造一个仓库的时候，你的仓库中存在一个选项，即 Github Pages，在进行了一些操作之后，便可以让你创建一个网站，而这个网站一般来说其域名为 <code>username.github.io/reponame</code>。具体进行的操作先按下不表，但这里也就不难发现了，实际上创建名为 <code>username.github.io</code> 看上去确实特殊，但是并不意味着你只能创建一个仓库：事实上 Github Pages 对于这个仓库名称进行了特殊处理，使用该名称创建的仓库，其域名直接为 <code>username.github.io</code>，但除此以外，并不限制你创建其他的仓库。</p><p>让我们来简单的了解一下创建一个网站的流程。</p><p>按照常规的流程来说，我们都知道，Web 网站是由 Web 三大件共同创建的，其中 html 负责创建网页的框架，css 负责创建网页的样式，而 js 负责创建网页的交互。而在大多数的网站中，<code>index.html</code> 绝对是重中之重。在 Github Pages，其在部署阶段，网站会自动寻找在某一目录下的 <code>index.html</code> 文件，并且将其作为网站的主页，同时将全部的内容部署到静态网页中。</p><p>因此这一流程也也就不难想象了，创建一个 <code>index.html</code>，在其中写入一些内容，然后将这个文件部署到 Github Pages 中，便可以得到一个网站，简单地好似将大象放进冰箱里。</p><h3 id=实例>实例</h3><p>在这里给出一个小小的实例，读者可以跟着进行一下尝试，在这里我们假设读者已经在本地完成了 Git 以及 Github 相关的一切配置，并且拥有了一个仓库，例如名为 <code>MyExample</code>。<strong>以下均会采用我的用户名进行操作，这是因为每一次使用 <code>username</code> 的时候总会存在读者不解并不将其替换，使用本人的用户名应当会更加明显一些，表明替换的必要性。读者在使用的时候将我的用户名替换为自己的即可。</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone git@github.com:Axi404/MyExample.git
+</span></span><span class=line><span class=cl><span class=nb>cd</span> MyExample
+</span></span><span class=line><span class=cl>vim index.html
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>index.html</code> 中写入以下内容：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;UTF-8&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;viewport&#34;</span> <span class=na>content</span><span class=o>=</span><span class=s>&#34;width=device-width, initial-scale=1.0&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>My First Website<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>h1</span><span class=p>&gt;</span>Welcome to My First Website<span class=p>&lt;/</span><span class=nt>h1</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>This is a simple HTML page hosted on GitHub Pages.<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>更进一步来说，你可能愿意为其添加一些 CSS 样式以及 JS 脚本，这也同样不难：</p><p>首先创建一个 CSS 文件名为 <code>styles.css</code>，在其中写入一些代码。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=nt>body</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>font-family</span><span class=p>:</span> <span class=n>Arial</span><span class=p>,</span> <span class=kc>sans-serif</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>padding</span><span class=p>:</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>background-color</span><span class=p>:</span> <span class=mh>#f4f4f4</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>h1</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>color</span><span class=p>:</span> <span class=mh>#333</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>text-align</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-top</span><span class=p>:</span> <span class=mi>50</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>p</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>color</span><span class=p>:</span> <span class=mh>#666</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>text-align</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>margin-top</span><span class=p>:</span> <span class=mi>20</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>然后创建一个JS文件名为 <code>script.js</code>，并且在其中输入一些代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;DOMContentLoaded&#39;</span><span class=p>,</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Welcome to My First Website!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></td></tr></table></div></div><p>最后再对 <code>index.html</code> 进行一些修改以导入这些内容，包括在 head 中加入 <code>&lt;link rel="stylesheet" href="styles.css"></code> 以及在 body 的末尾加入 <code>&lt;script src="script.js">&lt;/script></code>，这样便大功告成了。</p><p>假如你使用的是 VS Code 之类的编辑器，使用 <code>Live Server</code> 可以对这个页面进行实时阅览，十分好用，或者正常的 Linux 命令行，使用 <code>xdg-open</code> 打开文件进行预览也是可以的（指在具有桌面 GUI 以及默认浏览器的系统中）。</p><p>接下来可以将这些内容上传到 Github 了：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git add . 
+</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;initial commit&#34;</span>
+</span></span><span class=line><span class=cl>git push
+</span></span></code></pre></td></tr></table></div></div><p>之后前往 <code>Github</code> 上面，依次添加 <code>Setting -> Pages -> None -> main -> save</code>，完成设置，流程可以如下所示：</p><img src=github_pages.png alt="github pages setting" style="display:block;margin:0 auto;zoom:50%"><p>不难发现后方的名为 <code>/(root)</code> 的选项，即你的 <code>index.html</code> 所在的目录，我们这里使用默认的根目录即可，后续我们会知道，使用自定义的 Github Actions 也可以做到相同的效果。</p><p>在点击 save 之后可以点击上方的 Actions 看到一个 deployment 的 action 正在 <code>queue</code> 或者正在 <code>Pending</code>，等待部署结束即可。</p><img src=actions_start.png alt="github actions pending" style="display:block;margin:0 auto;zoom:50%"><p>此时再次回到 Pages 的界面，可以看到页面已经部署，并且给出了 url 链接。</p><img src=pages_deploy_ready.png alt="github pages ready" style="display:block;margin:0 auto;zoom:50%"><p>之后再次进行的部署流程会比这个简单很多，只需要在修改了内容之后重新 commit 并且 push 即可，剩下的内容 Github Actions 会帮助你完成，这是得力于这个 Action 对你的 push 操作的检测（被触发）。</p><p>部署诸如 Hugo 以及 mkdocs 等内容与直接的 html 文件稍有不同，在后续的拓展内容中会陆续更新这两部分的介绍。</p><h2 id=完成你的第一个-github-actions>完成你的第一个 Github Actions</h2><p>你已经完成了一个正常的网页的部署了，一般来说，假如说你是正常的手写的 <code>index.html</code> 类型的静态网页，此时任务便已经结束了，不过很不幸，你可能还有更多的需求，所以需要一个自己的 Github Actions 来进行更多的个性化操作。</p><p>笔者将给出两个示例来进行示范，其中之一是部署 vue 项目，众所周知 vue 项目需要顺利编译才可以成为正常的静态网页，而优雅的方式之中并不包括本地编译之后手动推送。如何在 Github 中使用 Github Actions 来自动化完成这一流程便成为了刚需。同时，笔者也将给出另一个示例，也就是 CSDDL 的另一关键组成：BoardCaster。BoardCaster 是保管在另一仓库中的 JSON 格式的保研信息数据库，如何进行定时的订阅以及对于当前仓库的定时更新？这也同样可以使用 Github Actions 做到。</p><h3 id=部署-vue-项目>部署 vue 项目</h3><p>首先先通过正常的方式安装 vue3，并且已经完成了一个项目的新建。例如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npm install -g @vue/cli
+</span></span><span class=line><span class=cl>vue create cs-baoyan-ddl
+</span></span><span class=line><span class=cl><span class=nb>cd</span> cs-baoyan-ddl
+</span></span><span class=line><span class=cl>npm install
+</span></span><span class=line><span class=cl>npm install gh-pages --save-dev
+</span></span></code></pre></td></tr></table></div></div><p>并且进行了一些内容的创建。</p><p>之后需要进行若干的设置操作，虽然这些并不包括在 Github Actions 之中，但是为了后续的部署，这些是必要内容，假如仅讲解 Github Actions 未免写得过于的空洞。</p><p>首先修改 <code>vue.config.js</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=nx>module</span><span class=p>.</span><span class=nx>exports</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>publicPath</span><span class=o>:</span> <span class=nx>process</span><span class=p>.</span><span class=nx>env</span><span class=p>.</span><span class=nx>NODE_ENV</span> <span class=o>===</span> <span class=s1>&#39;production&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=o>?</span> <span class=s1>&#39;/cs-baoyan-ddl/&#39;</span> <span class=c1>// your repo&#39;s name
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>:</span> <span class=s1>&#39;/&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></td></tr></table></div></div><p>此处值得一提的是，在此之前包括 fetch 的内容，如 <code>fetch('/config/schools.json')</code>，需要修改为类似于 <code>fetch('/cs-baoyan-ddl/config/schools.json')</code> 的格式。</p><p>之后修改 <code>package.json</code>，加入 deploy部分：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=s2>&#34;scripts&#34;</span><span class=err>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;build&#34;</span><span class=p>:</span> <span class=s2>&#34;vue-cli-service build&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;serve&#34;</span><span class=p>:</span> <span class=s2>&#34;vue-cli-service serve&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;deploy&#34;</span><span class=p>:</span> <span class=s2>&#34;gh-pages -d dist&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>gh-pages</code> 是一个十分强大的工具，可以在 build 的时候为你 build 原内容到分支 <code>gh-pages</code> 中。</p><p>之后在 <code>.github/workflows/deploy.yml</code> 中添加以下内容：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy to GitHub Pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build-deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout repository</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Set up Node.js</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/setup-node@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>node-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;16&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Install dependencies</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm install</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build project</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm run build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Configure Git</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          git config --global user.name &#39;github-actions&#39;
+</span></span></span><span class=line><span class=cl><span class=sd>          git config --global user.email &#39;github-actions@github.com&#39;</span><span class=w>          
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy to GitHub Pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+</span></span></span><span class=line><span class=cl><span class=sd>          npm run deploy</span><span class=w>          
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>GITHUB_TOKEN</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>遂讲解一下这个 Github Actions 的内容。</p><p>一般来说，Github Actions 一共包括三个部分，分别是 <code>name</code>, <code>on</code> 以及 <code>jobs</code>。</p><ul><li><code>name</code>：name 的含义应该不难理解，也就是你的 Actions 的名字，你在 Github 之中全流程都是可视化的，name 作为选择执行不同 Actions 的依据十分的直观。</li><li><code>on</code>：on 的含义是触发条件，也就是当什么事件发生时，你的 Actions 才会被触发。</li><li><code>jobs</code>：jobs 的含义是任务，也就是你的 Actions 具体要执行什么操作。<ul><li><code>build-deploy</code>：本代码中的 <code>build-deploy</code> 是这个 Actions 之中唯一的任务，这串字符也就是这个任务的名称。</li><li><code>runs-on: ubuntu-latest</code>：<code>runs-on</code> 的含义是运行环境，也就是你的 Actions 会在什么环境下运行。一般来说使用最新的 ubuntu 环境即可，即 <code>ubuntu-latest</code>。</li><li><code>steps</code>：<code>steps</code> 的含义是步骤，也就是你的 Actions 具体要执行什么操作。<ul><li><code>actions/checkout@v2</code>：<code>actions/checkout@v2</code> 是一个 Github 官方提供的 Actions，其作用是检出仓库。</li><li><code>actions/setup-node@v2</code>：<code>actions/setup-node@v2</code> 是一个 Github 官方提供的 Actions，其作用是安装 Node.js。</li><li><code>run: npm install</code>：这个步骤会执行 <code>npm install</code> 命令，以安装项目所需的所有依赖包。这个步骤通常是必要的，因为在构建和部署之前，所有的依赖包都需要被安装到项目中，这其中包括了关键内容，即 <code>vue</code> 以及 <code>gh-pages</code>。</li><li><code>run: npm run build</code>：这个步骤会执行 <code>npm run build</code> 命令，以构建项目。这通常会生成一个用于生产环境的优化后的静态文件集，例如 HTML、CSS 和 JavaScript 文件。</li><li><code>run: git config --global user.name 'github-actions'</code> 和 <code>run: git config --global user.email 'github-actions@github.com'</code>：这两个步骤用于配置 Git 用户名和电子邮件地址，以便后续的 Git 操作可以顺利进行。这里设置的用户名和电子邮件是为了让 GitHub Actions 可以以一个虚拟用户的身份进行提交操作。换句话说，这里的 name 以及 email 可以随意设置，只是为了一个名称而已，具体的权限由 <code>secrets.GITHUB_TOKEN</code> 提供。</li><li><code>run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git</code>：这一行命令会更新 Git 远程仓库的 URL，以便使用 GitHub 提供的访问令牌进行身份验证。<code>${{ secrets.GITHUB_TOKEN }}</code> 是一个 GitHub 提供的自动生成的访问令牌，它存储在 GitHub Secrets 中，用于确保安全的身份验证。只有使用了 <code>secrets.GITHUB_TOKEN</code>，指令才有与 Github 仓库交互的权限。</li><li><code>run: npm run deploy</code>：这个步骤会执行 <code>npm run deploy</code> 命令，以将构建后的文件部署到 GitHub Pages 上。由于安装了 <code>gh-pages</code>，在部署的过程中会自动在 Git 上进行操作，将静态文件推送到 <code>gh-pages</code> 分支，从而触发 GitHub Pages 的部署。</li></ul></li></ul></li></ul><p>以上便不难理解 Github Actions 的基本工作原理了，绝大多数的静态网站生成方案都会给出自己的 Github Actions 配置文件，而你只需要在理解了文件的组成之后在他们的基础上进行略微的修改即可。</p><h3 id=定时更新仓库文件>定时更新仓库文件</h3><p>CSDDL 的另一关键组成便是其数据库，也就是 BoardCaster。众所周知，静态网站并不存在后端，也就不存在可以持续更新维护与访问的后端数据库，但是使用 JSON 文件以及一种类似于订阅效果的操作，可以完成一个丐版的数据库，这并不困难。</p><p>梳理一下思路，我们的需求包括，<code>git clone</code> 另一仓库的内容，将另一仓库的内容截取需要的部分复制到本仓库对应位置，正常的 <code>add</code>, <code>commit</code>, <code>push</code> 流程。最后，这个脚本需要定期执行。</p><p>不难给出 Github Actions 脚本：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Update JSON from BoardCaster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>schedule</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>cron</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;*/15 * * * *&#39;</span><span class=w>  </span><span class=c># 每15分钟运行一次</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w>  </span><span class=c># 手动触发</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>update-readme</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout Listener repository</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Clone BoardCaster repository</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>git clone https://github.com/CS-BAOYAN/BoardCaster.git</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Copy and rename data.json to public/config/schools.json</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>        cp BoardCaster/data.json public/config/schools.json</span><span class=w>        
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Commit and push changes if there are any</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>        git config --global user.name &#39;github-actions&#39;
+</span></span></span><span class=line><span class=cl><span class=sd>        git config --global user.email &#39;github-actions@github.com&#39;
+</span></span></span><span class=line><span class=cl><span class=sd>        git add public/config/schools.json
+</span></span></span><span class=line><span class=cl><span class=sd>        if git diff-index --quiet HEAD; then
+</span></span></span><span class=line><span class=cl><span class=sd>          echo &#34;No changes to commit&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>        else
+</span></span></span><span class=line><span class=cl><span class=sd>          git commit -m &#34;Update public/config/schools.json from BoardCaster&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>          git push
+</span></span></span><span class=line><span class=cl><span class=sd>        fi</span><span class=w>        
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>GITHUB_TOKEN</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>大多数内容应该不难理解，大量的篇幅是常规的 Git 操作，在 GITHUB_TOKEN 的环境下执行，其中唯一需要指出的细节是先比较 HEAD 之后再决定是否 commit，这是因为若无修改而 commit 会导致 Git 报错，虽然实际上无伤大雅，但是依然不够优雅。</p><p>同样需要指出的是定时触发的语法，<code>schedule</code> 中的 <code>cron</code> 语法是 Github Actions 提供的定时触发语法，<code>*/15 * * * *</code> 表示每 15 分钟触发一次。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>* * * * *
+</span></span><span class=line><span class=cl>| | | | |
+</span></span><span class=line><span class=cl>| | | | +---- 星期几 (0 - 7) (星期天为0或7)
+</span></span><span class=line><span class=cl>| | | +------ 月份 (1 - 12)
+</span></span><span class=line><span class=cl>| | +-------- 日期 (1 - 31)
+</span></span><span class=line><span class=cl>| +---------- 小时 (0 - 23)
+</span></span><span class=line><span class=cl>+------------ 分钟 (0 - 59)
+</span></span></code></pre></td></tr></table></div></div><p>Cron 是一种用于调度任务的时间表表达式，广泛应用于类 Unix 操作系统的任务调度工具中。GitHub Actions 也支持使用 Cron 表达式来定时触发工作流。Cron 表达式由五个字段组成，分别表示分钟、小时、日期、月份和星期几。</p><p>其中需要著名的特殊字符包括以下内容：</p><ul><li><strong>星号（*）</strong>：表示匹配任何值。例如，<code>* * * * *</code> 表示每分钟执行一次。</li><li><strong>逗号（,）</strong>：用于分隔多个值。例如，<code>0,15,30,45 * * * *</code> 表示每小时的第 0、15、30 和 45 分钟执行。</li><li><strong>连字符（-）</strong>：用于指定一个范围。例如，<code>0-5 * * * *</code> 表示每小时的第 0 到 5 分钟执行。</li><li><strong>斜杠（/）</strong>：用于指定步长。例如，<code>*/15 * * * *</code> 表示每 15 分钟执行一次。</li></ul><p>同时，需要注意的是 Github Actions 由于流量过大的问题，所以说对于定期触发的 Actions 并不会按照准确的时间执行，而是大概率会出现延后，在这里开通了 <code>workflow_dispatch</code>，可以在紧急情况下选择手动触发。</p><h2 id=结语>结语</h2><p>以上便是本次介绍的全部内容了，在此限于篇幅，也要告一段落了，更多的静态网站部署工具，笔者多半也有使用过，或许改天会开一个合集，讲一下踩过的坑。</p><p>Github Pages 与 Github Actions 可以帮助开发者构建个人网站，更重要的是，其完全免费。使用它们吧，创作属于自己的内容。</p></section><footer class=article-footer><section class=article-tags><a href=/Blog/tags/tech-talk/>Tech Talk</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under MIT</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on Jul 02, 2024 00:00 UTC</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/><div class=article-image><img src=/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/cover.6024f0bf6f60544ef12453d3f877b742_hu8627932685599706825.png width=250 height=150 loading=lazy alt="Featured image of post Isaac Sim 踩坑日记" data-hash="md5-YCTwv29gVE7xJFPT+He3Qg=="></div><div class=article-details><h2 class=article-title>Isaac Sim 踩坑日记</h2></div></a></article><article class=has-image><a href=/Blog/p/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84-bug-%E9%9B%86%E6%95%A3%E5%9C%B0/><div class=article-image><img src=/Blog/p/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84-bug-%E9%9B%86%E6%95%A3%E5%9C%B0/cover.b9f27f8b08439ad9604df6b431ad1cd0_hu13162539339108556298.jpg width=250 height=150 loading=lazy alt="Featured image of post 奇奇怪怪的 Bug 集散地" data-hash="md5-ufJ/iwhDmtlgTfa0Ma0c0A=="></div><div class=article-details><h2 class=article-title>奇奇怪怪的 Bug 集散地</h2></div></a></article><article class=has-image><a href=/Blog/p/%E6%A0%A1%E5%9B%AD-vpn-%E8%BF%9E%E6%8E%A5%E5%AE%9E%E5%BD%95/><div class=article-image><img src=/Blog/p/%E6%A0%A1%E5%9B%AD-vpn-%E8%BF%9E%E6%8E%A5%E5%AE%9E%E5%BD%95/cover.244f8eb950140e59c894d0d62c2f3089_hu7156794404620403148.jpg width=250 height=150 loading=lazy alt="Featured image of post 校园 VPN 连接实录" data-hash="md5-JE+OuVAUDlnIlNDWLC8wiQ=="></div><div class=article-details><h2 class=article-title>校园 VPN 连接实录</h2></div></a></article><article class=has-image><a href=/Blog/p/robomaster-%E8%A7%86%E8%A7%89%E7%BB%84%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%9F%B9%E8%AE%AD/><div class=article-image><img src=/Blog/p/robomaster-%E8%A7%86%E8%A7%89%E7%BB%84%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%9F%B9%E8%AE%AD/cover.f1dcd12aa9e1c5128ea39849eefc477e_hu6185054173531065451.png width=250 height=150 loading=lazy alt="Featured image of post RoboMaster 视觉组第三次培训" data-hash="md5-8dzRKqnhxRKOo5hJ7vxHfg=="></div><div class=article-details><h2 class=article-title>RoboMaster 视觉组第三次培训</h2></div></a></article><article class=has-image><a href=/Blog/p/robomaster-%E8%A7%86%E8%A7%89%E7%BB%84%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%9F%B9%E8%AE%AD/><div class=article-image><img src=/Blog/p/robomaster-%E8%A7%86%E8%A7%89%E7%BB%84%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%9F%B9%E8%AE%AD/cover.3393779e7157f9cf01d07c7ad3e855ca_hu12486287441643169551.png width=250 height=150 loading=lazy alt="Featured image of post RoboMaster 视觉组第二次培训" data-hash="md5-M5N3nnFX+c8B0Hx60+hVyg=="></div><div class=article-details><h2 class=article-title>RoboMaster 视觉组第二次培训</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=Axi404/Blog data-repo-id=R_kgDOMN0OzQ data-category=Announcements data-category-id=DIC_kwDOMN0Ozc4CgmNX data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2024 Axi404</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.26.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/Blog/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

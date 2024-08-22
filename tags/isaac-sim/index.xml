@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Isaac Sim on Axi404</title><link>https://axi404.github.io/Blog/tags/isaac-sim/</link><description>Recent content in Isaac Sim on Axi404</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Aug 2024 09:20:00 +0800</lastBuildDate><atom:link href="https://axi404.github.io/Blog/tags/isaac-sim/index.xml" rel="self" type="application/rss+xml"/><item><title>Isaac Sim 踩坑日记</title><link>https://axi404.github.io/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/</link><pubDate>Mon, 19 Aug 2024 09:20:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/cover.png" alt="Featured image of post Isaac Sim 踩坑日记" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>因为科研的需要，所以说需要安装一下仿真的环境，领域里面最通用的环境就是 Isaac Sim 了，但是据说也比较复杂，老师推荐了另一个 simulator（Sapien），说是比较轻量级，但是为了以后和其他工作更好地对接，以及之后估计半年多一年还是远程，有必要成为模拟器大师，于是挑战一下自己。&lt;/p>
+&lt;p>这篇日记依然和 LLM Talk 系列一样，应该是无限期更新的，包括说正常的安装以及操作的一些记录（对于一些涉密的内容，不会涉及），一些模块的学习，以及一些报错的整理。一方面是给自己作为一个笔记，一方面也是假如说有将来的同学进组，可以有一些更加明确的指引。毕竟本人是英文苦手，看英文的速度完全做不到“扫过”，所以还是有必要记录一下的。&lt;/p>
+&lt;p>一些你有必要知道的网址：&lt;/p>
+&lt;ul>
+&lt;li>Issac Sim 文档：&lt;a class="link" href="https://docs.omniverse.nvidia.com/py/isaacsim/index.html" target="_blank" rel="noopener"
+>https://docs.omniverse.nvidia.com/py/isaacsim/index.html&lt;/a>&lt;/li>
+&lt;li>Issac Sim 教程：&lt;a class="link" href="https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/index.html" target="_blank" rel="noopener"
+>https://docs.omniverse.nvidia.com/isaacsim/latest/core_api_tutorials/index.html&lt;/a>&lt;/li>
+&lt;li>mplib 文档：&lt;a class="link" href="https://motion-planning-lib.readthedocs.io/latest/index.html" target="_blank" rel="noopener"
+>https://motion-planning-lib.readthedocs.io/latest/index.html&lt;/a>&lt;/li>
+&lt;li>Franka urdf：&lt;a class="link" href="https://github.com/haosulab/ManiSkill/tree/v0.5.3/mani_skill2/assets/descriptions" target="_blank" rel="noopener"
+>https://github.com/haosulab/ManiSkill/tree/v0.5.3/mani_skill2/assets/descriptions&lt;/a>，需要使用其中的 &lt;code>panda_v2.urdf&lt;/code> 并且下载 &lt;code>franka_description/meshes&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="安装-isaac-sim">安装 Isaac Sim
+&lt;/h2>&lt;p>首先先简单说一下什么是 Isaac Sim，这是一个在 Nvidia 的 omniverse 下的一个 App，可以完成各种的仿真，也支持 ROS 的接口（虽然我目前还不知道 Embodied 的这一套流程是否和 ROS 有接壤），所以说做机器人这方面，用这个的比较多。而且这个东西是可以生成 image（镜像）并且运行在服务器上的，所以说各种意义上的符合具身智能领域的各种需求。&lt;/p>
+&lt;p>既然是 Nvidia 的产品，拥有一个 Nvidia 的账号也就是必须的事情了，一般来说还是推荐通过谷歌邮箱之类的 Mail 去注册，在这里不去赘述这个事情。&lt;/p>
+&lt;h3 id="环境概述">环境概述
+&lt;/h3>&lt;p>按照常规的教程来说，反正首先概述一下环境。本人的环境如下，作为参考，当然，这套环境貌似在一些性能上不是很可以，不知道能否坚持到最后：&lt;/p>
+&lt;p>以下是 CPU 以及系统信息：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">root:~$ linuxlogo -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-&amp;#39;``(|||)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ,`\ \ `-`. 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> / \ &amp;#39;``-. ` 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-. , `___: 88 88 88,888, 88 88 ,88888, 88888 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> (:::) : ___ 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-` ` , : 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \ / ,..-` , 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `./ / .-.` &amp;#39;88888&amp;#39; &amp;#39;88888&amp;#39; &amp;#39;88888&amp;#39; 88 88 &amp;#39;8888 &amp;#39;88888&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-..-( )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-`
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Linux Version 5.15.0-117-generic, Compiled #127~20.04.1-Ubuntu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">16 2.3GHz Intel i7 Processors, 128TB RAM, 73728 Bogomips Total
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>由于本人更换系统的意愿（见 &lt;a class="link" href="https://axi404.github.io/Blog/p/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84-bug-%E9%9B%86%E6%95%A3%E5%9C%B0/" target="_blank" rel="noopener"
+>Strange Bugs&lt;/a>，Ubuntu 20.04 日常使用已经很不方便），在安装 Isaac Sim 之后的内容均在 Ubuntu 22.04 上进行，如存在其他版本的信息，会专门注明补充。此系统的信息如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">root:~$ linuxlogo -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-&amp;#39;``(|||)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ,`\ \ `-`. 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> / \ &amp;#39;``-. ` 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .-. , `___: 88 88 88,888, 88 88 ,88888, 88888 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> (:::) : ___ 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-` ` , : 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \ / ,..-` , 88 88 88 88 88 88 88 88 88 88 88
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `./ / .-.` &amp;#39;88888&amp;#39; &amp;#39;88888&amp;#39; &amp;#39;88888&amp;#39; 88 88 &amp;#39;8888 &amp;#39;88888&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-..-( )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> `-`
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Linux Version 6.8.0-40-generic, Compiled #40~22.04.3-Ubuntu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">16 4.6GHz Intel i7 Tigerlake Processors, 31.1GB RAM, 74k Bogomips
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>以下是显卡信息，因为是笔记本，我的显卡是 8GB 的 RTX 3070 Laptop：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">root:~$: nvcc --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nvcc: NVIDIA (R) Cuda compiler driver
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Copyright (c) 2005-2023 NVIDIA Corporation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Built on Tue_Feb__7_19:32:13_PST_2023
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Cuda compilation tools, release 12.1, V12.1.66
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Build cuda_12.1.r12.1/compiler.32415258_0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>我的电脑是 Dell 的 Alienware m15 R6。&lt;/p>
+&lt;h3 id="下载-omniverse-launcher">下载 omniverse-launcher
+&lt;/h3>&lt;p>就像是之前说到的一样，Isaac 的 omniverse 下的一个 App，所以说在安装 Isaac 之前要先安装 omniverse-launcher，也是比较简单的，在官网 &lt;a class="link" href="https://www.nvidia.com/en-us/omniverse/download/" target="_blank" rel="noopener"
+>https://www.nvidia.com/en-us/omniverse/download/&lt;/a> 进行安装就好。进入下载页面之前会要求输入一些个人信息，随意写一下就好，理论来说 nvidia 账号中已经包含了这些内容，所以会自动填写。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image.png"
+width="1349"
+height="780"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image_hu10746123673173750997.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image_hu7637177516514602677.png 1024w"
+loading="lazy"
+alt="Download omniverse-launcher"
+class="gallery-image"
+data-flex-grow="172"
+data-flex-basis="415px"
+>&lt;/p>
+&lt;p>下载下来之后是一个 &lt;code>.AppImage&lt;/code> 的文件，按照我的惯例，就直接运行了：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~/Downloads
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wget https://install.launcher.omniverse.nvidia.com/installers/omniverse-launcher-linux.AppImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo chmod +x omniverse-launcher-linux.AppImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./omniverse-launcher-linux.AppImage
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>对于 Ubuntu 22.04，可能会报错 &lt;code>AppImages require FUSE to run.&lt;/code>，按照提示信息，安装 &lt;code>sudo apt install libfuse2&lt;/code> 即可。&lt;/p>
+&lt;p>运行之后产生登录页面，本质上还是 nvidia 账号，点击 &lt;code>LOG IN&lt;/code> 之后会跳转到网页，输入帐号密码登录即可。然后同意若干的协议，进入如下界面：&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-1.png"
+width="1242"
+height="686"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-1_hu17527278590175316699.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-1_hu7285587254767241699.png 1024w"
+loading="lazy"
+alt="Path Selection"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p>
+&lt;p>这些路径按照默认配置即可。选择确认，进入主界面：&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-2.png"
+width="1248"
+height="703"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-2_hu10207561541151484896.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-2_hu12230757369094596466.png 1024w"
+loading="lazy"
+alt="Main page"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>其中比较重要的是 &lt;code>Library&lt;/code>/&lt;code>Exchange&lt;/code>/&lt;code>Nucleus&lt;/code>，第一个是已经安装的内容的管理，第二个是安装内容的途径，第三个是一种中央数据库和协作引擎。&lt;/p>
+&lt;h3 id="安装并启动-isaac-sim">安装并启动 Isaac Sim
+&lt;/h3>&lt;p>进入 Exchange 进行安装，首先安装 cache，搜索之后下拉版本，选择 &lt;code>2023.1.0&lt;/code>，并点击 install 即可。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-3.png"
+width="1243"
+height="697"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-3_hu3853611999187686564.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-3_hu17541399864301029184.png 1024w"
+loading="lazy"
+alt="Install cache"
+class="gallery-image"
+data-flex-grow="178"
+data-flex-basis="428px"
+>&lt;/p>
+&lt;p>然后点击 Nucleus，选择 Add local Nucleus Service：&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-4.png"
+width="1244"
+height="685"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-4_hu7028057938891900325.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-4_hu743240427657441107.png 1024w"
+loading="lazy"
+alt="Add local Nucleus Service"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="435px"
+>&lt;/p>
+&lt;p>会要求设置 path 以及 admin account，自行设置即可。&lt;/p>
+&lt;p>最后在 Exchange 中安装 Isaac Sim，同样是搜索，版本选择 &lt;code>2023.1.0-hotfix.1&lt;/code>，点击 install。&lt;/p>
+&lt;blockquote>
+&lt;p>本人目前选择安装 &lt;code>4.1.0&lt;/code> 版本，且之后内容均在此版本下进行。&lt;/p>
+&lt;/blockquote>
+&lt;p>在 Nucleus 下载完毕之后，可以找到两个本地的服务：&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-5.png"
+width="1233"
+height="577"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-5_hu13508455836588724467.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-5_hu12927463928512376474.png 1024w"
+loading="lazy"
+alt="Nucleus"
+class="gallery-image"
+data-flex-grow="213"
+data-flex-basis="512px"
+>&lt;/p>
+&lt;p>其中选择 Settings，可以在网页中看到如下内容：&lt;/p>
+&lt;blockquote>
+&lt;p>值得注意的是，在第二次或者以后启动的时候，可能会出现进入其 Settings 链接 &lt;code>http://localhost:3080/&lt;/code> 之后为一片白色的情况，而 Cache 没有正确启动，导致后续的程序无法运行，解决方法之一是，可以进入其子窗口 &lt;code>http://localhost:3080/cache&lt;/code>，再点击上方的 &lt;code>Apps&lt;/code>，之后 &lt;code>Restart all&lt;/code> 即可。&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-6.png"
+width="2293"
+height="1107"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-6_hu15209500052959788551.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-6_hu1706317476672483300.png 1024w"
+loading="lazy"
+alt="Nucleus Settings"
+class="gallery-image"
+data-flex-grow="207"
+data-flex-basis="497px"
+>&lt;/p>
+&lt;p>假如出现问题，如显示 Stop 或者 Error，请检查之前说的版本问题。假如 cache 版本不对，重新卸载并且安装，然后点击 Launch 即可。&lt;/p>
+&lt;p>选择文件夹图标的内容，可以在网页中看到如下的内容：&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-7.png"
+width="2041"
+height="307"
+srcset="https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-7_hu13817713123353504455.png 480w, https://axi404.github.io/Blog/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-7_hu4443030497244314378.png 1024w"
+loading="lazy"
+alt="Nucleus content"
+class="gallery-image"
+data-flex-grow="664"
+data-flex-basis="1595px"
+>&lt;/p>
+&lt;p>均确认无误之后，可以在 Library 中选择 Isaac Sim 并且点击 Launch。&lt;/p>
+&lt;h2 id="standalone-pick-and-place-代码实现">Standalone Pick and Place 代码实现
+&lt;/h2>&lt;blockquote>
+&lt;p>此章节在 Ubuntu 22.04, CUDA 12.1, cudnn 9.3.0, Isaac Sim 4.1.0, cache 2023.1.0 下运行。&lt;/p>
+&lt;/blockquote>
+&lt;p>接下来就是写代码的环节了，一般来说这个代码有两种实现的方式，一种是在 Isaac Sim 里面添加一个 User Example，另一种是直接使用一个脚本，也就是 standalone script，这里面推荐使用脚本。因为 User Example 的方法必须要使用 GUI 才可以启动，还是不太方便，后续我们肯定是希望这个程序可以摆脱 GUI，当然，必要的时候也可以唤出。&lt;/p>
+&lt;p>第一次需要找到你的 Isaac Sim 的环境在哪里，因为 Isaac Sim 使用了自己的 python 环境，因此需要找到他的解释器，假如你是默认安装的路径，那么应该可以看到路径:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> /home/&lt;span class="sb">`&lt;/span>whoami&lt;span class="sb">`&lt;/span>/.local/share/ov/pkg/isaac-sim-4.1.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>但是假如不是，可以进入 Isaac Sim 软件，随便点击一个上方栏的 Isaac Examples，并且 Open Containing Folder 即可。&lt;/p>
+&lt;img src="image-8.png" alt="alt text" style="display: block; margin: 0 auto; zoom: 50%;">
+&lt;p>例如 hello world 这个 example，这个文件夹应该在 &lt;code>isaac-sim-4.1.0/exts/omni.isaac.examples/omni/isaac/examples/hello_world&lt;/code> 中，以下全部的操作视作在 &lt;code>isaac-sim-4.1.0&lt;/code> 下进行。&lt;/p>
+&lt;p>首先先安装一下 opencv-python，并且创建我们接下来的程序的文件夹：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt install libgtk2.0-dev pkg-config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./python -m pip install opencv-python
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir exts/omni.isaac.examples/omni/isaac/examples/Isaac_learning
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch exts/omni.isaac.examples/omni/isaac/examples/Isaac_learning/script.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">code .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后打开这个新建的文件，在里面输入&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">isaacsim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SimulationApp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SimulationApp&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s2">&amp;#34;headless&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">False&lt;/span>&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">World&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">World&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_running&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">step&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">render&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这是一个最简单的程序，可以创建出来一个正常的模拟器的界面，接下来需要做的事情就是在里面添加东西了。&lt;/p>
+&lt;p>在这里简单介绍一下 Isaac Sim 的物体的基本组织结构，基本上可以说，Isaac Sim 里面的物体都是由 Prim 组成的，也就是所谓的 XFormPrim，一般来说，存在一个 world，一个 world 里面会存在 scene，scene 里面的绝大多数内容都是 prim，可以理解为 isaac sim 里面的 object，同时支持嵌套。&lt;/p>
+&lt;p>不过对于最基础的内容，我们存在一些 api 可以使用，更多的内容都可以在文档中查询，所以让我们简单修改代码，在里面加入一个地面和一个方块。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">isaacsim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SimulationApp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SimulationApp&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s2">&amp;#34;headless&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">False&lt;/span>&lt;span class="p">})&lt;/span> &lt;span class="c1"># we can also run as headless.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">World&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core.objects&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">DynamicCuboid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">World&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_default_ground_plane&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cube1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DynamicCuboid&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scale&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_running&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">step&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">render&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行一下，不难发现里面多出来了一个方块和一个地板，也就是这两行的效果。一个物体有两个经常使用的属性，一个是 Rigid Body，也就是物体是否会受到力的影响，一个是 Colliders Preset，也就是物体是否会有碰撞。DynamicCuboid 默认具有这两个属性，所以你会看到它掉在地板上，而地板是不受到重力影响的，所以你不会看到地板和物体一起掉下去。&lt;/p>
+&lt;p>同时可以注意到的是 prim_path 以及 name，第一个描述了 cube 的 prim 的嵌套关系，因为 world 也是一个 prim，而这个物体的名字则叫做 cube1。&lt;/p>
+&lt;p>同样的方法，我们可以在里面加入一个 Franka，这也不难：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">isaacsim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SimulationApp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SimulationApp&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s2">&amp;#34;headless&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">False&lt;/span>&lt;span class="p">})&lt;/span> &lt;span class="c1"># we can also run as headless.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">World&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core.objects&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">DynamicCuboid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">World&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_default_ground_plane&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cube1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DynamicCuboid&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scale&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">franka&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Franka&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/Franka&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;franka&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">reset&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gripper&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_joint_positions&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gripper&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">joint_opened_positions&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_running&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">step&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">render&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>USD 是 Isaac Sim 保存数字资产的方式，想要使用 USD 也可以使用 Prim 来进行导入，这些内容我们都会在后续讲到，我在 Isaac Sim 里用五个长方体做了一个&lt;a class="link" href="https://raw.githubusercontent.com/Axi404/Isaac_learning/main/assets/usds/table.usd" target="_blank" rel="noopener"
+>简陋的桌子&lt;/a>，或许可供后续我的程序的例子中的使用。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">isaacsim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SimulationApp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SimulationApp&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s2">&amp;#34;headless&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">False&lt;/span>&lt;span class="p">})&lt;/span> &lt;span class="c1"># we can also run as headless.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">World&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">omni.isaac.core.objects&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">DynamicCuboid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">numpy&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">np&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">World&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_default_ground_plane&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cube1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DynamicCuboid&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cube1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scale&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.5015&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">1.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">franka&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scene&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Franka&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/Franka&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;franka&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">controller&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PickPlaceController&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;pick_place_controller&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">gripper&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gripper&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">robot_articulation&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">franka&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">camera&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Camera&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prim_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/World/camera&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">25.0&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">frequency&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resolution&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">256&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">256&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">orientation&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">rot_utils&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">euler_angles_to_quats&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">90&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">]),&lt;/span> &lt;span class="n">degrees&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">reset&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">camera&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">initialize&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">camera&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_motion_vectors_to_frame&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gripper&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_joint_positions&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gripper&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">joint_opened_positions&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_running&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">position&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">orientation&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fancy_cube&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get_world_pose&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">goal_position&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">np&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">array&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">0.3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mf">0.3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">0.0515&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mf">2.0&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">current_joint_positions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get_joint_positions&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">actions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">controller&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">forward&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">picking_position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cube_position&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">placing_position&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">goal_position&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">current_joint_positions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">current_joint_positions&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">franka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">apply_action&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">actions&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">world&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">step&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">render&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">simulation_app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># close Isaac Sim&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

@@ -1,0 +1,839 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="OpenVLA 纯小白代码阅读记录。"><title>OpenVLA 代码笔记</title>
+<link rel=canonical href=https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/><link rel=stylesheet href=/Blog/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="OpenVLA 代码笔记"><meta property='og:description' content="OpenVLA 纯小白代码阅读记录。"><meta property='og:url' content='https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/'><meta property='og:site_name' content='Axi404'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Tech Talk'><meta property='article:tag' content='LLM'><meta property='article:tag' content='Code Reading'><meta property='article:tag' content='Embodied AI'><meta property='article:published_time' content='2024-07-23T09:00:00+08:00'><meta property='article:modified_time' content='2024-07-23T09:00:00+08:00'><meta property='og:image' content='https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover.jpg'><meta name=twitter:title content="OpenVLA 代码笔记"><meta name=twitter:description content="OpenVLA 纯小白代码阅读记录。"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover.jpg'><link rel="shortcut icon" href=/Blog/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/Blog/><img src=/Blog/img/avatar_hu12164355173948498683.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>❤️</span></figure><div class=site-meta><h1 class=site-name><a href=/Blog>Axi404</a></h1><h2 class=site-description>你好，我是阿汐，欢迎。</h2></div></header><ol class=menu-social><li><a href=https://github.com/Axi404 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=/Blog/index.xml target=_blank title=RSS rel=me><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/Blog/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/Blog/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/Blog/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/Blog/repos/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Repos</span></a></li><li><a href=/Blog/%E5%8F%8B%E9%93%BE/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>友链</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#openvla>OpenVLA</a></li><li><a href=#代码结构>代码结构</a></li><li><a href=#模型训练>模型训练</a><ol><li><a href=#主文件>主文件</a></li><li><a href=#prismatic-vlms>prismatic-vlms</a></li><li><a href=#run_vla_training>run_vla_training</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/><img src=/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover_hu6399073719778389575.jpg srcset="/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover_hu6399073719778389575.jpg 800w, /Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover_hu16543161224176435367.jpg 1600w" width=800 height=302 loading=lazy alt="Featured image of post OpenVLA 代码笔记"></a></div><div class=article-details><header class=article-category><a href=/Blog/categories/ai-talk/ style=background-color:#0177b8;color:#fff>AI Talk</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/>OpenVLA 代码笔记</a></h2><h3 class=article-subtitle>OpenVLA 纯小白代码阅读记录。</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jul 23, 2024</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 minute read</time></div></footer></div></header><section class=article-content><p>因为要开始入门具身智能，所以说要阅读代码，显然选择了开源的 OpenVLA，于是在这里记录一下代码的阅读过程。</p><p>本人代码水平为，掌握 Pytorch 大多数语法，对于 Hugging Face 不太了解。故部分内容会省略，尽量做到大多数内容均详实。</p><h2 id=openvla>OpenVLA</h2><p>OpenVLA 是一个具身智能大模型，Open 在这里就是 Open Source 的意思，于是使用其开源代码，开源网址为 <a class=link href=https://github.com/openvla/openvla target=_blank rel=noopener>https://github.com/openvla/openvla</a>。</p><h2 id=代码结构>代码结构</h2><p>直接运行一个 <code>tree</code>，看一下代码结构：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>├───prismatic
+</span></span><span class=line><span class=cl>│   ├───conf
+</span></span><span class=line><span class=cl>│   ├───extern
+</span></span><span class=line><span class=cl>│   │   └───hf
+</span></span><span class=line><span class=cl>│   ├───models
+</span></span><span class=line><span class=cl>│   │   ├───backbones
+</span></span><span class=line><span class=cl>│   │   │   ├───llm
+</span></span><span class=line><span class=cl>│   │   │   │   └───prompting
+</span></span><span class=line><span class=cl>│   │   │   └───vision
+</span></span><span class=line><span class=cl>│   │   ├───vlas
+</span></span><span class=line><span class=cl>│   │   └───vlms
+</span></span><span class=line><span class=cl>│   ├───overwatch
+</span></span><span class=line><span class=cl>│   ├───preprocessing
+</span></span><span class=line><span class=cl>│   │   └───datasets
+</span></span><span class=line><span class=cl>│   ├───training
+</span></span><span class=line><span class=cl>│   │   └───strategies
+</span></span><span class=line><span class=cl>│   ├───util
+</span></span><span class=line><span class=cl>│   └───vla
+</span></span><span class=line><span class=cl>│       └───datasets
+</span></span><span class=line><span class=cl>│           └───rlds
+</span></span><span class=line><span class=cl>│               ├───oxe
+</span></span><span class=line><span class=cl>│               │   └───utils
+</span></span><span class=line><span class=cl>│               └───utils
+</span></span><span class=line><span class=cl>├───scripts
+</span></span><span class=line><span class=cl>│   ├───additional-datasets
+</span></span><span class=line><span class=cl>│   └───extern
+</span></span><span class=line><span class=cl>└───vla-scripts
+</span></span><span class=line><span class=cl>    └───extern
+</span></span></code></pre></td></tr></table></div></div><p>其中首先关注如何从头训练，于是关注 <code>vla-scripts/train.py</code> 这个文件。</p><h2 id=模型训练>模型训练</h2><h3 id=主文件>主文件</h3><p>简单让 GPT4-o 生成了 <code>vla-scripts/train.py</code> 的逐行注释，如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>train.py
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>Training script for Vision-Language-Action (VLA) Policies, built on top of pretrained VLMs, trained using mixtures of
+</span></span></span><span class=line><span class=cl><span class=s2>the Open-X Embodiment dataset. Performs training in native PyTorch, using Fully-Sharded Data Parallel (FSDP) to run
+</span></span></span><span class=line><span class=cl><span class=s2>distributed across GPUs (and nodes). By default, assumes that CUDA toolkit is &gt;= 11.0 (to support BF16 mixed precision).
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>Notes &amp; Prerequisites:
+</span></span></span><span class=line><span class=cl><span class=s2>    - If you want to set a custom location for all HF / TIMM artifacts --&gt; `export HF_HOME=&#34;&lt;PATH&gt;&#34;` *before* running!
+</span></span></span><span class=line><span class=cl><span class=s2>        =&gt; For example (add to end of .bashrc): `export HF_HOME=&#34;/mnt/fsx/skaramcheti/cache&#34;`
+</span></span></span><span class=line><span class=cl><span class=s2>    - If you want to suppress random Tensorflow logs --&gt; `export TF_CPP_MIN_LOG_LEVEL=3`
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>Run with:
+</span></span></span><span class=line><span class=cl><span class=s2>    - [Single Node One-GPU (Debug)] : torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/train.py
+</span></span></span><span class=line><span class=cl><span class=s2>    - [Single Node Multi-GPU (= $K)]: torchrun --standalone --nnodes 1 --nproc-per-node $K vla-scripts/train.py
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>json</span>  <span class=c1># 导入json模块，用于处理JSON数据</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>  <span class=c1># 导入os模块，用于与操作系统交互</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>  <span class=c1># 导入re模块，用于正则表达式操作</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span><span class=p>,</span> <span class=n>field</span>  <span class=c1># 从dataclasses模块导入dataclass和field，用于定义数据类</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>  <span class=c1># 从pathlib模块导入Path，用于文件路径操作</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Optional</span><span class=p>,</span> <span class=n>Tuple</span><span class=p>,</span> <span class=n>Union</span>  <span class=c1># 从typing模块导入一些类型提示</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>draccus</span>  <span class=c1># 导入draccus库，用于配置管理</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>torch</span>  <span class=c1># 导入torch库，用于深度学习</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>torch.distributed</span> <span class=k>as</span> <span class=nn>dist</span>  <span class=c1># 导入torch.distributed模块，用于分布式训练</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>yaml</span>  <span class=c1># 导入yaml模块，用于处理YAML文件</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.conf</span> <span class=kn>import</span> <span class=n>VLAConfig</span><span class=p>,</span> <span class=n>VLARegistry</span>  <span class=c1># 从prismatic.conf导入VLAConfig和VLARegistry</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.models</span> <span class=kn>import</span> <span class=n>load</span><span class=p>,</span> <span class=n>load_vla</span>  <span class=c1># 从prismatic.models导入load和load_vla函数</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.overwatch</span> <span class=kn>import</span> <span class=n>initialize_overwatch</span>  <span class=c1># 从prismatic.overwatch导入initialize_overwatch函数</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.training</span> <span class=kn>import</span> <span class=n>VLAMetrics</span><span class=p>,</span> <span class=n>get_train_strategy</span>  <span class=c1># 从prismatic.training导入VLAMetrics和get_train_strategy</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.util</span> <span class=kn>import</span> <span class=n>set_global_seed</span>  <span class=c1># 从prismatic.util导入set_global_seed函数</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.vla</span> <span class=kn>import</span> <span class=n>get_vla_dataset_and_collator</span>  <span class=c1># 从prismatic.vla导入get_vla_dataset_and_collator函数</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>prismatic.vla.datasets.rlds.utils.data_utils</span> <span class=kn>import</span> <span class=n>save_dataset_statistics</span>  <span class=c1># 从prismatic.vla.datasets.rlds.utils.data_utils导入save_dataset_statistics函数</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置合理的默认值</span>
+</span></span><span class=line><span class=cl><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=p>[</span><span class=s2>&#34;TOKENIZERS_PARALLELISM&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;false&#34;</span>  <span class=c1># 禁用分词器的并行处理</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 初始化Overwatch =&gt;&gt; 包装`logging.Logger`</span>
+</span></span><span class=line><span class=cl><span class=n>overwatch</span> <span class=o>=</span> <span class=n>initialize_overwatch</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>  <span class=c1># 初始化日志记录工具</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>  <span class=c1># 使用dataclass装饰器定义数据类</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>TrainConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># fmt: off</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># VLAConfig (`prismatic/conf/vla.py`); override with --vla.type `VLARegistry.&lt;VLA&gt;.vla_id`</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla</span><span class=p>:</span> <span class=n>VLAConfig</span> <span class=o>=</span> <span class=n>field</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>default_factory</span><span class=o>=</span><span class=n>VLAConfig</span><span class=o>.</span><span class=n>get_choice_class</span><span class=p>(</span><span class=n>VLARegistry</span><span class=o>.</span><span class=n>DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS</span><span class=o>.</span><span class=n>vla_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># VLA配置，默认使用VLARegistry.DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS.vla_id</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 目录路径</span>
+</span></span><span class=line><span class=cl>    <span class=n>data_root_dir</span><span class=p>:</span> <span class=n>Path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span>  <span class=c1># Open-X数据集目录的路径</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;datasets/open-x-embodiment&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>run_root_dir</span><span class=p>:</span> <span class=n>Path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s2>&#34;runs&#34;</span><span class=p>)</span>  <span class=c1># 存储日志和检查点的目录路径</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 恢复运行参数</span>
+</span></span><span class=line><span class=cl>    <span class=n>pretrained_checkpoint</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=n>Path</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 预训练检查点的绝对路径</span>
+</span></span><span class=line><span class=cl>    <span class=n>is_resume</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>  <span class=c1># 是否继续之前的训练</span>
+</span></span><span class=line><span class=cl>    <span class=n>resume_step</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>int</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 恢复的全局步骤</span>
+</span></span><span class=line><span class=cl>    <span class=n>resume_epoch</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>int</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 恢复的训练周期</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 运行参数</span>
+</span></span><span class=line><span class=cl>    <span class=n>run_id</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 用于日志记录的运行ID</span>
+</span></span><span class=line><span class=cl>    <span class=n>run_id_note</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 用于日志记录的额外注释</span>
+</span></span><span class=line><span class=cl>    <span class=n>save_interval</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>2500</span>  <span class=c1># 保存检查点的间隔（以步骤为单位）</span>
+</span></span><span class=line><span class=cl>    <span class=n>image_aug</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>  <span class=c1># 是否启用图像增强</span>
+</span></span><span class=line><span class=cl>    <span class=n>seed</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>7</span>  <span class=c1># 随机种子（用于可重复性）</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># HF Hub 凭证（用于任何受限模型）</span>
+</span></span><span class=line><span class=cl>    <span class=n>hf_token</span><span class=p>:</span> <span class=n>Union</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Path</span><span class=p>]</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s2>&#34;.hf_token&#34;</span><span class=p>)</span>  <span class=c1># 环境变量或HF Token的路径</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 跟踪参数</span>
+</span></span><span class=line><span class=cl>    <span class=n>trackers</span><span class=p>:</span> <span class=n>Tuple</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span> <span class=o>=</span> <span class=p>(</span><span class=s2>&#34;jsonl&#34;</span><span class=p>,</span> <span class=s2>&#34;wandb&#34;</span><span class=p>)</span>  <span class=c1># 初始化的跟踪器</span>
+</span></span><span class=line><span class=cl>    <span class=n>wandb_project</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;openvla&#34;</span>  <span class=c1># W&amp;B项目名称</span>
+</span></span><span class=line><span class=cl>    <span class=n>wandb_entity</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;stanford-voltron&#34;</span>  <span class=c1># W&amp;B实体名称</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>__post_init__</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;提升优化参数的可用性，并验证`expected_world_size`&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>epochs</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>epochs</span>  <span class=c1># 设置训练周期数</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>max_steps</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>max_steps</span>  <span class=c1># 设置最大训练步骤数</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>global_batch_size</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>global_batch_size</span>  <span class=c1># 设置全局批次大小</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>per_device_batch_size</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>per_device_batch_size</span>  <span class=c1># 设置每个设备的批次大小</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>learning_rate</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>learning_rate</span>  <span class=c1># 设置学习率</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>weight_decay</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>weight_decay</span>  <span class=c1># 设置权重衰减</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>max_grad_norm</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>max_grad_norm</span>  <span class=c1># 设置最大梯度范数</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>lr_scheduler_type</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>lr_scheduler_type</span>  <span class=c1># 设置学习率调度器类型</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>warmup_ratio</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>warmup_ratio</span>  <span class=c1># 设置预热比率</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>train_strategy</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>train_strategy</span>  <span class=c1># 设置训练策略</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># [验证] 断言`expected_world_size`</span>
+</span></span><span class=line><span class=cl>        <span class=k>assert</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>expected_world_size</span> <span class=o>==</span> <span class=n>overwatch</span><span class=o>.</span><span class=n>world_size</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>),</span> <span class=sa>f</span><span class=s2>&#34;Expected World Size = </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>expected_world_size</span><span class=si>}</span><span class=s2> but Found </span><span class=si>{</span><span class=n>overwatch</span><span class=o>.</span><span class=n>world_size</span><span class=p>()</span><span class=si>}</span><span class=s2> GPUs!&#34;</span>  <span class=c1># 验证期望的世界大小是否与实际一致</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># fmt: on</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@draccus.wrap</span><span class=p>()</span>  <span class=c1># 使用draccus.wrap装饰器定义训练函数</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>train</span><span class=p>(</span><span class=n>cfg</span><span class=p>:</span> <span class=n>TrainConfig</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;OpenVLA Training :: Warming Up&#34;</span><span class=p>)</span>  <span class=c1># 记录训练开始的信息</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 注意 =&gt; 在`torchrun`下初始化`overwatch`会自动设置`torch.distributed`</span>
+</span></span><span class=line><span class=cl>    <span class=n>torch</span><span class=o>.</span><span class=n>cuda</span><span class=o>.</span><span class=n>set_device</span><span class=p>(</span><span class=n>device_id</span> <span class=o>:=</span> <span class=n>overwatch</span><span class=o>.</span><span class=n>local_rank</span><span class=p>())</span>  <span class=c1># 设置CUDA设备</span>
+</span></span><span class=line><span class=cl>    <span class=n>torch</span><span class=o>.</span><span class=n>cuda</span><span class=o>.</span><span class=n>empty_cache</span><span class=p>()</span>  <span class=c1># 清空CUDA缓存</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 配置唯一的运行名称和保存目录</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla_id</span> <span class=o>=</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>vla_id</span>  <span class=c1># 获取VLA ID</span>
+</span></span><span class=line><span class=cl>    <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>vla_id</span><span class=si>}</span><span class=s2>+n</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>expected_world_size</span> <span class=o>//</span> <span class=mi>8</span><span class=si>}</span><span class=s2>+b</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>per_device_batch_size</span><span class=si>}</span><span class=s2>+x</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>seed</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span> <span class=ow>is</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 如果运行ID为空，则生成唯一的运行ID</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cfg</span><span class=o>.</span><span class=n>run_id_note</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span> <span class=o>+=</span> <span class=sa>f</span><span class=s2>&#34;--</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>run_id_note</span><span class=si>}</span><span class=s2>&#34;</span>  <span class=c1># 如果有运行ID注释，则添加到运行ID中</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cfg</span><span class=o>.</span><span class=n>image_aug</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span> <span class=o>+=</span> <span class=s2>&#34;--image_aug&#34;</span>  <span class=c1># 如果启用了图像增强，则添加到运行ID中</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 开始 =&gt;&gt; 创建目录并设置随机性</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;&#34;Do or do not; there is no try.&#34;&#39;</span><span class=p>,</span> <span class=n>ctx_level</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>hf_token</span> <span class=o>=</span> <span class=n>cfg</span><span class=o>.</span><span class=n>hf_token</span><span class=o>.</span><span class=n>read_text</span><span class=p>()</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span> <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>hf_token</span><span class=p>,</span> <span class=n>Path</span><span class=p>)</span> <span class=k>else</span> <span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=p>[</span><span class=n>cfg</span><span class=o>.</span><span class=n>hf_token</span><span class=p>]</span>  <span class=c1># 读取HF Token</span>
+</span></span><span class=line><span class=cl>    <span class=n>worker_init_fn</span> <span class=o>=</span> <span class=n>set_global_seed</span><span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>seed</span><span class=p>,</span> <span class=n>get_worker_init_fn</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>  <span class=c1># 设置全局随机种子</span>
+</span></span><span class=line><span class=cl>    <span class=n>os</span><span class=o>.</span><span class=n>makedirs</span><span class=p>(</span><span class=n>run_dir</span> <span class=o>:=</span> <span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>run_root_dir</span> <span class=o>/</span> <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span><span class=p>),</span> <span class=n>exist_ok</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>  <span class=c1># 创建运行目录</span>
+</span></span><span class=line><span class=cl>    <span class=n>os</span><span class=o>.</span><span class=n>makedirs</span><span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>run_root_dir</span> <span class=o>/</span> <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span> <span class=o>/</span> <span class=s2>&#34;checkpoints&#34;</span><span class=p>,</span> <span class=n>exist_ok</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>  <span class=c1># 创建检查点目录</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 保存配置 =&gt;&gt; 另外保存一个JSON版本以供以后HF集成</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>overwatch</span><span class=o>.</span><span class=n>is_rank_zero</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>draccus</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>cfg</span><span class=p>,</span> <span class=nb>open</span><span class=p>(</span><span class=n>run_dir</span> <span class=o>/</span> <span class=s2>&#34;config.yaml&#34;</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>))</span>  <span class=c1># 保存配置到YAML文件</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>run_dir</span> <span class=o>/</span> <span class=s2>&#34;config.yaml&#34;</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f_yaml</span><span class=p>,</span> <span class=nb>open</span><span class=p>(</span><span class=n>run_dir</span> <span class=o>/</span> <span class=s2>&#34;config.json&#34;</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f_json</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>yaml_cfg</span> <span class=o>=</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>f_yaml</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>json</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>yaml_cfg</span><span class=p>,</span> <span class=n>f_json</span><span class=p>,</span> <span class=n>indent</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span>  <span class=c1># 保存配置到JSON文件</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 加载VLA检查点（如果从训练中恢复）或基础VLM（从`cfg.vla.base_vlm` ID或路径）</span>
+</span></span><span class=line><span class=cl>    <span class=c1>#   =&gt;&gt; 注意::验证所有参数在加载时都以FP32加载！</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Loading Base VLM `</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>base_vlm</span><span class=si>}</span><span class=s2>` from ID/Path&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cfg</span><span class=o>.</span><span class=n>pretrained_checkpoint</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=c1># [验证] 预训练检查点的`step`和`epoch`应与`resume_step`和`resume_epoch`匹配</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#   =&gt;&gt; 注意::我们要求开发人员传递`resume_*`参数作为额外的健全性检查！</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>cfg</span><span class=o>.</span><span class=n>is_resume</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>assert</span> <span class=nb>int</span><span class=p>(</span><span class=n>re</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=s2>&#34;step-(.+?)-&#34;</span><span class=p>,</span> <span class=n>cfg</span><span class=o>.</span><span class=n>pretrained_checkpoint</span><span class=o>.</span><span class=n>name</span><span class=p>)</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=o>==</span> <span class=n>cfg</span><span class=o>.</span><span class=n>resume_step</span>
+</span></span><span class=line><span class=cl>            <span class=k>assert</span> <span class=nb>int</span><span class=p>(</span><span class=n>re</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=s2>&#34;epoch-(.+?)-&#34;</span><span class=p>,</span> <span class=n>cfg</span><span class=o>.</span><span class=n>pretrained_checkpoint</span><span class=o>.</span><span class=n>name</span><span class=p>)</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=o>==</span> <span class=n>cfg</span><span class=o>.</span><span class=n>resume_epoch</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>vlm</span> <span class=o>=</span> <span class=n>load_vla</span><span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>pretrained_checkpoint</span><span class=p>,</span> <span class=n>hf_token</span><span class=o>=</span><span class=n>hf_token</span><span class=p>,</span> <span class=n>load_for_training</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>  <span class=c1># 加载VLA检查点</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>vlm</span> <span class=o>=</span> <span class=n>load</span><span class=p>(</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>base_vlm</span><span class=p>,</span> <span class=n>hf_token</span><span class=o>=</span><span class=n>hf_token</span><span class=p>,</span> <span class=n>load_for_training</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>  <span class=c1># 加载基础VLM</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># [验证] 模型应为全精度！</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>param</span> <span class=ow>in</span> <span class=n>vlm</span><span class=o>.</span><span class=n>parameters</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>assert</span> <span class=n>param</span><span class=o>.</span><span class=n>dtype</span> <span class=o>==</span> <span class=n>torch</span><span class=o>.</span><span class=n>float32</span><span class=p>,</span> <span class=sa>f</span><span class=s2>&#34;Loaded VLM parameter not in full precision: </span><span class=si>{</span><span class=n>param</span><span class=si>}</span><span class=s2>&#34;</span>  <span class=c1># 验证模型参数类型</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 根据冻结与未冻结的参数确定训练“阶段”--&gt;支持不同的微调方案！</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_vision_backbone</span> <span class=ow>and</span> <span class=ow>not</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_llm_backbone</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span> <span class=o>=</span> <span class=s2>&#34;vla-full-train&#34;</span>  <span class=c1># 完全微调</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_vision_backbone</span> <span class=ow>and</span> <span class=ow>not</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_llm_backbone</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span> <span class=o>=</span> <span class=s2>&#34;vla-train&#34;</span>  <span class=c1># 冻结视觉编码器</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=ow>not</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_vision_backbone</span> <span class=ow>and</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_llm_backbone</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>assert</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>unfreeze_last_llm_layer</span><span class=p>,</span> <span class=s2>&#34;You should unfreeze at least the last layer of your LLM!&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span> <span class=o>=</span> <span class=s2>&#34;vla-sandwich-train&#34;</span>  <span class=c1># 微调视觉编码器、投影器和LLM最后一层</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_vision_backbone</span> <span class=ow>and</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_llm_backbone</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>assert</span> <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>unfreeze_last_llm_layer</span><span class=p>,</span> <span class=s2>&#34;Need to unfreeze at least last LLM layer to train!&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span> <span class=o>=</span> <span class=s2>&#34;vla-last-layer-train&#34;</span>  <span class=c1># 仅微调LLM最后一层</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Weight freezing configuration not supported. VLA config has the following parameters: &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=sa>f</span><span class=s2>&#34;freeze_vision_backbone: </span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_vision_backbone</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=sa>f</span><span class=s2>&#34;freeze_llm_backbone: </span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>freeze_llm_backbone</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=sa>f</span><span class=s2>&#34;unfreeze_last_llm_layer: </span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>unfreeze_last_llm_layer</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>  <span class=c1># 如果配置不支持，则引发错误</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># [显式] 调用`freeze_backbones`以提高清晰度 =&gt;&gt; 将准确记录哪些被冻结</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Invoking `VLM.freeze_backbones()` for `</span><span class=si>{</span><span class=n>vla_id</span><span class=si>}</span><span class=s2>` =&gt; Stage: `</span><span class=si>{</span><span class=n>stage</span><span class=si>}</span><span class=s2>`&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>vlm</span><span class=o>.</span><span class=n>freeze_backbones</span><span class=p>(</span><span class=n>stage</span><span class=p>)</span>  <span class=c1># 冻结模型参数</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 打印总参数和可训练参数的数量</span>
+</span></span><span class=line><span class=cl>    <span class=n>num_params</span> <span class=o>=</span> <span class=nb>sum</span><span class=p>(</span><span class=n>p</span><span class=o>.</span><span class=n>numel</span><span class=p>()</span> <span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>vlm</span><span class=o>.</span><span class=n>parameters</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=n>num_trainable_params</span> <span class=o>=</span> <span class=nb>sum</span><span class=p>(</span><span class=n>p</span><span class=o>.</span><span class=n>numel</span><span class=p>()</span> <span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>vlm</span><span class=o>.</span><span class=n>parameters</span><span class=p>()</span> <span class=k>if</span> <span class=n>p</span><span class=o>.</span><span class=n>requires_grad</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=sa>f</span><span class=s2>&#34;# Parameters (in millions): </span><span class=si>{</span><span class=n>num_params</span> <span class=o>/</span> <span class=mi>10</span><span class=o>**</span><span class=mi>6</span><span class=si>:</span><span class=s2>.3f</span><span class=si>}</span><span class=s2> Total, </span><span class=si>{</span><span class=n>num_trainable_params</span> <span class=o>/</span> <span class=mi>10</span><span class=o>**</span><span class=mi>6</span><span class=si>:</span><span class=s2>.3f</span><span class=si>}</span><span class=s2> Trainable&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 记录参数数量</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 获取VLA数据集和collator</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating VLA Open-X Dataset with Mixture `</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>data_mix</span><span class=si>}</span><span class=s2>`&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla_dataset</span><span class=p>,</span> <span class=n>action_tokenizer</span><span class=p>,</span> <span class=n>collator</span> <span class=o>=</span> <span class=n>get_vla_dataset_and_collator</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>data_root_dir</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>data_mix</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>image_transform</span><span class=o>=</span><span class=n>vlm</span><span class=o>.</span><span class=n>vision_backbone</span><span class=o>.</span><span class=n>get_image_transform</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>        <span class=n>tokenizer</span><span class=o>=</span><span class=n>vlm</span><span class=o>.</span><span class=n>llm_backbone</span><span class=o>.</span><span class=n>get_tokenizer</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>        <span class=n>prompt_builder_fn</span><span class=o>=</span><span class=n>vlm</span><span class=o>.</span><span class=n>llm_backbone</span><span class=o>.</span><span class=n>prompt_builder_fn</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>default_image_resolution</span><span class=o>=</span><span class=n>vlm</span><span class=o>.</span><span class=n>vision_backbone</span><span class=o>.</span><span class=n>default_image_resolution</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>shuffle_buffer_size</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>shuffle_buffer_size</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>image_aug</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>image_aug</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 获取VLA数据集和collator</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 保存数据集统计信息以便在推理时去归一化</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>overwatch</span><span class=o>.</span><span class=n>is_rank_zero</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>save_dataset_statistics</span><span class=p>(</span><span class=n>vla_dataset</span><span class=o>.</span><span class=n>dataset_statistics</span><span class=p>,</span> <span class=n>run_dir</span><span class=p>)</span>  <span class=c1># 保存数据集统计信息</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 创建训练策略</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Initializing Train Strategy `</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>train_strategy</span><span class=si>}</span><span class=s2>`&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>train_strategy</span> <span class=o>=</span> <span class=n>get_train_strategy</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>train_strategy</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>train_strategy</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>vlm</span><span class=o>=</span><span class=n>vlm</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>device_id</span><span class=o>=</span><span class=n>device_id</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>=</span><span class=n>stage</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>epochs</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>epochs</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>max_steps</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>max_steps</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>global_batch_size</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>global_batch_size</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>per_device_batch_size</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>per_device_batch_size</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>learning_rate</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>learning_rate</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>weight_decay</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>weight_decay</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>max_grad_norm</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>max_grad_norm</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>lr_scheduler_type</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>lr_scheduler_type</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>warmup_ratio</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>warmup_ratio</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>enable_gradient_checkpointing</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>enable_gradient_checkpointing</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>enable_mixed_precision_training</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>enable_mixed_precision_training</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>reduce_in_full_precision</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>vla</span><span class=o>.</span><span class=n>reduce_in_full_precision</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>worker_init_fn</span><span class=o>=</span><span class=n>worker_init_fn</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 初始化训练策略</span>
+</span></span><span class=line><span class=cl>    <span class=n>train_strategy</span><span class=o>.</span><span class=n>run_setup</span><span class=p>(</span><span class=n>run_dir</span><span class=o>=</span><span class=n>run_dir</span><span class=p>,</span> <span class=n>n_train_examples</span><span class=o>=</span><span class=nb>len</span><span class=p>(</span><span class=n>vla_dataset</span><span class=p>))</span>  <span class=c1># 设置训练策略</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 创建度量工具 =&gt;&gt; 动态跟踪，记录到指定的跟踪器（例如JSONL，Weights &amp; Biases）</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating Metrics with Active Trackers =&gt; `</span><span class=si>{</span><span class=n>cfg</span><span class=o>.</span><span class=n>trackers</span><span class=si>}</span><span class=s2>`&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>metrics</span> <span class=o>=</span> <span class=n>VLAMetrics</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>trackers</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>cfg</span><span class=o>.</span><span class=n>run_id</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>run_dir</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>draccus</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>cfg</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>wandb_project</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>wandb_project</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>wandb_entity</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>wandb_entity</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>resume_step</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>resume_step</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>resume_epoch</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>resume_epoch</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 创建度量工具</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 运行VLA训练</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Starting VLA Training Loop&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>train_strategy</span><span class=o>.</span><span class=n>run_vla_training</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>vla_dataset</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>collator</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>action_tokenizer</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>metrics</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>save_interval</span><span class=o>=</span><span class=n>cfg</span><span class=o>.</span><span class=n>save_interval</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>  <span class=c1># 运行VLA训练</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 完成</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Done with Training =&gt;&gt; Finalizing Metrics&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>metrics</span><span class=o>.</span><span class=n>finalize</span><span class=p>()</span>  <span class=c1># 完成度量工具</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 完成所有操作</span>
+</span></span><span class=line><span class=cl>    <span class=n>overwatch</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;... and that&#39;s all, folks!&#34;</span><span class=p>)</span>  <span class=c1># 记录日志信息</span>
+</span></span><span class=line><span class=cl>    <span class=n>dist</span><span class=o>.</span><span class=n>barrier</span><span class=p>()</span>  <span class=c1># 同步所有进程</span>
+</span></span><span class=line><span class=cl>    <span class=n>dist</span><span class=o>.</span><span class=n>destroy_process_group</span><span class=p>()</span>  <span class=c1># 销毁进程组</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>train</span><span class=p>()</span>  <span class=c1># 如果是主模块，则运行训练函数</span>
+</span></span></code></pre></td></tr></table></div></div><p>在这里暂时不用关注太多的事情，我第一件关心的事情是，一开始 <code>import</code> 的那么多的库里面，他们分别起到了什么作用。</p><p>假如说前往 OpenVLA 的 <a class=link href=https://github.com/openvla/openvla target=_blank rel=noopener>Github 仓库</a>，可以发现其 fork 了另一个库，也就是 <a class=link href=https://github.com/TRI-ML/prismatic-vlms target=_blank rel=noopener>prismatic-vlms</a>，在这里我只想关注 OpenVLA 的实现，所以我想要知道，相较于 prismatic-vlms，OpenVLA 有什么改动。</p><h3 id=prismatic-vlms>prismatic-vlms</h3><p>在 prismatic-vlms 中，同样运行一下 <code>tree</code>，看一下文件结构：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>├───prismatic
+</span></span><span class=line><span class=cl>│   ├───conf
+</span></span><span class=line><span class=cl>│   ├───models
+</span></span><span class=line><span class=cl>│   │   ├───backbones
+</span></span><span class=line><span class=cl>│   │   │   ├───llm
+</span></span><span class=line><span class=cl>│   │   │   │   └───prompting
+</span></span><span class=line><span class=cl>│   │   │   └───vision
+</span></span><span class=line><span class=cl>│   │   └───vlms
+</span></span><span class=line><span class=cl>│   ├───overwatch
+</span></span><span class=line><span class=cl>│   ├───preprocessing
+</span></span><span class=line><span class=cl>│   │   └───datasets
+</span></span><span class=line><span class=cl>│   ├───training
+</span></span><span class=line><span class=cl>│   │   └───strategies
+</span></span><span class=line><span class=cl>│   │   └───strategies
+</span></span><span class=line><span class=cl>│   └───util
+</span></span><span class=line><span class=cl>└───scripts
+</span></span><span class=line><span class=cl>    └───additional-datasets
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>conf</code> 里面，可以发现的是，其中包括 <code>datasets.py</code> 以及 <code>models.py</code> 这两个文件，OpenVLA 增加了一个新的 <code>vla.py</code>，也是同样一个代码风格。</p><p>以 <code>vla.py</code> 为例，具有一个 <code>VLAConfig</code> 的类：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>VLAConfig</span><span class=p>(</span><span class=n>ChoiceRegistry</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=c1># fmt: off</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla_id</span><span class=p>:</span> <span class=nb>str</span>                                     <span class=c1># Unique VLA Policy ID that fully specifies a configuration variant</span>
+</span></span><span class=line><span class=cl>    <span class=n>base_vlm</span><span class=p>:</span> <span class=n>Union</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Path</span><span class=p>]</span>                      <span class=c1># Base VLM as ID/Path to Run Directory (e.g., `prism-dinosiglip+7b`)</span>
+</span></span><span class=line><span class=cl>    <span class=n>freeze_vision_backbone</span><span class=p>:</span> <span class=nb>bool</span>                    <span class=c1># Freeze Vision Backbone Parameters (akin to pretraining)</span>
+</span></span><span class=line><span class=cl>    <span class=n>freeze_llm_backbone</span><span class=p>:</span> <span class=nb>bool</span>                       <span class=c1># Freeze LLM Backbone parameters</span>
+</span></span><span class=line><span class=cl>    <span class=n>unfreeze_last_llm_layer</span><span class=p>:</span> <span class=nb>bool</span>                   <span class=c1># Unfreeze final layer of LLM (only takes effect if LLM is frozen)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Data Mixture Parameters</span>
+</span></span><span class=line><span class=cl>    <span class=n>data_mix</span><span class=p>:</span> <span class=nb>str</span>                                   <span class=c1># Open-X Embodiment Dataset =&gt;&gt; Unique Mixture ID (e.g., `bridge`)</span>
+</span></span><span class=line><span class=cl>    <span class=n>shuffle_buffer_size</span><span class=p>:</span> <span class=nb>int</span>                        <span class=c1># Size of Shuffle Buffer (100K for Bridge, 1M for OXE)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Optimization Parameters</span>
+</span></span><span class=line><span class=cl>    <span class=n>epochs</span><span class=p>:</span> <span class=nb>int</span>                                     <span class=c1># Epochs to Run (in case `max_steps` is not specified)</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_steps</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>int</span><span class=p>]</span>                        <span class=c1># [Optional] Max Gradient Steps to Run (overrides `epochs`)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>expected_world_size</span><span class=p>:</span> <span class=nb>int</span>                        <span class=c1># Expected # of GPUs =&gt;&gt; allows us to gate training on hardware</span>
+</span></span><span class=line><span class=cl>    <span class=n>global_batch_size</span><span class=p>:</span> <span class=nb>int</span>                          <span class=c1># Global Batch Size (divided across processes / world size)</span>
+</span></span><span class=line><span class=cl>    <span class=n>per_device_batch_size</span><span class=p>:</span> <span class=nb>int</span>                      <span class=c1># Per-Device Batch Size (per-process / individual GPU)</span>
+</span></span><span class=line><span class=cl>                                                    <span class=c1>#   =&gt;&gt; # of accumulation steps is auto-computed</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>learning_rate</span><span class=p>:</span> <span class=nb>float</span>                            <span class=c1># Peak Learning Rate (`lr_scheduler_type` sets warmup/decay)</span>
+</span></span><span class=line><span class=cl>    <span class=n>weight_decay</span><span class=p>:</span> <span class=nb>float</span>                             <span class=c1># Weight Decay for AdamW Optimizer</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_grad_norm</span><span class=p>:</span> <span class=nb>float</span>                            <span class=c1># Max Grad Norm (for global gradient clipping)</span>
+</span></span><span class=line><span class=cl>    <span class=n>lr_scheduler_type</span><span class=p>:</span> <span class=nb>str</span>                          <span class=c1># LR Scheduler (usually: &#34;constant&#34; | &#34;linear-warmup+cosine-decay&#34;)</span>
+</span></span><span class=line><span class=cl>    <span class=n>warmup_ratio</span><span class=p>:</span> <span class=nb>float</span>                             <span class=c1># Fraction of Steps to Warmup (for warmup LR schedulers)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>train_strategy</span><span class=p>:</span> <span class=nb>str</span>                             <span class=c1># Train Strategy (default &#34;fsdp-full-shard&#34;)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Enable Gradient/Activation Checkpointing (for the LLM Backbone)</span>
+</span></span><span class=line><span class=cl>    <span class=n>enable_gradient_checkpointing</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>      <span class=c1># Enable Gradient/Activation Checkpointing during Training</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Mixed Precision Training via Torch Native AMP (`autocast`)</span>
+</span></span><span class=line><span class=cl>    <span class=n>enable_mixed_precision_training</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>    <span class=c1># Enable Traditional BF16 Mixed Precision</span>
+</span></span><span class=line><span class=cl>    <span class=n>reduce_in_full_precision</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>           <span class=c1># Accumulate/Reduce All-Gather Gradients in FP32 Full Precision</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># fmt: on</span>
+</span></span></code></pre></td></tr></table></div></div><p>这等于说是全部的需要的配置信息了，接下来就需要在里面塞入一些配置就好了，之后在创建的时候，使用类似于 factory 的东西进行调用就可以了。</p><p>于是就使用一个配置即可：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Exp_SigLIP_224px_Bridge</span><span class=p>(</span><span class=n>VLAConfig</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla_id</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;siglip-224px+mx-bridge&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>base_vlm</span><span class=p>:</span> <span class=n>Union</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Path</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;siglip-224px+7b&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>freeze_vision_backbone</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=n>freeze_llm_backbone</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=n>unfreeze_last_llm_layer</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Data Mixture Parameters</span>
+</span></span><span class=line><span class=cl>    <span class=n>data_mix</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;bridge&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>shuffle_buffer_size</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>256_000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Optimization Parameters</span>
+</span></span><span class=line><span class=cl>    <span class=n>epochs</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>1000</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_steps</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>int</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>expected_world_size</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>global_batch_size</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>256</span>
+</span></span><span class=line><span class=cl>    <span class=n>per_device_batch_size</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>32</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>learning_rate</span><span class=p>:</span> <span class=nb>float</span> <span class=o>=</span> <span class=mf>2e-5</span>
+</span></span><span class=line><span class=cl>    <span class=n>weight_decay</span><span class=p>:</span> <span class=nb>float</span> <span class=o>=</span> <span class=mf>0.0</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_grad_norm</span><span class=p>:</span> <span class=nb>float</span> <span class=o>=</span> <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=n>lr_scheduler_type</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;constant&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>warmup_ratio</span><span class=p>:</span> <span class=nb>float</span> <span class=o>=</span> <span class=mf>0.0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>train_strategy</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;fsdp-full-shard&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>对于其他的配置来说的话，相较于这个原来的配置文件，只需要进行少量的修改，于是直接进行继承就好：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Exp_FreezeVIT_SigLIP_224px_Bridge</span><span class=p>(</span><span class=n>Exp_SigLIP_224px_Bridge</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>vla_id</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;siglip-224px-icy+mx-bridge&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>base_vlm</span><span class=p>:</span> <span class=n>Union</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Path</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;siglip-224px+7b&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>freeze_vision_backbone</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span></code></pre></td></tr></table></div></div><p>之后实现一个枚举：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># === Define a VLA Registry Enum for Reference &amp; Validation ===</span>
+</span></span><span class=line><span class=cl><span class=nd>@unique</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>VLARegistry</span><span class=p>(</span><span class=n>Enum</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Sanity Check Configurations =&gt;&gt; BridgeV2</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_MX_BRIDGE</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_Bridge</span>
+</span></span><span class=line><span class=cl>    <span class=n>DINOSIGLIP_224PX_MX_BRIDGE</span> <span class=o>=</span> <span class=n>Exp_DinoSigLIP_224px_Bridge</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># SigLIP Frozen Backbone Experiment</span>
+</span></span><span class=line><span class=cl>    <span class=n>FREEZE_SIGLIP_224PX_MX_BRIDGE</span> <span class=o>=</span> <span class=n>Exp_FreezeVIT_SigLIP_224px_Bridge</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># [OpenVLA v0.1 7B] SigLIP 224px + OXE Magic Soup</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_MX_OXE_MAGIC_SOUP</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_OXE_Magic_Soup</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># [OpenVLA 7B] DINO + SigLIP 224px + OXE Magic Soup++</span>
+</span></span><span class=line><span class=cl>    <span class=n>DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS</span> <span class=o>=</span> <span class=n>Exp_DinoSigLIP_224px_OXE_Magic_Soup_Plus</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># === TDROID Fine-tuning Configs ===</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_MX_TDROID_CARROT_IN_BOWL</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_TDROID_CarrotInBowl</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_MX_TDROID_POUR_CORN_IN_POT</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_TDROID_PourCornInPot</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_ICY_MX_TDROID_CARROT_IN_BOWL</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_Icy_TDROID_CarrotInBowl</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_LASTLAYER_MX_TDROID_CARROT_IN_BOWL</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_LastLayer_TDROID_CarrotInBowl</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_SANDWICH_MX_TDROID_CARROT_IN_BOWL</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_Sandwich_TDROID_CarrotInBowl</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># === DROID Fine-tuning Configs ===</span>
+</span></span><span class=line><span class=cl>    <span class=n>SIGLIP_224PX_MX_DROID_WIPE</span> <span class=o>=</span> <span class=n>Exp_SigLIP_224px_Droid_Wipe</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nd>@property</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>vla_id</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>value</span><span class=o>.</span><span class=n>vla_id</span>
+</span></span></code></pre></td></tr></table></div></div><p>然后批量将这些内容注册成 <code>subclass</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Register VLAs in Choice Registry</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>vla_variant</span> <span class=ow>in</span> <span class=n>VLARegistry</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>VLAConfig</span><span class=o>.</span><span class=n>register_subclass</span><span class=p>(</span><span class=n>vla_variant</span><span class=o>.</span><span class=n>vla_id</span><span class=p>,</span> <span class=n>vla_variant</span><span class=o>.</span><span class=n>value</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>虽然现在 prismatic-vlms 我还没有看完，但是我已经急了，所以对一些内容进行了跳过，接下来再次回到 <code>train.py</code>。</p><h3 id=run_vla_training>run_vla_training</h3><p>简单检查一下训练的代码，不难发现，前面的大多数内容都是类似的，除了一些获取数据集之类的操作之外，主要还是正在设置各种的配置文件，但是在这里暂时先不关心这些，而是直接跳到 <code>run_vla_training</code>，换句话说，我想要知道其论文中的训练是如何实现的。</p><p>在这里简单再次复述一下 OpenVLA 的训练过程，</p></section><footer class=article-footer><section class=article-tags><a href=/Blog/tags/tech-talk/>Tech Talk</a>
+<a href=/Blog/tags/llm/>LLM</a>
+<a href=/Blog/tags/code-reading/>Code Reading</a>
+<a href=/Blog/tags/embodied-ai/>Embodied AI</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under MIT</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/Blog/p/llm-talk-2/><div class=article-image><img src=/Blog/p/llm-talk-2/cover.77d1c008ee84a1c0d2d82fa8ff0f5def_hu16905013641152106528.jpg width=250 height=150 loading=lazy alt="Featured image of post LLM Talk 2" data-hash="md5-d9HACO6EocDS2C+o/w9d7w=="></div><div class=article-details><h2 class=article-title>LLM Talk 2</h2></div></a></article><article class=has-image><a href=/Blog/p/llm-talk-1/><div class=article-image><img src=/Blog/p/llm-talk-1/cover.fa06aa6c7b5d239b630906b9878b1859_hu10679657573008431902.jpg width=250 height=150 loading=lazy alt="Featured image of post LLM Talk 1" data-hash="md5-+gaqbHtdI5tjCQa5h4sYWQ=="></div><div class=article-details><h2 class=article-title>LLM Talk 1</h2></div></a></article><article class=has-image><a href=/Blog/p/llm-talk-0/><div class=article-image><img src=/Blog/p/llm-talk-0/cover.14d230888754facdc38bcba7c256a1cc_hu10186549384755557257.jpg width=250 height=150 loading=lazy alt="Featured image of post LLM Talk 0" data-hash="md5-FNIwiIdU+s3Di8unwlahzA=="></div><div class=article-details><h2 class=article-title>LLM Talk 0</h2></div></a></article><article class=has-image><a href=/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/><div class=article-image><img src=/Blog/p/isaac-sim-%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/cover.6024f0bf6f60544ef12453d3f877b742_hu8627932685599706825.png width=250 height=150 loading=lazy alt="Featured image of post Isaac Sim 踩坑日记" data-hash="md5-YCTwv29gVE7xJFPT+He3Qg=="></div><div class=article-details><h2 class=article-title>Isaac Sim 踩坑日记</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=Axi404/Blog data-repo-id=R_kgDOMN0OzQ data-category=Announcements data-category-id=DIC_kwDOMN0Ozc4CgmNX data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2024 Axi404</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.26.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/Blog/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

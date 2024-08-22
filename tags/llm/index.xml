@@ -1,0 +1,1483 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLM on Axi404</title><link>https://axi404.github.io/Blog/tags/llm/</link><description>Recent content in LLM on Axi404</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Aug 2024 10:00:00 +0800</lastBuildDate><atom:link href="https://axi404.github.io/Blog/tags/llm/index.xml" rel="self" type="application/rss+xml"/><item><title>LLM Talk 2</title><link>https://axi404.github.io/Blog/p/llm-talk-2/</link><pubDate>Fri, 16 Aug 2024 10:00:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/llm-talk-2/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/llm-talk-2/cover.jpg" alt="Featured image of post LLM Talk 2" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>在代表性工作之余，也有必要阅读一些其他的内容，这当然也需要总结，所以新开设一个章节，记录在这里。&lt;/p>
+&lt;h2 id="pointllmhttpsarxivorgpdf230816911">&lt;a class="link" href="https://arxiv.org/pdf/2308.16911" target="_blank" rel="noopener"
+>PointLLM&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/PointLLM.png"
+width="1150"
+height="335"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/PointLLM_hu553825487982873834.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/PointLLM_hu5134396539344614531.png 1024w"
+loading="lazy"
+alt="The pipeline of PointLLM"
+class="gallery-image"
+data-flex-grow="343"
+data-flex-basis="823px"
+>&lt;/p>
+&lt;p>PointLLM 可以是说十分标志的工作了，属于是中规中矩，但是效果确实很不错。就像是一般的 VLM 一样，但是只不过是将图像的模态输入换成了点云，然后使用 point encoder，总体来说改变并不算多。可以说这篇工作的诞生是符合直觉的，点云模态也可以作为一种语言进行建模。&lt;/p>
+&lt;h2 id="embodiedgpthttpsarxivorgpdf230515021">&lt;a class="link" href="https://arxiv.org/pdf/2305.15021" target="_blank" rel="noopener"
+>EmbodiedGPT&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/EmbodiedGPT.png"
+width="1268"
+height="636"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/EmbodiedGPT_hu17646664235410338742.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/EmbodiedGPT_hu7795959124199465473.png 1024w"
+loading="lazy"
+alt="The pipeline of EmbodiedGPT"
+class="gallery-image"
+data-flex-grow="199"
+data-flex-basis="478px"
+>&lt;/p>
+&lt;p>EmbodiedGPT 也是一篇比较符合直觉的工作，但是不是那么的极简。本身是按照 BLIP2 的范式来的，用了一个 Embodied-Former（其实也就是 Q-former）来连接 ViT 和 LLaMA3，来做一个桥梁，之后输出一个 instance information，一个 CNN 处理图像输出一个 global information，两个 concat 一下作为 low-level policy 的输入。&lt;/p>
+&lt;p>本身值得说的是，一方面这种设计，为什么不单独通过 embodied-former 直接输出的 instance information 呢？毕竟也是通过了 ViT 的信息编码的，之所以还需要一个 CNN，大概率是这样做了之后发现表征能力不强，所以需要更加显式的提供一些信息。&lt;/p>
+&lt;h2 id="rt-trajectoryhttpsarxivorgpdf231101977">&lt;a class="link" href="https://arxiv.org/pdf/2311.01977" target="_blank" rel="noopener"
+>RT-Trajectory&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/RT-Trajectory.png"
+width="1069"
+height="561"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/RT-Trajectory_hu13764125952902433046.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/RT-Trajectory_hu16656104565665843010.png 1024w"
+loading="lazy"
+alt="The pipeline of RT-Trajectory"
+class="gallery-image"
+data-flex-grow="190"
+data-flex-basis="457px"
+>&lt;/p>
+&lt;p>RT-Trajectory 是一个输出 low-level policy 的模型，使用了 RT-1 的框架作为动作的输出，在此之前会输入之前和当前的帧以及一个工作轨迹，这里面动作轨迹通过 R 和 G 两个通道表征了时间顺序以及高度信息，和图像一起输入。因为从文字 prompt 改为了图像（轨迹），所以本质上具有更高的细粒度，性能更好也很正常。&lt;/p>
+&lt;h2 id="im2flow2acthttpsarxivorgpdf240715208">&lt;a class="link" href="https://arxiv.org/pdf/2407.15208" target="_blank" rel="noopener"
+>Im2Flow2Act&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act.png"
+width="1260"
+height="467"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act_hu5565080518049794872.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act_hu10282474898964292122.png 1024w"
+loading="lazy"
+alt="The pipeline of Im2Flow2Act"
+class="gallery-image"
+data-flex-grow="269"
+data-flex-basis="647px"
+>&lt;/p>
+&lt;p>Im2Flow2Act 算是一篇比较有意思的工作，本身应该是 ATM 的后续工作，不过因为糟糕的阅读顺序，我其实是先阅读的这一篇。&lt;/p>
+&lt;p>因为确实需要的前置知识还是很多的，所以说先暂且形而上学的理解一下这个问题，后续估计需要详细的看一看相关的论文。Im2Flow2Act 的核心思想在于，首先根据任务生成对象流，对象流就具有很高的细粒度了，之后对象流通过模仿学习来获得动作规划。&lt;/p>
+&lt;p>这篇工作使用了 Diffusion 里面的动作生成（视频生成）作为流生成的方法。首先先框出来一个物体，在物体上面可以采样若干的关键点，这些点就组成了一个 $H\times W$ 的图片，但是这个图片不是正常的图片，和RT-Trajectory 里面的轨迹图片一样，是通过像素表征了别的信息，这里面就是图像系下的坐标和可见度。那么根据条件输入，就可以生成视频了，而这个视频本质上表征的是这个物体在不同时刻的空间信息。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act-2.png"
+width="1294"
+height="255"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act-2_hu12324251025328306913.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/Im2Flow2Act-2_hu4128093339197168695.png 1024w"
+loading="lazy"
+alt="Flow generation"
+class="gallery-image"
+data-flex-grow="507"
+data-flex-basis="1217px"
+>&lt;/p>
+&lt;p>流生成了之后，基本上是直接使用模仿学习进行的运动规划，用了 Transformer 去编码当前帧的状态，再用 Transformer 去和任务流做融合，来生成剩余的流，最后交给 Diffusion Policy 去生成动作。&lt;/p>
+&lt;p>粗浅的凑一下的话，创新性在于使用生成式的方法生成高细粒度的物体流，显然是优于 RT-Trajectory 的，同时第二阶段的时候使用当前的状态和任务流做融合，有一种 nav 中全局规划和局部规划的意味，但是并不完全。总的来说是一篇 based 轨迹的动作规划的很不错的工作，而且相较于 RT-Trajectory，更有细粒度，而且保证了公平性。&lt;/p>
+&lt;h2 id="llarvahttpsarxivorgpdf240611815">&lt;a class="link" href="https://arxiv.org/pdf/2406.11815" target="_blank" rel="noopener"
+>LLARVA&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA.png"
+width="568"
+height="484"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA_hu16478159279018403801.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA_hu1999976497384346944.png 1024w"
+loading="lazy"
+alt="The pipeline of LLARVA"
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="281px"
+>&lt;/p>
+&lt;p>LLARVA 相较于之前的工作，可以说也是一个比较符合直觉的工作，使用指令调优（IT）的方法进行训练，也是处理了 OXE 这个数据集。从 Pipeline 也不难看出，LLARVA 是一个比较经典的架构，基本上也是 LLAVA 的框架，训练一个 projection layer 以及后面的 Transformer 做对齐以及模态的融合。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA-2.png"
+width="1159"
+height="134"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA-2_hu16334294272978712019.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/LLARVA-2_hu171522114758417341.png 1024w"
+loading="lazy"
+alt="The instruction of LLARVA"
+class="gallery-image"
+data-flex-grow="864"
+data-flex-basis="2075px"
+>&lt;/p>
+&lt;p>其创新点其实有点 World Model 的意思，通过让模型预测将来的视觉轨迹这种更具细粒度的内容，之后输出 Action，这明显是一个更加困难而且包含了更多未来信息的任务，所以效果会更好也是显而易见的。当然，本身 IT 的方法，自然也可以让模型更好地完成任务就是了。&lt;/p>
+&lt;h2 id="atmhttpsarxivorgpdf240100025">&lt;a class="link" href="https://arxiv.org/pdf/2401.00025" target="_blank" rel="noopener"
+>ATM&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/ATM.png"
+width="1781"
+height="810"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/ATM_hu13827657837283113655.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/ATM_hu10889338598371124634.png 1024w"
+loading="lazy"
+alt="The pipeline of ATM"
+class="gallery-image"
+data-flex-grow="219"
+data-flex-basis="527px"
+>&lt;/p>
+&lt;p>这篇论文可以说影响力还是很拉满的，对于后续的一些轨迹 based 的工作，比如 Im2Flow2Act，明显是有很大的影响的，本身也是拿了 RSS 的满分，不过因为理解了之前的这些论文，这一篇其实很好理解。&lt;/p>
+&lt;img src="ATM-2.png" alt="Trajectory Conditional Policy" style="display: block; margin: 0 auto; zoom: 50%;">
+&lt;p>本身的话，ATM 没有采取像是 Im2Flow2Act 一样的物体轨迹的预测，这也比较好理解，全局的点一方面或许可以具有全局的动作视野，而另一方面，全局的点也会比较好获取一些。本身的方法就是使用点跟踪的技术对图像里的点进行跟踪来生成数据集，然后让一个 track transformer 来预测点的轨迹。接下来就是一个正常的 Trajectory Conditional Policy，本身的实现，论文里也说了，也是使用 cls token 去做全局表征（ViT like），然后用了 track prediction 去作为额外的 condition 进行 fusion。&lt;/p>
+&lt;p>从创新点来说，这篇算是开山之作之一了，引入了 Track 作为中间的表征以及条件，并且可以通过数据集的一些生成的技术进行标准的损失计算，因此在监督下训练提升的很好也是意料之中了。一方面增加了更具细粒度的输入，一方面这种细粒度也体现在任务的难度上（hard task），二者共同导致模型的简单易用。&lt;/p>
+&lt;h2 id="track2acthttpsarxivorgpdf240501527">&lt;a class="link" href="https://arxiv.org/pdf/2405.01527" target="_blank" rel="noopener"
+>Track2Act&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act.png"
+width="982"
+height="378"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act_hu13478923946785409988.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act_hu12237593858482207075.png 1024w"
+loading="lazy"
+alt="DiT of Track2Act"
+class="gallery-image"
+data-flex-grow="259"
+data-flex-basis="623px"
+>&lt;/p>
+&lt;p>老实说，我并没有感觉到 Track2Act 和 ATM 之间是否真的具有较大的差异，二者的方法实际上是近似的，也就是先预测轨迹，之后将轨迹作为动作生成的条件。首先还是进行点的预测，在这里使用的是 DiT，随机 sample 一些点和轨迹，然后就可以进行生成了，将当前状态、目标以及迭代次数都作为 adaptive conditioning 输入。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act-2.png"
+width="1544"
+height="438"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act-2_hu9268430916526509800.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/Track2Act-2_hu11420025774295333665.png 1024w"
+loading="lazy"
+alt="Residual policy of Track2Act"
+class="gallery-image"
+data-flex-grow="352"
+data-flex-basis="846px"
+>&lt;/p>
+&lt;p>有了这些点之后，就不难给出一个刚性变化了，然而刚性变化注定不太靠谱，于是乎加入了一个残差策略，再用另一个模型的预测来修正之前的结果。按照文章的表述，残差控制可以增加准确度并未首创，不过确实是一个纠正偏差的好方法，前面的轨迹生成并求刚性变化，获得一个变化之后加上残差，这本质上其实和 ATM 直接通过一个模型进行 action 的求解是等价的，毕竟刚性变化同样可以用模型来进行表征。&lt;/p>
+&lt;h2 id="extreme-cross-embodimenthttpsarxivorgpdf240219432">&lt;a class="link" href="https://arxiv.org/pdf/2402.19432" target="_blank" rel="noopener"
+>Extreme Cross-Embodiment&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Extreme-Cross-Embodiment.png"
+width="1178"
+height="434"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/Extreme-Cross-Embodiment_hu5848427255907965082.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/Extreme-Cross-Embodiment_hu2906568667324405879.png 1024w"
+loading="lazy"
+alt="The pipeline of Extreme Cross-Embodiment"
+class="gallery-image"
+data-flex-grow="271"
+data-flex-basis="651px"
+>&lt;/p>
+&lt;p>这篇文章的感觉有点野心很大故事丰满但是后继乏力的感觉。基本的故事是说要实现一种跨不同机器人模态的表征学习，但是实际上只是视觉导航以及抓取这两种任务，甚至并不涉及灵巧手，这并不能算十分的跨模态。本身的想法就是说，移动和抓取的本质上都是让相机坐标系发生了坐标系变换，实际上是等价的（虽然其实并不等价，因为机械臂受到物理尺寸限制），所以说可以统一，然后就开始直接训练一个模型，输入是 state 和 goal，之后直接融合，获得两个目标，一个是机械臂的位姿（DiT），一个是距离的预测（MLP），也算是将这两个任务统一了一点。&lt;/p>
+&lt;p>之前的任务，绝大多数都在处理单一的机器人下的任务，一般为机械臂，这篇的创新点也就止步于同时使用两种训练数据了。然而或许可以思考这样一个问题，假如说机器人的种类是可以穷尽的，或者说常见机器人的种类是可以穷尽的，一种 BEiTV3-like 的模型结构或许是可能的，直接在 Transformer 中引入 EMOE（Embodied MOE），然后同时使用这些全部的数据。&lt;/p>
+&lt;h2 id="ecothttpsarxivorgpdf240708693">&lt;a class="link" href="https://arxiv.org/pdf/2407.08693" target="_blank" rel="noopener"
+>ECoT&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/ECoT.png"
+width="1319"
+height="366"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/ECoT_hu443176413743909562.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/ECoT_hu9643119002823615094.png 1024w"
+loading="lazy"
+alt="The pipeline of ECoT"
+class="gallery-image"
+data-flex-grow="360"
+data-flex-basis="864px"
+>&lt;/p>
+&lt;p>ECoT 这篇文章其实算是中规中矩，就是正常的 CoT，但是加入了 Embodied 的条件，能够 work 也是意料之中，或许其生成 CoT 数据的操作是可以借鉴的吧。&lt;/p>
+&lt;h2 id="voxposerhttpsarxivorgpdf230705973">&lt;a class="link" href="https://arxiv.org/pdf/2307.05973" target="_blank" rel="noopener"
+>VoxPoser&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/VoxPoser.png"
+width="1161"
+height="352"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/VoxPoser_hu6482975638033301594.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/VoxPoser_hu10047120591277572146.png 1024w"
+loading="lazy"
+alt="The pipeline of VoxPoser"
+class="gallery-image"
+data-flex-grow="329"
+data-flex-basis="791px"
+>&lt;/p>
+&lt;p>VoxPoser 这一篇其实我不太理解，其本身是通过 LLM 以及 VLM 获取图像以及任务的表征，并且想要输出两张价值图，其中 VLM 是传统的 VLM，类似于开集检测器，可以获得物体的位置，之后 LLM 来去处理这些位置，获得两张价值图，这两张价值图进一步引导模型进行轨迹规划。疑点在于，整个的框架的表征被极大的压缩了，本来丰富的视觉特征被压缩到了必要的物体上，之后被 LLM 处理为了价值图，个人感觉这套体系并不稳定，任何一环出了差错，整体就崩掉了。然而使用价值图作为引导是值得参考的，这为模型的轨迹规划提供了更明确的提示。&lt;/p>
+&lt;h2 id="moohttpsarxivorgpdf230300905">&lt;a class="link" href="https://arxiv.org/pdf/2303.00905" target="_blank" rel="noopener"
+>MOO&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOO.png"
+width="1311"
+height="331"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOO_hu1561002853506322742.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOO_hu8422180632441360151.png 1024w"
+loading="lazy"
+alt="The pipeline of MOO"
+class="gallery-image"
+data-flex-grow="396"
+data-flex-basis="950px"
+>&lt;/p>
+&lt;p>MOO 的 pipeline 也很简单，本身甚至可以说设置了一个 hard task，而这都是为了设置一个通用的接口。因为 MOO 本身使用了 RT-1 的架构，所以可以理解为，其本身对于复杂的语言表征能力有限，而且不同的任务中，这些语言的格式可能也不相同。不过这个接口，我个人感觉就是本身就是 RT-1 已经具备的。&lt;/p>
+&lt;p>大致的流程就像 pipeline 里面描述的一样，其可以将 Mask 作为一个通道融到图像里面，然后将动词提取出来。一个小的疑惑在于，比如说图中的任务，move 是一个向量，没有语序的话，模型如何理解这种顺序呢？然而这并非这篇论文核心探讨的问题，所以其实也无所谓。&lt;/p>
+&lt;h2 id="chatgpt-for-roboticshttpsarxivorgpdf230617582">&lt;a class="link" href="https://arxiv.org/pdf/2306.17582" target="_blank" rel="noopener"
+>ChatGPT for Robotics&lt;/a>
+&lt;/h2>&lt;p>本身可以理解为使用 ChatGPT 去做机器人的一个发散性的思考，同时提出了诸如 PromptCraft 之类的工具。&lt;/p>
+&lt;h2 id="pivothttpsarxivorgpdf240207872">&lt;a class="link" href="https://arxiv.org/pdf/2402.07872" target="_blank" rel="noopener"
+>PIVOT&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/PIVOT.png"
+width="951"
+height="564"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/PIVOT_hu8877757109724288711.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/PIVOT_hu6274401565301454789.png 1024w"
+loading="lazy"
+alt="The pipeline of PIVOT"
+class="gallery-image"
+data-flex-grow="168"
+data-flex-basis="404px"
+>&lt;/p>
+&lt;p>这篇文章的思想还是比较有趣的，也算是充分利用的 MLLM 的 VLM 能力。本身的思路其实在于，让大模型在具身智能的任务中进行生成式不太靠谱，但是去做选择题还是可以的。于是可以先随机 sample 一些动作或者轨迹，之后将这些内容 annotate 到图片上（与 CoPa 同理解，VLM 的 V 更具有空间的表征能力），让模型选择，然后一次次的选择即可。&lt;/p>
+&lt;h2 id="code-as-policieshttpsarxivorgpdf220907753">&lt;a class="link" href="https://arxiv.org/pdf/2209.07753" target="_blank" rel="noopener"
+>Code As Policies&lt;/a>
+&lt;/h2>&lt;img src="Code-As-Policies.png" alt="The pipeline of Code As Policies" style="display: block; margin: 0 auto; zoom: 50%;">
+&lt;p>这篇文章的思路也很简答，就是可以使用代码来控制机器人，这等于可以让 LLM 与环境进行持续且合理的交互。大模型可以通过调用 API 来获取环境信息，比如说调用视觉 API 来获取物体位置，同时也支持了使用一些比如 for 之类的操作，毕竟代码肯定比一次次的生成式更加有条理。&lt;/p>
+&lt;h2 id="mokahttpsarxivorgpdf240303174">&lt;a class="link" href="https://arxiv.org/pdf/2403.03174" target="_blank" rel="noopener"
+>MOKA&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOKA.png"
+width="1359"
+height="476"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOKA_hu1227818927646190066.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-2/MOKA_hu2902875177303240046.png 1024w"
+loading="lazy"
+alt="The pipeline of MOKA"
+class="gallery-image"
+data-flex-grow="285"
+data-flex-basis="685px"
+>&lt;/p>
+&lt;p>MOKA 的思路其实本质上和 CoPa 以及 PIVOT 是十分类似的，都是使用 Prompt-based 的 VLM，通过将不同的选择 annotate 到图像上，并且让模型进行选择，从而进行路径的规划。MOKA 等于说是希望通过若干的点标注，让模型学会如何去完成动作。所以流程上也是首先先找到需要操作的物体，然后再采样抓握点以及路径点之类的，最后结束。甚至说虽然 MOKA 里面没有明说，但是实际上其对于抓握点进行 filter，并且通过 filter 获得抓握姿态，这个流程实际上和 CoPa 可以说是一模一样，只是说 MOKA 希望通过路径点来完成动作，而 CoPa 则希望通过向量来完成动作。&lt;/p></description></item><item><title>LLM Talk 1</title><link>https://axi404.github.io/Blog/p/llm-talk-1/</link><pubDate>Thu, 08 Aug 2024 22:34:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/llm-talk-1/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/llm-talk-1/cover.jpg" alt="Featured image of post LLM Talk 1" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>本篇内容是因为本人在 LLM 的学习过程中，有学到不同的东西，所以需要一篇文档来总结一下，顺便也作为一个分享。本篇内容不会过多的讲解方法本身，相应的，会给出一些 insight 和思考。&lt;/p>
+&lt;p>Noting 的是，全部的内容都是直接基于论文阅读的，参考资料中提及的内容指，这些内容或许能够帮助读者进一步理解论文里说的内容。大的基石还是论文。&lt;/p>
+&lt;p>&lt;strong>由于博客本身的特性，因为在标题中添加了论文链接，想要跳转请点击目录中的序号，不然会跳转到论文中。&lt;/strong>&lt;/p>
+&lt;h2 id="bow">BOW
+&lt;/h2>&lt;p>BOW，也就是 Bag of Words，是一种十分简单的模型，简答来说就是将一句话使用词的形式进行分割，然后用键值对的形式进行储存。这样做的一个显然的结果就是，词袋模型并不能很好的建模语言的顺序，但是作为一种最为初级的 tokenizer 来说也已经很不错了。&lt;/p>
+&lt;p>所以很显然，词袋模型的第一个通病，就是处在无法对于语序进行建模这个问题上，而且同时，可以理解为这个模型是使用一种表格来进行表示的，这种表格是 one-hot 且离散的，本质上也没有很好的建模语言。&lt;/p>
+&lt;p>词袋模型的一个 trick 在于处理过大的词表，可以使用 hash 的方法，更好的利用空间。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>词袋模型 - &lt;a class="link" href="https://en.wikipedia.org/wiki/Bag-of-words_model" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Bag-of-words_model&lt;/a>&lt;/li>
+&lt;li>Feature Hash - &lt;a class="link" href="https://en.wikipedia.org/wiki/Feature_hashing" target="_blank" rel="noopener"
+>https://en.wikipedia.org/wiki/Feature_hashing&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="tf-idf">TF-IDF
+&lt;/h2>&lt;p>TF-IDF 可以理解为是一种对于知识库中的文档中的词汇的重要性的建模方法。这个思想十分简单，也是由两个因素组成，TF 和 IDF，前者用来形容一个词汇在文档中出现的次数，后者则是使用了这个词汇的文档的次数。但事实上其中使用了 log 与乘法等内容进行数学形式的计算，不过这里只讨论 insight。&lt;/p>
+&lt;p>这种方法很好地体现了一个真正的关键词汇，在文档中所需要包含的特征。首先，这个词汇一定会被反复提起，因此这个词汇与文档的关联性才高；同时，这个词汇不会被太多的文档所提及，假如被被提及太多，意味着这个词汇丧失了独特性，诸如人称代词等一系列内容，均符合 TF 的描述，因此需要 IDF 来进行 filter。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>TF-IDF - &lt;a class="link" href="https://www.cnblogs.com/L-shuai/p/13817978.html" target="_blank" rel="noopener"
+>https://www.cnblogs.com/L-shuai/p/13817978.html&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="word-2-vec">Word 2 Vec
+&lt;/h2>&lt;p>Word 2 Vec 是一种用于生成词向量的技术，它通过将词语映射到一个高维向量空间中，使得语义相似的词在向量空间中距离较近。其中比较常见的是 skip-gram 和 CBOW 两种模型，前者是使用词预测上下文，后者是使用上下文预测词。简单理解一下方法的话，CBOW 是输入一个词（one-hot 向量），然后经过编码，再解码为一个向量，最大化上下文的概率；CBOW 则是输入上下文，最大化词的概率。这两种方法显然都可以很好的训练编码器，也就使得词汇被编码到了一个连续的高维空间中。&lt;/p>
+&lt;p>Word 2 Vec 的一个 insight 是，它将词映射到了一个高维空间中，而高维空间中，距离较近的词，语义上更相似。因此，这种思想可以拓展到其他领域，例如图像，声音等等，将不同模态的信息映射到同一个高维空间中，然后进行相似度的计算。&lt;/p>
+&lt;h2 id="cliphttpsarxivorgpdf210300020">&lt;a class="link" href="https://arxiv.org/pdf/2103.00020" target="_blank" rel="noopener"
+>CLIP&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CLIP.png"
+width="1283"
+height="471"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CLIP_hu6255267894114262391.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/CLIP_hu9886061737994420452.png 1024w"
+loading="lazy"
+alt="The pipeline of CLIP"
+class="gallery-image"
+data-flex-grow="272"
+data-flex-basis="653px"
+>&lt;/p>
+&lt;p>CLIP 在某种程度上也可以说是一个开山之作，虽然说对多模态的探索早在它之前就已经开始了，然而不只是数据量很大，本身对于内容处理的范式也使得 CLIP 极具拓展性，可以在很多任务中泛化。&lt;/p>
+&lt;p>简单理解一下 CLIP，也就是使用一个图像编码器和一个文本编码器，对于一组图像文本对进行编码，然后获得输出。接下来就是对比学习类型的工作了，需要清楚的是，相匹配的图像文本对一定是在编码之后相似度很高的，那么直接对大量输出之间的余弦相似度进行优化，是一个显然的答案。&lt;/p>
+&lt;p>这里面激动人心的事情，一是在进行混合，或者说再进行多模态的相似度求解的时候，可以直接使用余弦相似度这种这种方法，这证明这些编码器在经过大量数据的训练之后，确实可以将不同模态的输入投射到一个通用的 high-level 空间中。事实上由于大多数的论文都是从故事说起，因此可能会忽略，尽管在人类的概念上图像和文本可以统一于一个高层的思维中的概念，然而这种表示，在使用数学或者计算机形式的信息时是否成立，这依然是一个问号。不过从目前的实验结果来看，答案是肯定的，而后续的一系列工作也证明了，不只是图像与文本，不同的模态之间确实可以具有一种数学意义上的高维空间中的统一。&lt;/p>
+&lt;p>当然同时，CLIP 的 prompt template 进行 zero shot 分类的技巧也同样令人印象深刻，这本质上是对于 bert 范式在多模态领域对一种拓展。后续的工作中也涌现了一系列的对于 prompt 的应用，然而这是后话了。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>CLIP - &lt;a class="link" href="https://www.bilibili.com/video/BV1SL4y1s7LQ/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1SL4y1s7LQ/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="vilthttpsarxivorgpdf210203334">&lt;a class="link" href="https://arxiv.org/pdf/2102.03334" target="_blank" rel="noopener"
+>ViLT&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLT.png"
+width="1222"
+height="446"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLT_hu9647419255588095401.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLT_hu11914698758927266329.png 1024w"
+loading="lazy"
+alt="The pipeline of ViLT"
+class="gallery-image"
+data-flex-grow="273"
+data-flex-basis="657px"
+>&lt;/p>
+&lt;p>ViLT 也算是比较经典的多模态领域的工作了，这里面需要说的东西其实不多。首先需要先理清一些常规的内容，也就是 ViT 和 Transformer 在形式上究竟有什么区别。假如说我们不去关注这两个模型的输出，一个显而易见的事情是，他们的不同点仅仅在于模型的输入部分，当然对于输入的处理也有所不同。具体来说，在文本的部分使用了 tokenizer，还在图像的部分分 patch 变成 token 之后进行了一次简单的编码。借用一下后期的 insight，假如不去在意这种简单的编码的性能，已经可以理解为，视觉信息本身就是一种语言。&lt;/p>
+&lt;p>这篇论文首先总结了之前的工作，然后给出了一个双塔的模型的对比。具体来说，双塔的多模态模型有三个组件组成，分别是文本编码器、图像编码器和多模态编码器，这其中，这三个编码器的大小也就成了一个问题。首先需要考虑的是，当我们有固定的算力的情况下，我们应该如何分配算力给三个模型。一种最为常见的做法，是把多一些的算力分配给图像，这是由于图像本身就具有更难的编码难度，然后将两个编码器在多模态上进行简单的融合 ；之后也就是 CLIP，属于是用了一个文本和图像都很大，之后在多模态进行一个简单的编码。但是一个直觉显然是，作为多模态的任务，我们需要将多模态的进行更好地处理，给足算力，因为真正的多模态的理解，不是像 CLIP 一样进行简单的高维表征的融合，而是直接从低维信息中直接获得高维的多模态理解。所以说显而易见的，可以直接将多模态的部分变成一个 Transformer，然后将不同模态的数据进行简单的 tokenize 之后就 concat 作为输入。&lt;/p>
+&lt;p>在这里提供了几个 insight，其中之一是，尽管我们认为 ViLT 的这种做法比较符合直觉，但是很明显它缺乏一种泛化能力。在已经训练好的模型的基础上，假如新加入一种新模态，例如语音，ViLT 就需要重新进行一次训练，而 CLIP 将新的编码器 align 到之前的空间中即可，原来的编码器可以 frozen。虽然说这种方法并不优雅（因为三个模态同时进行训练，所获得的图像文本编码器的权重，肯定和他们两个进行训练的时候不一样，这也是因为对于三模态的输入来说，最后获得的那个高维空间，本身也会具有新模态的含义，但是尽管如此强行的对齐依然是可以的），但也能反映出来泛化能力上的不同。&lt;/p>
+&lt;p>另一方面的几个小技巧，包括说对于图像使用数据增强（因为没有繁重的图像编码器，所以不同于之前的方法将编码后的特征储存起来使用，ViLT 作为端到端的模型，可以直接使用图像，那么图像增强就有必要了），同时避免使用 cut 以及 color 类型的增强。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>ViLT - &lt;a class="link" href="https://www.bilibili.com/video/BV14r4y1j74y/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV14r4y1j74y/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="albefhttpsarxivorgpdf210707651">&lt;a class="link" href="https://arxiv.org/pdf/2107.07651" target="_blank" rel="noopener"
+>ALBEF&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ALBEF.png"
+width="1044"
+height="468"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ALBEF_hu14855783355779402512.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/ALBEF_hu9302484069457993946.png 1024w"
+loading="lazy"
+alt="The pipeline of ALBEF"
+class="gallery-image"
+data-flex-grow="223"
+data-flex-basis="535px"
+>&lt;/p>
+&lt;p>介绍一下 ALBEF，这份工作可以说也是很经典的内容了，基本来说，符合了前人工作的几个共识。首先就是，一般来说，图像编码器需要大于文本编码器，同时的话，多模态的编码器也要尽可能的大，于是使用了 12 层 Transformer 作为图像编码器，6 层文本以及 6 层多模态。同时也是用了 ITC/ITM/MLM，这几种经典的任务。&lt;/p>
+&lt;p>其中一个创新点在于 hard negative，也就是从 ITC 中选择最相似的难样本作为 ITM 的 negative；同时还有一个，也可以理解为是自学习或者自蒸馏，反正就是加入了一个 MT 来获得稳定表征。这里面需要注意的是，事实上在训练的过程中，数据的噪声巨大无比，而且不一定准确，因此加入一个 MT，已经不是在单模态里面的那种简单平均了，而是甚至可以生成质量远高于当前 GT 的标签，这一点在后续的 BLIP 里面也有体现，也可以说是对于数据的处理。&lt;/p>
+&lt;p>但是进行一个简单的拓展，之所以使用动量的方法，本质上还是因为它是 one- stage 的，假如说使用 noisy student 那种，每训练完一个模型再作为 Teacher，肯定也是没有问题的，在这里，BLIP 似乎更加出色，后续去说。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>多模态串讲 - &lt;a class="link" href="https://www.bilibili.com/video/BV1Vd4y1v77v/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1Vd4y1v77v/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="vlmohttpsarxivorgpdf211102358">&lt;a class="link" href="https://arxiv.org/pdf/2111.02358" target="_blank" rel="noopener"
+>VLMo&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/VLMo.png"
+width="1047"
+height="778"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/VLMo_hu12239281493893823575.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/VLMo_hu3590504840222895920.png 1024w"
+loading="lazy"
+alt="The pipeline of VLMo"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="322px"
+>&lt;/p>
+&lt;p>VLMo 也可以说是一个比较经典的工作，其中提出的主要就是 MoME，但是这里面，MoE 的experts 是模型自己去选择的，而在这个里面则是手动的进行切换。&lt;/p>
+&lt;p>大概的结构就是一个 L 层的 Transformer，但是其中的 FFN 都被换成了多个 FFN 的形式，然后在训练的过程中决定使用哪一个。&lt;/p>
+&lt;p>这里面的一个 insight 在于无需使用多个 attention block，而是说确实一个 attention 就可以处理完全部内容了，而且不同的 FFN 也可以接收同样的输出，并根据自己的模态进行理解。&lt;/p>
+&lt;p>那么对于这三个经典的 loss，ITC 可以分别激活图像和文本，最后算损失；ITM 先分别激活图像和文本若干层，之后再全交给多模态；MLM 同 ITM，从图上看起来还是十分优雅的。&lt;/p>
+&lt;p>最后，这个预训练的策略也比较有意思，属于是采用了分阶段训练，首先用图像数据训练图像 FFN，之后是文本，在经过了一定量的预训练之后，才是多模态。在这个里面需要注意的是，图像和文本的顺序不能换，不知道具体是因为什么。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>多模态串讲 - &lt;a class="link" href="https://www.bilibili.com/video/BV1Vd4y1v77v/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1Vd4y1v77v/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="bliphttpsarxivorgpdf220112086">&lt;a class="link" href="https://arxiv.org/pdf/2201.12086" target="_blank" rel="noopener"
+>BLIP&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP.png"
+width="1273"
+height="524"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP_hu3513322508418828729.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP_hu3952465392716823917.png 1024w"
+loading="lazy"
+alt="The pipeline of BLIP"
+class="gallery-image"
+data-flex-grow="242"
+data-flex-basis="583px"
+>&lt;/p>
+&lt;p>BLIP 可以说是我比较喜欢的一篇工作了，当然，基础的模型结构并没有很大的创新，本身还是 VLMo 的框架，贡献了 attention block 的参数，但是把 MLM 换成了 LM，所以这里的参数不能共享，换成了一个 casual attention。&lt;/p>
+&lt;p>这里面我非常喜欢的一个设计，就是它的 caption-filter 框架。这种设计其实在 ALBEF 里面已经体现出来了一些，也就是我前面说的使用 MT 的方法。但是事实上，这种方法并不完全的优雅，尽管是 one-stage，但是或许效果并不如 two-stage，更何况本身还是完全的套用之前的范式，属于是意识到了 noisy 和 pseudo label 的潜力，但是并没有完全发挥。&lt;/p>
+&lt;p>那么，BLIP 的这个框架就不一样了。首先是一个 two-stage，这一点无伤大雅，正如我所说的，one 和 two 的区别并不是很大，甚至说 EMA 唯一的意义在于维护一个 bank，其他情况下完全可以想象，性能应该不如 two-stage。&lt;/p>
+&lt;p>BLIP 的重点在于，ALBEF 只关注到了 MLM 生成的高质量，然后就直接融合进去了，这种粗糙的融合固然是可行的，但是效果不一定特别好，只能说是缓解了 noisy 的情况，因为 noisy 依然存在，只是因为 MT 的权重而被稀释了。那么一个更彻底的方案就是进行 filter，BLIP 巧妙的注意到了这种 filter 的需求和 ITM 的任务惊人的相似，于是使用 LM 进行 caption，把 caption 和 GT 一起交给 ITM 去二选一，这样最后的结果就会很好了。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>多模态串讲 - &lt;a class="link" href="https://www.bilibili.com/video/BV1fA411Z772/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1fA411Z772/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="cocahttpsarxivorgpdf220501917">&lt;a class="link" href="https://arxiv.org/pdf/2205.01917" target="_blank" rel="noopener"
+>CoCa&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoCa.png"
+width="1104"
+height="456"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoCa_hu14405603765062802331.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoCa_hu664365697823158593.png 1024w"
+loading="lazy"
+alt="The pipeline of CoCa"
+class="gallery-image"
+data-flex-grow="242"
+data-flex-basis="581px"
+>&lt;/p>
+&lt;p>CoCa 可以说和 ALBEF 十分的相似，基本上就是和 ALBEF 一模一样，但是 CoCa 的关注点在于，之前的工作，虽然看上去从 pipeline 里面都是同时进行的输入，但是实际上在一个 iteration 里面都是经过了很多次的 forward，而 CoCa 则是希望，在同一个 iteration 里面，所有的 forward 都只进行一次，也就是所谓的 one-pass。&lt;/p>
+&lt;p>方法也十分简单，既然 one-pass 了，那么 scale 上去很多数据就会方便很多，毕竟计算快了很多，于是直接对文本输入直接采取 casual-attention，也不需要管数据的损失，算就完事了，于是任务也变成了一个 Co 和一个 Ca，也就是 contrast 和 caption。&lt;/p>
+&lt;p>所以说白了其实带来的 insight 不算多，一方面 ITC 确实有效，一方面 LM 也是一个难任务，但是在诸多 trick 之上，CoCa 的 large model 以及 scale up 的 data 显然为其性能带来的更大的影响。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>多模态串讲 - &lt;a class="link" href="https://www.bilibili.com/video/BV1fA411Z772/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1fA411Z772/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="beit-v3httpsarxivorgpdf220810442">&lt;a class="link" href="https://arxiv.org/pdf/2208.10442" target="_blank" rel="noopener"
+>BEiT V3&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BEiT_V3.png"
+width="978"
+height="414"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BEiT_V3_hu2922237692943501611.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/BEiT_V3_hu7745315587546980925.png 1024w"
+loading="lazy"
+alt="The pipeline of BEiT V3"
+class="gallery-image"
+data-flex-grow="236"
+data-flex-basis="566px"
+>&lt;/p>
+&lt;p>可以说 BEiT V3 本质上和之前的 VLMo 是十分类似的，但是区别在于，其只采用了一种任务，也就是 LM 任务，这自然也增加了运算的效率。之后就是通过大量的数据，以及不同 FFN 的激活，来在不同的的任务里面训练，可以说是十分的简洁。&lt;/p>
+&lt;p>这篇说白了也就是一个 insight，也就是阐述了 MoME 在 LM 任务下 scale up 之后确实很强，同时当然，这些 MoME 依然可以组合，再去 transfer 到不同的下游任务里。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>多模态串讲 - &lt;a class="link" href="https://www.bilibili.com/video/BV1fA411Z772/" target="_blank" rel="noopener"
+>https://www.bilibili.com/video/BV1fA411Z772/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="blip2httpsarxivorgpdf230112597">&lt;a class="link" href="https://arxiv.org/pdf/2301.12597" target="_blank" rel="noopener"
+>BLIP2&lt;/a>
+&lt;/h2>&lt;p>虽然说名字叫做 BLIP2，但是实际上感觉模型的结构上区别还是很大的，只是说任务比较类似而已。&lt;/p>
+&lt;p>BLIP2 的主要贡献，以及 motivation 在于，之前的模型，都是全部由自己训练的，无论是效率还是算力之类的，开销都很大，而目前领域内已经有了很多的性能很好的模型，于是直接 frozen 之后拿过来用就好。于是提出了一个 Q-former，可以对于 frozen 的图像 encoder 以及 LLM 起到桥梁的作用。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-1.png"
+width="1320"
+height="285"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-1_hu5176689364604041223.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-1_hu15993455571184253569.png 1024w"
+loading="lazy"
+alt="Stage 1 for BLIP2"
+class="gallery-image"
+data-flex-grow="463"
+data-flex-basis="1111px"
+>&lt;/p>
+&lt;p>训练还是一个 two-stage，这里面 stage-1 和 stage-2 的图画的其实很迷惑，因为 Q-former 里面本质上是有两个 Transformer 的，那么后面在 stage-2 的输出，是两个 Transformer 的 concat 还是什么，就很神秘。这里一篇 &lt;a class="link" href="https://blog.csdn.net/LoseInVain/article/details/136013909" target="_blank" rel="noopener"
+>csdn 的博客&lt;/a> 的图很不错，事实上拿的是 queries 输入的那个 transformer 的输出。&lt;/p>
+&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-2.png"
+width="1228"
+height="360"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-2_hu11408803297489657589.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/BLIP2-2_hu4492691596634601345.png 1024w"
+loading="lazy"
+alt="Stage 2 for BLIP2"
+class="gallery-image"
+data-flex-grow="341"
+data-flex-basis="818px"
+>&lt;/p>
+&lt;p>Stage-1 和正常的 ALBEF 区别不大，之后 stage-2 把输出过 MLP 送给 LLM，再进行训练。本质上假如没有 Stage-2，那么就是一个 ALBEF，而假如没有 stage-1，则是一种新的范式。那么能否抛开 stage-1 呢？毕竟 stage-2 也是一个完整的训练流程，而且也是多模态的，但是实验表明不行。一种理解是，在 Q-former 里面之所以要引入一个文本编码器，目的就是通过 stage-1 的各种任务，让图像端的 Q-former 和文本对齐，换句话说，这个 token 输入给后面的 LLM 的时候，模型说的是人话，而不是图像话，毕竟后面跟的 MLP 只是为了统一维度，本身与文本类似的语言表征，还是在 Q-former 里面进行建模的。比起来能够将两个模型拼起来，我觉得还是这个 align 的启发更大一些。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>BLIP2 - &lt;a class="link" href="https://blog.csdn.net/LoseInVain/article/details/136013909" target="_blank" rel="noopener"
+>https://blog.csdn.net/LoseInVain/article/details/136013909&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="llavahttpsarxivorgpdf230408485">&lt;a class="link" href="https://arxiv.org/pdf/2304.08485" target="_blank" rel="noopener"
+>LLava&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/LLava.png"
+width="896"
+height="259"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/LLava_hu18412266607396604993.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/LLava_hu12835145047276987599.png 1024w"
+loading="lazy"
+alt="The pipeline of LLava"
+class="gallery-image"
+data-flex-grow="345"
+data-flex-basis="830px"
+>&lt;/p>
+&lt;p>LLava 比较简单，主要是提出了一种只使用 GPT 的文字功能，就可以生成高质量 caption 的方法，简单来说，对于具有 captions 和 bounding boxes 的内容来说，其实际上具有更多的信息量可以挖掘，所以可以生成一些高质量的 hard task。&lt;/p>
+&lt;p>模型的结构就是一个 image encoder 之后跟一个 MLP 来映射，然后一起输入到 LLM 里面。依然训练是 two-stage 的，首先只训练 MLP 来对齐，之后训练 MLP 和 LLM 来适应具体任务。&lt;/p>
+&lt;p>本身的 insight 一方面对齐不需要很强的表征能力，MLP 已经足矣；另一方面高质量的数据很重要。同时 LLava 用的各种 prompt 自然也很有参考价值。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>LLava - &lt;a class="link" href="https://blog.csdn.net/qq_35812205/article/details/136586853" target="_blank" rel="noopener"
+>https://blog.csdn.net/qq_35812205/article/details/136586853&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="rt-1httpsarxivorgpdf221206817">&lt;a class="link" href="https://arxiv.org/pdf/2212.06817" target="_blank" rel="noopener"
+>RT-1&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-1.png"
+width="1057"
+height="290"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-1_hu1524860977096866326.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-1_hu14330689259753987089.png 1024w"
+loading="lazy"
+alt="The pipeline of RT-1"
+class="gallery-image"
+data-flex-grow="364"
+data-flex-basis="874px"
+>&lt;/p>
+&lt;p>RT-1 讲实话结构并不是很好，但是一是在于数据量大，二是在于在实体跑起来了，于是的话，参考价值也挺高。简单概述一下结构，是用卷积 + FiLM 来进行的文本和图像的融合，文本编码器的输出用来作为 FiLM 的参数，然后调制卷积。之后获得 Tokens 再过 TokenLearner，输入进一个 transformer 里面，获得最后的自由度。&lt;/p>
+&lt;p>这种架构在当下貌似已经不流行了，所以说一下局限性，也就当作是 insight 了。一是在于，在数据量巨大的情况下，多模态基本就是撑死胆大的饿死胆小的，这种复杂的结构，本质上还是担心模型的表征能力不强，或者模型没有能力输出自由度这种级别的信息，但是显然从后面来看实在是多虑了，transformer 确实有大一统的潜力。二也是在于，这种设计其实封死了后面的拓展性。机器人的数据肯定是稀少的，遥想当初 VLMo 就是通过引入单一的视觉和文本数据来进行 scale，而 RT-1 则是完全不给除了自由度之外的数据留活路了，于是后面就很难再进行拓展了。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>RT-1 - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/652897511" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/652897511&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="rt-2httpsarxivorgpdf230715818">&lt;a class="link" href="https://arxiv.org/pdf/2307.15818" target="_blank" rel="noopener"
+>RT-2&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-2.png"
+width="1242"
+height="470"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-2_hu13836169366302193316.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/RT-2_hu2767061334283239724.png 1024w"
+loading="lazy"
+alt="The pipeline of RT-2"
+class="gallery-image"
+data-flex-grow="264"
+data-flex-basis="634px"
+>&lt;/p>
+&lt;p>RT-2 的结构就十分的合理了，使用一个大的 transformer（其实也就是 LLM）接收文本和图像的编码输入，之后获得特殊的 token 用来表示动作，就可以直接进行控制了。这种操作使得其可以同时使用多模态的数据以及机器人的数据，所以说 scale up 的效果非常不错，剩下的就不需要过多赘述了，就是正常的训练。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>RT-2 - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/651670131" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/651670131&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="vimahttpsarxivorgpdf221003094">&lt;a class="link" href="https://arxiv.org/pdf/2210.03094" target="_blank" rel="noopener"
+>VIMA&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/VIMA.png"
+width="1096"
+height="583"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/VIMA_hu15773149967399728935.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/VIMA_hu9507317268602168809.png 1024w"
+loading="lazy"
+alt="The pipeline of VIMA"
+class="gallery-image"
+data-flex-grow="187"
+data-flex-basis="451px"
+>&lt;/p>
+&lt;p>VIMA 也算是比较早期的工作了，没有使用 LLM，但是是有一定的可取之处的。首先是在于使用 object token，object token 的生成在使用 Mask R-CNN 之后包含图像信息即 ViT 编码之后的结果以及 bounding box，可以说同时包含了物体和位置信息，之后还储存了一些历史信息，可以进行长任务。虽然说 RT-2 也可以上下文理解，但是 VIMA 直接使用原本的信息，肯定表征更多一些。&lt;/p>
+&lt;p>一个 insight 是 object token 肯定是一种很好的方式。以往的多模态输入都是先图像后文本，object token 将两个交叉在一起，肯定会有更好的效果，也更加将图像融入了文本的体系里面，是否有更加优雅的方式来进行 object token 的生成或许会是一个问题。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>VIMA - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/659016759" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/659016759&lt;/a>、&lt;/li>
+&lt;/ul>
+&lt;h2 id="saycanhttpsarxivorgpdf220401691">&lt;a class="link" href="https://arxiv.org/pdf/2204.01691" target="_blank" rel="noopener"
+>SayCan&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/SayCan.png"
+width="909"
+height="552"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/SayCan_hu8748502559540267398.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/SayCan_hu12688183524786333667.png 1024w"
+loading="lazy"
+alt="The pipeline of SayCan"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="395px"
+>&lt;/p>
+&lt;p>SayCan 可以说是在做这种规划任务里面比较早的了，但是也存在一些问题。首先大概的流程就是，先把需求提出来，这个时候模型本身存在一个动作空间，那么 LLM 就可以从这个动作空间里面给出不同的推荐，但是一个问题在于，由于 LLM 不清楚当前的情况，所以说可能无法很好地给出能够执行的结果，这个时候可以使用另一个模型，或者说是一个价值函数，来去评判在当前情况下这些动作的价值。那么这个价值函数是使用了环境信息的，价值大模型的推荐结合在一起，就生成了一个布置合理，而且可以完成的动作。&lt;/p>
+&lt;p>这里面的 insight 其实不多，或者说显而易见，想要让 LLM 去参与到动作的生成，固然其本来就具有一定的规划能力，但是这种能力在没有现场情况的了解下是施展不开的，于是可以简单地使用价值函数来作为一种当前情况的引入，本身需要训练的东西也很少，可以说是十分的轻量化。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>SayCan - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/655418399" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/655418399&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="language-models-as-zero-shot-plannershttpsarxivorgpdf220107207">&lt;a class="link" href="https://arxiv.org/pdf/2201.07207" target="_blank" rel="noopener"
+>Language Models as Zero-Shot Planners&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/lmzsp.png"
+width="1354"
+height="403"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/lmzsp_hu15143557363410051235.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/lmzsp_hu17839286919205161071.png 1024w"
+loading="lazy"
+alt="The pipeline of Language Models as Zero-Shot Planners"
+class="gallery-image"
+data-flex-grow="335"
+data-flex-basis="806px"
+>&lt;/p>
+&lt;p>这篇文章也是在 planning 领域的内容，某种程度上也可以说是 low fruit，甚至说不需要任何的训练，就是纯粹的 prompt，不过目测感觉还是要经过一些 finetune 的。&lt;/p>
+&lt;p>大概的思路就是，先让一个模型给出一些计划，然后这些计划通过另一个模型翻译成在 action set 里面的最接近的内容，然后执行。唯一不多的 insight 在于 LLM 通过 high-level 的交互就可以进行近似输出。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>Language Models as Zero-Shot Planners - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/656399047" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/656399047&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="palm-ehttpsarxivorgpdf230303378">&lt;a class="link" href="https://arxiv.org/pdf/2303.03378" target="_blank" rel="noopener"
+>PaLM-E&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/PaLM-E.png"
+width="1195"
+height="416"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/PaLM-E_hu2084183075359421664.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/PaLM-E_hu8419183865066599937.png 1024w"
+loading="lazy"
+alt="The pipeline of PaLM-E"
+class="gallery-image"
+data-flex-grow="287"
+data-flex-basis="689px"
+>&lt;/p>
+&lt;p>PaLM-E 可以说就是就是对于上述种种猜想的一个实际的体现，也就是说一方面仅仅通过多模态的 prompt 进行输入，这里面的输入包括文字/环境/图片，也就是全部的模态，之后输出的是 high-level 的 planning，再由其他的执行器去完成 low-level policy。&lt;/p>
+&lt;p>参考资料：&lt;/p>
+&lt;ul>
+&lt;li>PaLM-E - &lt;a class="link" href="https://zhuanlan.zhihu.com/p/662935514" target="_blank" rel="noopener"
+>https://zhuanlan.zhihu.com/p/662935514&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="vilahttpsarxivorgpdf231117842">&lt;a class="link" href="https://arxiv.org/pdf/2311.17842" target="_blank" rel="noopener"
+>ViLA&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLA.png"
+width="1363"
+height="479"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLA_hu10846129334182473016.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/ViLA_hu2976972758313329564.png 1024w"
+loading="lazy"
+alt="The pipeline of ViLA"
+class="gallery-image"
+data-flex-grow="284"
+data-flex-basis="682px"
+>&lt;/p>
+&lt;p>讲实话，我不是很理解 prompt 类型的工具，不过确实一些这种类型的工作可以有非常好的性能。总体来说，ViLA 输出的也是 high-level 的 policy。大概的流程就是输入当前的图像以及任务，还有历史上已经完成的任务，然后交给 gpt-4v，使用 CoT 分析一下当前的场面，然后结合分析给出动作，再交给执行器。&lt;/p>
+&lt;p>个人感觉 prompt 类型的工作实际上还是解决任务，而没有带来比较振奋人心的 insight（当然，CoT 这种属于出色的 prompt 工作），这毫无疑问是令人沮丧的，但是确实也刷新了性能，并且有效利用了那些已经性能很好的工作。&lt;/p>
+&lt;h2 id="copahttpsarxivorgpdf240308248">&lt;a class="link" href="https://arxiv.org/pdf/2403.08248" target="_blank" rel="noopener"
+>CoPa&lt;/a>
+&lt;/h2>&lt;p>&lt;img src="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoPa.png"
+width="970"
+height="721"
+srcset="https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoPa_hu4749042396556151588.png 480w, https://axi404.github.io/Blog/Blog/p/llm-talk-1/CoPa_hu3303268454071257216.png 1024w"
+loading="lazy"
+alt="The pipeline of CoPa"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="322px"
+>&lt;/p>
+&lt;p>CoPa 的工程感更足，把大量的模型结合在一起。总的来说首先是一个物体抓取，接下来是路径规划。对物体抓取，CoPa 给出了一个从粗到细的分割流程，具体还是使用 SAM 和 gpt 配合，最后筛选出来一个抓取的细节部位，然后用抓取姿势的生成器生成姿势。就有点类似于把锅拿起来，需要握住的是锅把一样。接下来是一个路径的规划，这里面也是先识别了各种物体的位姿，然后将这些内容画在图上，估计这种选择是因为不信任大模型的数学能力，反而是图像比较直观，容易理解。之后通过这种细粒度的指示，大模型就可以给出更加合理的建议，类似于之前是将锤子放在钉子上，现在可以是将锤子和钉子对齐，而且根据识别的位姿，或许可以精确到距离。然后交给执行器。&lt;/p>
+&lt;p>一个 insight 是对于细粒度信息的追求，很多时候直接的训练不能获得到这么细粒的信息，而 VLM 也不具有这种表征能力，所以说这种用其他模型的表征方式或许确实无法替代。&lt;/p>
+&lt;h1 id="总结">总结
+&lt;/h1>&lt;p>在阅读了诸多的内容之后，我发现了几件事情是大的趋势以及必要的。&lt;/p>
+&lt;p>首先是多模态输入的必然性，这里指交叉输入的多模态，将图像或者物体也作为 token 进行编码；其次是对齐的必要性，多模态具有不同的编码器，在这里，无论是直接训练 encoder 还是训练一个 projection，都是有必要将语言之外的模态映射一次的，也就导致大多数训练都是 two-stage 的。&lt;/p></description></item><item><title>LLM Talk 0</title><link>https://axi404.github.io/Blog/p/llm-talk-0/</link><pubDate>Thu, 01 Aug 2024 19:41:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/llm-talk-0/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/llm-talk-0/cover.jpg" alt="Featured image of post LLM Talk 0" />&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>算是写在一切之前，在开始我的 LLM 以及 embodied 之前，自然还是下过不少的基本功的，在这里算是记录一下，后续的内容也会陆陆续续的更新。&lt;/p>
+&lt;p>我写的大多数的 insight 分享，都是某一天想起来再写的。我估计我读过的论文，估计少说也有两百多，一篇一篇写是不太可能了，只能说慢慢读，慢慢写，想起来写，纯凭兴趣。&lt;/p>
+&lt;p>正常的基本功内容以及之前的一些文章，可以说也有很多了，要是说写完，倒也不太可能，姑且作为一个长期的工作吧，希望能够有写完的一天。&lt;/p>
+&lt;h2 id="机器学习">机器学习
+&lt;/h2>&lt;p>一开始是学习机器学习，在这里，大多数的知识点就是算法本身，更加偏向于数理之类的内容，不存在太多的 insight。要是真说是有的，估计是对于诸如熵/分布/采样等内容的理解与重视。中间看过几本书，推荐李航老师的《统计学习方法》以及周志华老师的《机器学习》。统计学习方法有&lt;a class="link" href="https://space.bilibili.com/406882224" target="_blank" rel="noopener"
+>简博士的讲解&lt;/a>，在我写这篇博客的时候，依然还在连载，不过事实上到了后面，一些内容很容易就看进去了，倒是不太需要视频。&lt;/p>
+&lt;h2 id="深度学习">深度学习
+&lt;/h2></description></item><item><title>OpenVLA 代码笔记</title><link>https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/</link><pubDate>Tue, 23 Jul 2024 09:00:00 +0800</pubDate><guid>https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/</guid><description>&lt;img src="https://axi404.github.io/Blog/p/openvla-%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/cover.jpg" alt="Featured image of post OpenVLA 代码笔记" />&lt;p>因为要开始入门具身智能，所以说要阅读代码，显然选择了开源的 OpenVLA，于是在这里记录一下代码的阅读过程。&lt;/p>
+&lt;p>本人代码水平为，掌握 Pytorch 大多数语法，对于 Hugging Face 不太了解。故部分内容会省略，尽量做到大多数内容均详实。&lt;/p>
+&lt;h2 id="openvla">OpenVLA
+&lt;/h2>&lt;p>OpenVLA 是一个具身智能大模型，Open 在这里就是 Open Source 的意思，于是使用其开源代码，开源网址为 &lt;a class="link" href="https://github.com/openvla/openvla" target="_blank" rel="noopener"
+>https://github.com/openvla/openvla&lt;/a>。&lt;/p>
+&lt;h2 id="代码结构">代码结构
+&lt;/h2>&lt;p>直接运行一个 &lt;code>tree&lt;/code>，看一下代码结构：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">├───prismatic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───extern
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───hf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───models
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├───backbones
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ ├───llm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ │ └───prompting
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └───vision
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├───vlas
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───vlms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───overwatch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───preprocessing
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───datasets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───training
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───strategies
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───util
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───vla
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───datasets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───rlds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───oxe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───utils
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───utils
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├───scripts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───additional-datasets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───extern
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└───vla-scripts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └───extern
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其中首先关注如何从头训练，于是关注 &lt;code>vla-scripts/train.py&lt;/code> 这个文件。&lt;/p>
+&lt;h2 id="模型训练">模型训练
+&lt;/h2>&lt;h3 id="主文件">主文件
+&lt;/h3>&lt;p>简单让 GPT4-o 生成了 &lt;code>vla-scripts/train.py&lt;/code> 的逐行注释，如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;span class="lnt">142
+&lt;/span>&lt;span class="lnt">143
+&lt;/span>&lt;span class="lnt">144
+&lt;/span>&lt;span class="lnt">145
+&lt;/span>&lt;span class="lnt">146
+&lt;/span>&lt;span class="lnt">147
+&lt;/span>&lt;span class="lnt">148
+&lt;/span>&lt;span class="lnt">149
+&lt;/span>&lt;span class="lnt">150
+&lt;/span>&lt;span class="lnt">151
+&lt;/span>&lt;span class="lnt">152
+&lt;/span>&lt;span class="lnt">153
+&lt;/span>&lt;span class="lnt">154
+&lt;/span>&lt;span class="lnt">155
+&lt;/span>&lt;span class="lnt">156
+&lt;/span>&lt;span class="lnt">157
+&lt;/span>&lt;span class="lnt">158
+&lt;/span>&lt;span class="lnt">159
+&lt;/span>&lt;span class="lnt">160
+&lt;/span>&lt;span class="lnt">161
+&lt;/span>&lt;span class="lnt">162
+&lt;/span>&lt;span class="lnt">163
+&lt;/span>&lt;span class="lnt">164
+&lt;/span>&lt;span class="lnt">165
+&lt;/span>&lt;span class="lnt">166
+&lt;/span>&lt;span class="lnt">167
+&lt;/span>&lt;span class="lnt">168
+&lt;/span>&lt;span class="lnt">169
+&lt;/span>&lt;span class="lnt">170
+&lt;/span>&lt;span class="lnt">171
+&lt;/span>&lt;span class="lnt">172
+&lt;/span>&lt;span class="lnt">173
+&lt;/span>&lt;span class="lnt">174
+&lt;/span>&lt;span class="lnt">175
+&lt;/span>&lt;span class="lnt">176
+&lt;/span>&lt;span class="lnt">177
+&lt;/span>&lt;span class="lnt">178
+&lt;/span>&lt;span class="lnt">179
+&lt;/span>&lt;span class="lnt">180
+&lt;/span>&lt;span class="lnt">181
+&lt;/span>&lt;span class="lnt">182
+&lt;/span>&lt;span class="lnt">183
+&lt;/span>&lt;span class="lnt">184
+&lt;/span>&lt;span class="lnt">185
+&lt;/span>&lt;span class="lnt">186
+&lt;/span>&lt;span class="lnt">187
+&lt;/span>&lt;span class="lnt">188
+&lt;/span>&lt;span class="lnt">189
+&lt;/span>&lt;span class="lnt">190
+&lt;/span>&lt;span class="lnt">191
+&lt;/span>&lt;span class="lnt">192
+&lt;/span>&lt;span class="lnt">193
+&lt;/span>&lt;span class="lnt">194
+&lt;/span>&lt;span class="lnt">195
+&lt;/span>&lt;span class="lnt">196
+&lt;/span>&lt;span class="lnt">197
+&lt;/span>&lt;span class="lnt">198
+&lt;/span>&lt;span class="lnt">199
+&lt;/span>&lt;span class="lnt">200
+&lt;/span>&lt;span class="lnt">201
+&lt;/span>&lt;span class="lnt">202
+&lt;/span>&lt;span class="lnt">203
+&lt;/span>&lt;span class="lnt">204
+&lt;/span>&lt;span class="lnt">205
+&lt;/span>&lt;span class="lnt">206
+&lt;/span>&lt;span class="lnt">207
+&lt;/span>&lt;span class="lnt">208
+&lt;/span>&lt;span class="lnt">209
+&lt;/span>&lt;span class="lnt">210
+&lt;/span>&lt;span class="lnt">211
+&lt;/span>&lt;span class="lnt">212
+&lt;/span>&lt;span class="lnt">213
+&lt;/span>&lt;span class="lnt">214
+&lt;/span>&lt;span class="lnt">215
+&lt;/span>&lt;span class="lnt">216
+&lt;/span>&lt;span class="lnt">217
+&lt;/span>&lt;span class="lnt">218
+&lt;/span>&lt;span class="lnt">219
+&lt;/span>&lt;span class="lnt">220
+&lt;/span>&lt;span class="lnt">221
+&lt;/span>&lt;span class="lnt">222
+&lt;/span>&lt;span class="lnt">223
+&lt;/span>&lt;span class="lnt">224
+&lt;/span>&lt;span class="lnt">225
+&lt;/span>&lt;span class="lnt">226
+&lt;/span>&lt;span class="lnt">227
+&lt;/span>&lt;span class="lnt">228
+&lt;/span>&lt;span class="lnt">229
+&lt;/span>&lt;span class="lnt">230
+&lt;/span>&lt;span class="lnt">231
+&lt;/span>&lt;span class="lnt">232
+&lt;/span>&lt;span class="lnt">233
+&lt;/span>&lt;span class="lnt">234
+&lt;/span>&lt;span class="lnt">235
+&lt;/span>&lt;span class="lnt">236
+&lt;/span>&lt;span class="lnt">237
+&lt;/span>&lt;span class="lnt">238
+&lt;/span>&lt;span class="lnt">239
+&lt;/span>&lt;span class="lnt">240
+&lt;/span>&lt;span class="lnt">241
+&lt;/span>&lt;span class="lnt">242
+&lt;/span>&lt;span class="lnt">243
+&lt;/span>&lt;span class="lnt">244
+&lt;/span>&lt;span class="lnt">245
+&lt;/span>&lt;span class="lnt">246
+&lt;/span>&lt;span class="lnt">247
+&lt;/span>&lt;span class="lnt">248
+&lt;/span>&lt;span class="lnt">249
+&lt;/span>&lt;span class="lnt">250
+&lt;/span>&lt;span class="lnt">251
+&lt;/span>&lt;span class="lnt">252
+&lt;/span>&lt;span class="lnt">253
+&lt;/span>&lt;span class="lnt">254
+&lt;/span>&lt;span class="lnt">255
+&lt;/span>&lt;span class="lnt">256
+&lt;/span>&lt;span class="lnt">257
+&lt;/span>&lt;span class="lnt">258
+&lt;/span>&lt;span class="lnt">259
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">train.py
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">Training script for Vision-Language-Action (VLA) Policies, built on top of pretrained VLMs, trained using mixtures of
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">the Open-X Embodiment dataset. Performs training in native PyTorch, using Fully-Sharded Data Parallel (FSDP) to run
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">distributed across GPUs (and nodes). By default, assumes that CUDA toolkit is &amp;gt;= 11.0 (to support BF16 mixed precision).
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">Notes &amp;amp; Prerequisites:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> - If you want to set a custom location for all HF / TIMM artifacts --&amp;gt; `export HF_HOME=&amp;#34;&amp;lt;PATH&amp;gt;&amp;#34;` *before* running!
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> =&amp;gt; For example (add to end of .bashrc): `export HF_HOME=&amp;#34;/mnt/fsx/skaramcheti/cache&amp;#34;`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> - If you want to suppress random Tensorflow logs --&amp;gt; `export TF_CPP_MIN_LOG_LEVEL=3`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">Run with:
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> - [Single Node One-GPU (Debug)] : torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/train.py
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> - [Single Node Multi-GPU (= $K)]: torchrun --standalone --nnodes 1 --nproc-per-node $K vla-scripts/train.py
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">json&lt;/span> &lt;span class="c1"># 导入json模块，用于处理JSON数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span> &lt;span class="c1"># 导入os模块，用于与操作系统交互&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">re&lt;/span> &lt;span class="c1"># 导入re模块，用于正则表达式操作&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">dataclasses&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">dataclass&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">field&lt;/span> &lt;span class="c1"># 从dataclasses模块导入dataclass和field，用于定义数据类&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">pathlib&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Path&lt;/span> &lt;span class="c1"># 从pathlib模块导入Path，用于文件路径操作&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Tuple&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Union&lt;/span> &lt;span class="c1"># 从typing模块导入一些类型提示&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">draccus&lt;/span> &lt;span class="c1"># 导入draccus库，用于配置管理&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">torch&lt;/span> &lt;span class="c1"># 导入torch库，用于深度学习&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">torch.distributed&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">dist&lt;/span> &lt;span class="c1"># 导入torch.distributed模块，用于分布式训练&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">yaml&lt;/span> &lt;span class="c1"># 导入yaml模块，用于处理YAML文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.conf&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">VLAConfig&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">VLARegistry&lt;/span> &lt;span class="c1"># 从prismatic.conf导入VLAConfig和VLARegistry&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.models&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">load&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">load_vla&lt;/span> &lt;span class="c1"># 从prismatic.models导入load和load_vla函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.overwatch&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">initialize_overwatch&lt;/span> &lt;span class="c1"># 从prismatic.overwatch导入initialize_overwatch函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.training&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">VLAMetrics&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">get_train_strategy&lt;/span> &lt;span class="c1"># 从prismatic.training导入VLAMetrics和get_train_strategy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.util&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">set_global_seed&lt;/span> &lt;span class="c1"># 从prismatic.util导入set_global_seed函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.vla&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">get_vla_dataset_and_collator&lt;/span> &lt;span class="c1"># 从prismatic.vla导入get_vla_dataset_and_collator函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">prismatic.vla.datasets.rlds.utils.data_utils&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">save_dataset_statistics&lt;/span> &lt;span class="c1"># 从prismatic.vla.datasets.rlds.utils.data_utils导入save_dataset_statistics函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置合理的默认值&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">environ&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;TOKENIZERS_PARALLELISM&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;false&amp;#34;&lt;/span> &lt;span class="c1"># 禁用分词器的并行处理&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 初始化Overwatch =&amp;gt;&amp;gt; 包装`logging.Logger`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">overwatch&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">initialize_overwatch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="vm">__name__&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 初始化日志记录工具&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@dataclass&lt;/span> &lt;span class="c1"># 使用dataclass装饰器定义数据类&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">TrainConfig&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># fmt: off&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># VLAConfig (`prismatic/conf/vla.py`); override with --vla.type `VLARegistry.&amp;lt;VLA&amp;gt;.vla_id`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">VLAConfig&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">field&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">default_factory&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">VLAConfig&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get_choice_class&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">VLARegistry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla_id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># VLA配置，默认使用VLARegistry.DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS.vla_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 目录路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data_root_dir&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="c1"># Open-X数据集目录的路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;datasets/open-x-embodiment&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">run_root_dir&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;runs&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 存储日志和检查点的目录路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 恢复运行参数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pretrained_checkpoint&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># 预训练检查点的绝对路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">is_resume&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># 是否继续之前的训练&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resume_step&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># 恢复的全局步骤&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resume_epoch&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># 恢复的训练周期&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 运行参数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">run_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># 用于日志记录的运行ID&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">run_id_note&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># 用于日志记录的额外注释&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">save_interval&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2500&lt;/span> &lt;span class="c1"># 保存检查点的间隔（以步骤为单位）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">image_aug&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">False&lt;/span> &lt;span class="c1"># 是否启用图像增强&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">seed&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">7&lt;/span> &lt;span class="c1"># 随机种子（用于可重复性）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># HF Hub 凭证（用于任何受限模型）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hf_token&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Union&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;.hf_token&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 环境变量或HF Token的路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 跟踪参数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">trackers&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Tuple&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;jsonl&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;wandb&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 初始化的跟踪器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">wandb_project&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;openvla&amp;#34;&lt;/span> &lt;span class="c1"># W&amp;amp;B项目名称&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">wandb_entity&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;stanford-voltron&amp;#34;&lt;/span> &lt;span class="c1"># W&amp;amp;B实体名称&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">def&lt;/span> &lt;span class="nf">__post_init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;提升优化参数的可用性，并验证`expected_world_size`&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">epochs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">epochs&lt;/span> &lt;span class="c1"># 设置训练周期数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_steps&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_steps&lt;/span> &lt;span class="c1"># 设置最大训练步骤数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">global_batch_size&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">global_batch_size&lt;/span> &lt;span class="c1"># 设置全局批次大小&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">per_device_batch_size&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">per_device_batch_size&lt;/span> &lt;span class="c1"># 设置每个设备的批次大小&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">learning_rate&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">learning_rate&lt;/span> &lt;span class="c1"># 设置学习率&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">weight_decay&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">weight_decay&lt;/span> &lt;span class="c1"># 设置权重衰减&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_grad_norm&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_grad_norm&lt;/span> &lt;span class="c1"># 设置最大梯度范数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lr_scheduler_type&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lr_scheduler_type&lt;/span> &lt;span class="c1"># 设置学习率调度器类型&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">warmup_ratio&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">warmup_ratio&lt;/span> &lt;span class="c1"># 设置预热比率&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">train_strategy&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">train_strategy&lt;/span> &lt;span class="c1"># 设置训练策略&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [验证] 断言`expected_world_size`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">expected_world_size&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">world_size&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">),&lt;/span> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Expected World Size = &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">expected_world_size&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> but Found &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">world_size&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> GPUs!&amp;#34;&lt;/span> &lt;span class="c1"># 验证期望的世界大小是否与实际一致&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># fmt: on&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@draccus.wrap&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 使用draccus.wrap装饰器定义训练函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">train&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">TrainConfig&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;OpenVLA Training :: Warming Up&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录训练开始的信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 注意 =&amp;gt; 在`torchrun`下初始化`overwatch`会自动设置`torch.distributed`&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_device&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">device_id&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">local_rank&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="c1"># 设置CUDA设备&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">empty_cache&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 清空CUDA缓存&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 配置唯一的运行名称和保存目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla_id&lt;/span> &lt;span class="c1"># 获取VLA ID&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">vla_id&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">+n&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">expected_world_size&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">+b&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">per_device_batch_size&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">+x&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">seed&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="kc">None&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 如果运行ID为空，则生成唯一的运行ID&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id_note&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;--&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id_note&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="c1"># 如果有运行ID注释，则添加到运行ID中&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image_aug&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="s2">&amp;#34;--image_aug&amp;#34;&lt;/span> &lt;span class="c1"># 如果启用了图像增强，则添加到运行ID中&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 开始 =&amp;gt;&amp;gt; 创建目录并设置随机性&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#34;Do or do not; there is no try.&amp;#34;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ctx_level&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hf_token&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hf_token&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read_text&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">strip&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="nb">isinstance&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hf_token&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">environ&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hf_token&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># 读取HF Token&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">worker_init_fn&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">set_global_seed&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">seed&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">get_worker_init_fn&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 设置全局随机种子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">makedirs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">run_dir&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_root_dir&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">exist_ok&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 创建运行目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">makedirs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_root_dir&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="s2">&amp;#34;checkpoints&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">exist_ok&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 创建检查点目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 保存配置 =&amp;gt;&amp;gt; 另外保存一个JSON版本以供以后HF集成&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_rank_zero&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">draccus&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">run_dir&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="s2">&amp;#34;config.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;w&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="c1"># 保存配置到YAML文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">with&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">run_dir&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="s2">&amp;#34;config.yaml&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;r&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">f_yaml&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">run_dir&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="s2">&amp;#34;config.json&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;w&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">f_json&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">yaml_cfg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">yaml&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe_load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">f_yaml&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">json&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">yaml_cfg&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f_json&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">indent&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 保存配置到JSON文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 加载VLA检查点（如果从训练中恢复）或基础VLM（从`cfg.vla.base_vlm` ID或路径）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># =&amp;gt;&amp;gt; 注意::验证所有参数在加载时都以FP32加载！&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Loading Base VLM `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">base_vlm&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">` from ID/Path&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pretrained_checkpoint&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [验证] 预训练检查点的`step`和`epoch`应与`resume_step`和`resume_epoch`匹配&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># =&amp;gt;&amp;gt; 注意::我们要求开发人员传递`resume_*`参数作为额外的健全性检查！&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_resume&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;step-(.+?)-&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pretrained_checkpoint&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">resume_step&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;epoch-(.+?)-&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pretrained_checkpoint&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">resume_epoch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vlm&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">load_vla&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pretrained_checkpoint&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">hf_token&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">hf_token&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">load_for_training&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 加载VLA检查点&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vlm&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">base_vlm&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">hf_token&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">hf_token&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">load_for_training&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 加载基础VLM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [验证] 模型应为全精度！&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">param&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parameters&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dtype&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">float32&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Loaded VLM parameter not in full precision: &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">param&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="c1"># 验证模型参数类型&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 根据冻结与未冻结的参数确定训练“阶段”--&amp;gt;支持不同的微调方案！&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_vision_backbone&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;vla-full-train&amp;#34;&lt;/span> &lt;span class="c1"># 完全微调&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_vision_backbone&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;vla-train&amp;#34;&lt;/span> &lt;span class="c1"># 冻结视觉编码器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_vision_backbone&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">unfreeze_last_llm_layer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;You should unfreeze at least the last layer of your LLM!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;vla-sandwich-train&amp;#34;&lt;/span> &lt;span class="c1"># 微调视觉编码器、投影器和LLM最后一层&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_vision_backbone&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">unfreeze_last_llm_layer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Need to unfreeze at least last LLM layer to train!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;vla-last-layer-train&amp;#34;&lt;/span> &lt;span class="c1"># 仅微调LLM最后一层&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="ne">ValueError&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Weight freezing configuration not supported. VLA config has the following parameters: &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;freeze_vision_backbone: &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_vision_backbone&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;freeze_llm_backbone: &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;unfreeze_last_llm_layer: &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">unfreeze_last_llm_layer&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 如果配置不支持，则引发错误&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [显式] 调用`freeze_backbones`以提高清晰度 =&amp;gt;&amp;gt; 将准确记录哪些被冻结&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Invoking `VLM.freeze_backbones()` for `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">vla_id&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">` =&amp;gt; Stage: `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">stage&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">`&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">freeze_backbones&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">stage&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 冻结模型参数&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 打印总参数和可训练参数的数量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">num_params&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sum&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">numel&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parameters&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">num_trainable_params&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sum&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">numel&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">p&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parameters&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">requires_grad&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;# Parameters (in millions): &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">num_params&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="si">:&lt;/span>&lt;span class="s2">.3f&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> Total, &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">num_trainable_params&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="o">**&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="si">:&lt;/span>&lt;span class="s2">.3f&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> Trainable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录参数数量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 获取VLA数据集和collator&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Creating VLA Open-X Dataset with Mixture `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_mix&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">`&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_dataset&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">action_tokenizer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">collator&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">get_vla_dataset_and_collator&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_root_dir&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_mix&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">image_transform&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vision_backbone&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get_image_transform&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tokenizer&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">llm_backbone&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get_tokenizer&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prompt_builder_fn&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">llm_backbone&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">prompt_builder_fn&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">default_image_resolution&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vlm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vision_backbone&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">default_image_resolution&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">shuffle_buffer_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shuffle_buffer_size&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">image_aug&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image_aug&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 获取VLA数据集和collator&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 保存数据集统计信息以便在推理时去归一化&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">is_rank_zero&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">save_dataset_statistics&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">vla_dataset&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dataset_statistics&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">run_dir&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 保存数据集统计信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 创建训练策略&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Initializing Train Strategy `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">train_strategy&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">`&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">get_train_strategy&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">train_strategy&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vlm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vlm&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">device_id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">device_id&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">stage&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">epochs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">epochs&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_steps&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_steps&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">global_batch_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">global_batch_size&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">per_device_batch_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">per_device_batch_size&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">learning_rate&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">learning_rate&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">weight_decay&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">weight_decay&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_grad_norm&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">max_grad_norm&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lr_scheduler_type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lr_scheduler_type&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">warmup_ratio&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">warmup_ratio&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">enable_gradient_checkpointing&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">enable_gradient_checkpointing&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">enable_mixed_precision_training&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">enable_mixed_precision_training&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">reduce_in_full_precision&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">reduce_in_full_precision&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">worker_init_fn&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">worker_init_fn&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 初始化训练策略&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_setup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">run_dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">run_dir&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">n_train_examples&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">vla_dataset&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="c1"># 设置训练策略&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 创建度量工具 =&amp;gt;&amp;gt; 动态跟踪，记录到指定的跟踪器（例如JSONL，Weights &amp;amp; Biases）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Creating Metrics with Active Trackers =&amp;gt; `&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">trackers&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">`&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">metrics&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">VLAMetrics&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">trackers&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_id&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">run_dir&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">draccus&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">encode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">wandb_project&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">wandb_project&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">wandb_entity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">wandb_entity&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resume_step&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">resume_step&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resume_epoch&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">resume_epoch&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 创建度量工具&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 运行VLA训练&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Starting VLA Training Loop&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run_vla_training&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_dataset&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">collator&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">action_tokenizer&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">metrics&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">save_interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cfg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">save_interval&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;span class="c1"># 运行VLA训练&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 完成&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Done with Training =&amp;gt;&amp;gt; Finalizing Metrics&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">metrics&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">finalize&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 完成度量工具&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 完成所有操作&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">overwatch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;... and that&amp;#39;s all, folks!&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 记录日志信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dist&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">barrier&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 同步所有进程&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dist&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">destroy_process_group&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 销毁进程组&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="c1"># 如果是主模块，则运行训练函数&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在这里暂时不用关注太多的事情，我第一件关心的事情是，一开始 &lt;code>import&lt;/code> 的那么多的库里面，他们分别起到了什么作用。&lt;/p>
+&lt;p>假如说前往 OpenVLA 的 &lt;a class="link" href="https://github.com/openvla/openvla" target="_blank" rel="noopener"
+>Github 仓库&lt;/a>，可以发现其 fork 了另一个库，也就是 &lt;a class="link" href="https://github.com/TRI-ML/prismatic-vlms" target="_blank" rel="noopener"
+>prismatic-vlms&lt;/a>，在这里我只想关注 OpenVLA 的实现，所以我想要知道，相较于 prismatic-vlms，OpenVLA 有什么改动。&lt;/p>
+&lt;h3 id="prismatic-vlms">prismatic-vlms
+&lt;/h3>&lt;p>在 prismatic-vlms 中，同样运行一下 &lt;code>tree&lt;/code>，看一下文件结构：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">├───prismatic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───models
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├───backbones
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ ├───llm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ │ └───prompting
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └───vision
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───vlms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───overwatch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───preprocessing
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───datasets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├───training
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───strategies
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └───strategies
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └───util
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└───scripts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └───additional-datasets
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在 &lt;code>conf&lt;/code> 里面，可以发现的是，其中包括 &lt;code>datasets.py&lt;/code> 以及 &lt;code>models.py&lt;/code> 这两个文件，OpenVLA 增加了一个新的 &lt;code>vla.py&lt;/code>，也是同样一个代码风格。&lt;/p>
+&lt;p>以 &lt;code>vla.py&lt;/code> 为例，具有一个 &lt;code>VLAConfig&lt;/code> 的类：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@dataclass&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">VLAConfig&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ChoiceRegistry&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># fmt: off&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="c1"># Unique VLA Policy ID that fully specifies a configuration variant&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">base_vlm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Union&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># Base VLM as ID/Path to Run Directory (e.g., `prism-dinosiglip+7b`)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">freeze_vision_backbone&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="c1"># Freeze Vision Backbone Parameters (akin to pretraining)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="c1"># Freeze LLM Backbone parameters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">unfreeze_last_llm_layer&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="c1"># Unfreeze final layer of LLM (only takes effect if LLM is frozen)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Data Mixture Parameters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data_mix&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="c1"># Open-X Embodiment Dataset =&amp;gt;&amp;gt; Unique Mixture ID (e.g., `bridge`)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">shuffle_buffer_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="c1"># Size of Shuffle Buffer (100K for Bridge, 1M for OXE)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Optimization Parameters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">epochs&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="c1"># Epochs to Run (in case `max_steps` is not specified)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_steps&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># [Optional] Max Gradient Steps to Run (overrides `epochs`)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">expected_world_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="c1"># Expected # of GPUs =&amp;gt;&amp;gt; allows us to gate training on hardware&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">global_batch_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="c1"># Global Batch Size (divided across processes / world size)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">per_device_batch_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="c1"># Per-Device Batch Size (per-process / individual GPU)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># =&amp;gt;&amp;gt; # of accumulation steps is auto-computed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">learning_rate&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="c1"># Peak Learning Rate (`lr_scheduler_type` sets warmup/decay)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">weight_decay&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="c1"># Weight Decay for AdamW Optimizer&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_grad_norm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="c1"># Max Grad Norm (for global gradient clipping)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lr_scheduler_type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="c1"># LR Scheduler (usually: &amp;#34;constant&amp;#34; | &amp;#34;linear-warmup+cosine-decay&amp;#34;)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">warmup_ratio&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="c1"># Fraction of Steps to Warmup (for warmup LR schedulers)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="c1"># Train Strategy (default &amp;#34;fsdp-full-shard&amp;#34;)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Enable Gradient/Activation Checkpointing (for the LLM Backbone)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">enable_gradient_checkpointing&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># Enable Gradient/Activation Checkpointing during Training&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Mixed Precision Training via Torch Native AMP (`autocast`)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">enable_mixed_precision_training&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># Enable Traditional BF16 Mixed Precision&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">reduce_in_full_precision&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># Accumulate/Reduce All-Gather Gradients in FP32 Full Precision&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># fmt: on&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这等于说是全部的需要的配置信息了，接下来就需要在里面塞入一些配置就好了，之后在创建的时候，使用类似于 factory 的东西进行调用就可以了。&lt;/p>
+&lt;p>于是就使用一个配置即可：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@dataclass&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Exp_SigLIP_224px_Bridge&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">VLAConfig&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;siglip-224px+mx-bridge&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">base_vlm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Union&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;siglip-224px+7b&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">freeze_vision_backbone&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">freeze_llm_backbone&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">unfreeze_last_llm_layer&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Data Mixture Parameters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data_mix&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;bridge&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">shuffle_buffer_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">256_000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Optimization Parameters&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">epochs&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_steps&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">expected_world_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">global_batch_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">256&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">per_device_batch_size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">32&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">learning_rate&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">2e-5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">weight_decay&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">0.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">max_grad_norm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lr_scheduler_type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;constant&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">warmup_ratio&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">0.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">train_strategy&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;fsdp-full-shard&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>对于其他的配置来说的话，相较于这个原来的配置文件，只需要进行少量的修改，于是直接进行继承就好：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@dataclass&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Exp_FreezeVIT_SigLIP_224px_Bridge&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Exp_SigLIP_224px_Bridge&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vla_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;siglip-224px-icy+mx-bridge&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">base_vlm&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Union&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;siglip-224px+7b&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">freeze_vision_backbone&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">bool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>之后实现一个枚举：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># === Define a VLA Registry Enum for Reference &amp;amp; Validation ===&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@unique&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">VLARegistry&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Enum&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Sanity Check Configurations =&amp;gt;&amp;gt; BridgeV2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_MX_BRIDGE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_Bridge&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DINOSIGLIP_224PX_MX_BRIDGE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_DinoSigLIP_224px_Bridge&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># SigLIP Frozen Backbone Experiment&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FREEZE_SIGLIP_224PX_MX_BRIDGE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_FreezeVIT_SigLIP_224px_Bridge&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [OpenVLA v0.1 7B] SigLIP 224px + OXE Magic Soup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_MX_OXE_MAGIC_SOUP&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_OXE_Magic_Soup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># [OpenVLA 7B] DINO + SigLIP 224px + OXE Magic Soup++&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DINOSIGLIP_224PX_MX_OXE_MAGIC_SOUP_PLUS&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_DinoSigLIP_224px_OXE_Magic_Soup_Plus&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># === TDROID Fine-tuning Configs ===&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_MX_TDROID_CARROT_IN_BOWL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_TDROID_CarrotInBowl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_MX_TDROID_POUR_CORN_IN_POT&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_TDROID_PourCornInPot&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_ICY_MX_TDROID_CARROT_IN_BOWL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_Icy_TDROID_CarrotInBowl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_LASTLAYER_MX_TDROID_CARROT_IN_BOWL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_LastLayer_TDROID_CarrotInBowl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_SANDWICH_MX_TDROID_CARROT_IN_BOWL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_Sandwich_TDROID_CarrotInBowl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># === DROID Fine-tuning Configs ===&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">SIGLIP_224PX_MX_DROID_WIPE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Exp_SigLIP_224px_Droid_Wipe&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nd">@property&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">def&lt;/span> &lt;span class="nf">vla_id&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla_id&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后批量将这些内容注册成 &lt;code>subclass&lt;/code>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Register VLAs in Choice Registry&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">vla_variant&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">VLARegistry&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">VLAConfig&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">register_subclass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">vla_variant&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vla_id&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">vla_variant&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>虽然现在 prismatic-vlms 我还没有看完，但是我已经急了，所以对一些内容进行了跳过，接下来再次回到 &lt;code>train.py&lt;/code>。&lt;/p>
+&lt;h3 id="run_vla_training">run_vla_training
+&lt;/h3>&lt;p>简单检查一下训练的代码，不难发现，前面的大多数内容都是类似的，除了一些获取数据集之类的操作之外，主要还是正在设置各种的配置文件，但是在这里暂时先不关心这些，而是直接跳到 &lt;code>run_vla_training&lt;/code>，换句话说，我想要知道其论文中的训练是如何实现的。&lt;/p>
+&lt;p>在这里简单再次复述一下 OpenVLA 的训练过程，&lt;/p></description></item></channel></rss>
